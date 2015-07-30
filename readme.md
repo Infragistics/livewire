@@ -8,11 +8,12 @@ Clone this repository:
     
 Install the node dependencies:
 
-   $ npm install
+    $ npm install
    
-Install the client-side dependencies:
+Install the app dependencies:
 
     $ cd app
+    $ npm install
     $ bower install
     
 Return back to the main folder:
