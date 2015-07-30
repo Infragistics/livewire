@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="./bower_components/bootstrap/dist/css/bootstrap.css" />
+		<link rel="stylesheet" type="text/css" href="./bower_components/font-awesome/css/font-awesome.css" />
+		<link rel="stylesheet" type="text/css" href="index.css" />
+		<title>ElectricMark</title>
+	</head>
+    <body>
+		<div id="editor-container">
+			<div id="editor"># Welcome to ElectricMark!
+
+The [Electron](http://electron.atom.io) + [Markdown](http://daringfireball.net/projects/markdown/) editor.</div>
+		</div>
+		<div id="result"></div>
+		<div id="footer"><button id="file-name-button" title="" class="form-control small text-muted"></button></div>
+		<script>window.$ = window.jQuery = require.main.require('./bower_components/jquery/dist/jquery.js');</script>
+		<script src="./bower_components/ace-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+		<script>require('./index.js');</script>
+    </body>
+</html>

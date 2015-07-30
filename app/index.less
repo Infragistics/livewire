@@ -1,0 +1,51 @@
+@editor-width: 49%;
+@editor-split: @editor-width + 1%;
+@footer-height: 40px;
+@gray-light: #eee;
+@gray-medium: #ccc;
+@editor-top: 20px;
+
+#editor,
+#result {
+    position: absolute;
+    bottom: @footer-height;
+    padding: 10px;
+}
+
+#editor { 
+    left: 10px;
+    border-right: solid 1px @gray-light;
+    top: @editor-top + 30px;
+    width: @editor-width; 
+}
+
+#result {
+    top: @editor-top;
+    left: @editor-split;
+    padding-top: 0px; 
+    overflow: auto;
+}
+
+#footer {
+    position: absolute;
+    bottom:0;
+    left:0;
+    right:0;
+    height:@footer-height;
+    padding:10px;
+    border-top: solid 1px @gray-light;
+    color: @gray-medium;
+    
+    &:hover {
+        background-color: @gray-light;
+    }
+}
+
+#file-name-button {
+    border: 0;
+    box-shadow: none;
+    padding: 0;
+    height: auto;
+    color: #999;
+    background-color: transparent;
+}

@@ -1,0 +1,18 @@
+{
+  "name": "electric-mark-renderer",
+  "version": "0.0.1",
+  "description": "",
+  "main": "../index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "markdown",
+    "electron"
+  ],
+  "author": "Craig Shoemaker <craig@craigshoemaker.net>",
+  "license": "MIT",
+  "dependencies": {
+    "marked": "^0.3.4"
+  }
+}

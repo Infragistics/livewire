@@ -1,0 +1,27 @@
+{
+  "name": "electric-mark",
+  "main": "index.js",
+  "version": "0.0.1",
+  "authors": [
+    "Craig Shoemaker <craig@craigshoemaker.net>"
+  ],
+  "description": "Electron Markdown editor",
+  "keywords": [
+    "electron",
+    "markdown"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ace-min-noconflict": "~1.1.9",
+    "bootstrap": "~3.3.5",
+    "font-awesome": "~4.4.0",
+    "postal.js": "~1.0.6"
+  }
+}
