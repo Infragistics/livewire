@@ -4,7 +4,7 @@ ElectricMark is a sample application Markdown editor written in [Electron](https
 ## Setup & Running the App
 Clone this repository:
 
-    $ git clone URL
+    $ git clone https://github.com/craigshoemaker/electric-mark.git
     
 Install the node dependencies:
 
