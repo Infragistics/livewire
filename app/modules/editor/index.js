@@ -39,11 +39,9 @@
   session.setMode('ace/mode/markdown');
   session.setUseWrapMode(true);
 
-  var clipboard = require('./clipboard.js');
-  clipboard.init(editor);
-  
-  var menuActions = require('./persistence.js');
-  menuActions.init(editor);
+  require('./clipboard.js').init(editor);
+  require('./persistence.js').init(editor);
+  require('./keyboard-shortcuts.js').init(editor);
 
   var convertToHTML = function () {
     var html = marked(editor.getValue());
