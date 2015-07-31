@@ -1,7 +1,14 @@
 {
-	"bold": 	{ "left" : "**",	"right" : "**",		"cursorOffset": 0 },
-	"italic":	{ "left" : "*",		"right" : "*",		"cursorOffset": 0 },
-	"image":	{ "left" : "![",	"right" : "]()",	"cursorOffset": 1 },
-	"link":		{ "left" : "[",		"right" : "]()",	"cursorOffset": 1 },
-	"code":		{ "left" : "`",		"right" : "`",		"cursorOffset": 0 }	
+	"bold": 		{ "left" : "**", "right" : "**", "cursorOffset": 0 },
+	"italic":		{ "left" : "*", "right" : "*", "cursorOffset": 0 },
+	"image":		{ "left" : "![", "right" : "]()", "cursorOffset": 1 },
+	"link":			{ "left" : "[", "right" : "]()", "cursorOffset": 1 },
+	"code":			{ "left" : "`", "right" : "`", "cursorOffset": 0 },	
+	"h1":			{ "left" : "# ", "right" : "", "cursorOffset": 0 },
+	"h2":			{ "left" : "## ", "right" : "", "cursorOffset": 0 },
+	"h3":			{ "left" : "### ", "right" : "", "cursorOffset": 0 },
+	"quote":		{ "left" : "> ", "right" : "", "cursorOffset": 0 },
+	"ordered":		{ "left" : "1. ", "right" : "", "cursorOffset": 0 },
+	"unordered":	{ "left" : "-  ", "right" : "", "cursorOffset": 0 },
+	"br":			{ "left" : "----------", "right" : "", "cursorOffset": 0 }
 }
