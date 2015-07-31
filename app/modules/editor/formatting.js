@@ -6,7 +6,7 @@
 	
 	var path = require('path');
 	
-	var grammar = require(path.resolve(__dirname, '../grammars')).get('markdown');
+	var formatter = require(path.resolve(__dirname, '../formats')).get('markdown');
 	
 	var wrapSelectedText = function(format){
 		var range = editor.getSelectionRange();
