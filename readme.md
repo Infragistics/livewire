@@ -7,7 +7,7 @@ A [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-ma
 ## Features
 1. **Easy to find files**: Once you save your file, the name appears in the bar at the bottom of the window. If you click on the bar an Explorer/Finder window will open with the file selected.
 
-2. **Global Shortcut**: For an easy way to return back to ElectricText, just press `CTRL + F12` (or `CMD + F12` on a Mac) to bring the ElectricMark window to focus and on top of all windows. 
+2. **Global Shortcut**: For an easy way to return back to ElectricText, just press `CTRL + F12` (or `CMD + F12` on a Mac) to bring the ElectricText window to focus and on top of all windows. 
 
 3. **Distraction-Free Writing**: You can toggle full screen mode by pressing `CTRL + SHIFT + F` and toggle auto-hide of the menu by pressing `CTRL + SHIFT + H`.
 
