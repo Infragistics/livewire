@@ -7,6 +7,11 @@
   var path = require('path');
   var messenger = require(path.resolve(__dirname, '../messenger'));
   
+  require(path.resolve(__dirname, './file.js'));
+  require(path.resolve(__dirname, './view.js'));
+  require(path.resolve(__dirname, './help.js'));
+  require(path.resolve(__dirname, './context.js'));
+  
   var handlers = {
     
     // File 
