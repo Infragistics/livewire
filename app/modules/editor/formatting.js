@@ -27,7 +27,7 @@
 			name: 'bold',
 			bindKey: { win: 'Ctrl-B', mac: 'Command-B' },
 			exec: function (e) {
-				wrapSelectedText(grammar.bold);
+				wrapSelectedText(formatter.bold);
 			}
 		});
 		
@@ -35,7 +35,7 @@
 			name: 'italic',
 			bindKey: { win: 'Ctrl-I', mac: 'Command-I' },
 			exec: function (e) {
-				wrapSelectedText(grammar.italic);
+				wrapSelectedText(formatter.italic);
 			}
 		});
 		
@@ -43,7 +43,7 @@
 			name: 'code',
 			bindKey: { win: 'Ctrl-D', mac: 'Command-D' },
 			exec: function (e) {
-				wrapSelectedText(grammar.code);
+				wrapSelectedText(formatter.code);
 			}
 		});
 		
@@ -51,7 +51,7 @@
 			name: 'link',
 			bindKey: { win: 'Ctrl-K', mac: 'Command-K' },
 			exec: function (e) {
-				wrapSelectedText(grammar.link);
+				wrapSelectedText(formatter.link);
 			}
 		});
 		
@@ -59,7 +59,7 @@
 			name: 'image',
 			bindKey: { win: 'Ctrl-Shift-I', mac: 'Command-Shift-I' },
 			exec: function (e) {
-				wrapSelectedText(grammar.image);
+				wrapSelectedText(formatter.image);
 			}
 		});
 	};
