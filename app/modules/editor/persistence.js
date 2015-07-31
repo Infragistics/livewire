@@ -58,7 +58,8 @@
 
       var content = editor.getValue();
 
-      dialogs.saveFile(content, options, 'md').then(function(filePath){
+      dialogs.saveFile(content, options, 'md').then(function(newFilePath){
+        filePath = newFilePath;
         messenger.publish.file('file.pathInfo', {path: filePath});
         messenger.publish.text('rerender');
       });
