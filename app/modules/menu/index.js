@@ -45,7 +45,7 @@
       label: 'View',
       submenu: [
         { label: 'Reload',                accelerator: 'CmdOrCtrl+R',       click: handlers.reload        },
-        { label: 'Toggle DevTools',       accelerator: 'CmdOrCtrl+Shift+I', click: handlers.devTools      },
+        { label: 'Toggle DevTools',       accelerator: 'CmdOrCtrl+Shift+T', click: handlers.devTools      },
         { label: 'Toggle Full Screen',    accelerator: 'CmdOrCtrl+Shift+F', click: handlers.fullScreen    },
         { label: 'Toggle Auto Hide Menu', accelerator: 'CmdOrCtrl+Shift+H', click: handlers.autoHideMenu  }
       ]
