@@ -1,0 +1,7 @@
+{
+	"bold": 	{ "left" : "**",	"right" : "**",		"cursorOffset": 0 },
+	"italic":	{ "left" : "*",		"right" : "*",		"cursorOffset": 0 },
+	"image":	{ "left" : "![",	"right" : "]()",	"cursorOffset": 1 },
+	"link":		{ "left" : "[",		"right" : "]()",	"cursorOffset": 1 },
+	"code":		{ "left" : "`",		"right" : "`",		"cursorOffset": 0 }	
+}
