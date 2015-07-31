@@ -17,7 +17,7 @@
   };
   
   renderer.image = function(href, title, text){
-    var value = '<span>[' +  href +  ']</span>';
+    var value = '<span>[image: ' +  href +  ']</span>';
     
     if(basePath.length > 0){
       value = '<img ' + 
