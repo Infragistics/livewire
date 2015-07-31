@@ -11,10 +11,14 @@
   width: 49%;
 }
 #result {
-  top: 20px;
+  top: 50px;
   left: 50%;
   padding-top: 0px;
   overflow: auto;
+  width: 50%;
+}
+#result h1:first-child {
+  margin-top: 0;
 }
 #footer {
   position: absolute;

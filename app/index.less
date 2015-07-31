@@ -1,9 +1,10 @@
 @editor-width: 49%;
 @editor-split: @editor-width + 1%;
+@result-width: 100% - @editor-split;
 @footer-height: 40px;
 @gray-light: #eee;
 @gray-medium: #ccc;
-@editor-top: 20px;
+@editor-top: 50px;
 
 #editor,
 #result {
@@ -15,7 +16,7 @@
 #editor { 
     left: 10px;
     border-right: solid 1px @gray-light;
-    top: @editor-top + 30px;
+    top: @editor-top;
     width: @editor-width; 
 }
 
@@ -24,6 +25,11 @@
     left: @editor-split;
     padding-top: 0px; 
     overflow: auto;
+    width: @result-width;
+    
+    h1:first-child {
+        margin-top:0;
+    }
 }
 
 #footer {
