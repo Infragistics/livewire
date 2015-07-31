@@ -1,13 +1,26 @@
+/// <reference path="../../../typings/jquery/jquery.d.ts"/>
 /* global ace */
 
-(function (ace, module) {
+(function ($, ace, module) {
 
   'use strict';
 
-  var marked = require('marked');
   var editor;
   var session;
   var $result = $('#result');
+  
+  var marked = require('marked');
+  var renderer = new marked.Renderer();
+  
+  renderer.table = function(header, body){
+    return '<table class="table table-striped">\n' + header + '\n' + body + '\n</table>'; 
+  };
+  
+  marked.setOptions({
+    renderer: renderer,
+    gfm: true,
+    tables: true
+  });
 
   editor = ace.edit('editor');
   editor.setOptions({
@@ -41,4 +54,4 @@
 
   editor.on('change', convertToHTML);
 
-} (ace, module.exports));
+} ($, ace, module.exports));
