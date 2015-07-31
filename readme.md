@@ -2,6 +2,8 @@
 
 A [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/) editor built with [Electron](electron.atom.io).
 
+![](screenshot.png)
+
 ## Features
 1. **Easy to find files**: Once you save your file, the name appears in the bar at the bottom of the window. If you click on the bar an Explorer/Finder window will open with the file selected.
 
