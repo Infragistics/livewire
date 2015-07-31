@@ -1,11 +1,11 @@
-# ElectricMark
+# ElectricText
 
 A [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/) editor built with [Electron](electron.atom.io).
 
 ## Features
 1. **Easy to find files**: Once you save your file, the name appears in the bar at the bottom of the window. If you click on the bar an Explorer/Finder window will open with the file selected.
 
-2. **Global Shortcut**: For an easy way to return back to ElectricMark, just press `CTRL + F12` (or `CMD + F12` on a Mac) to bring the ElectricMark window to focus and on top of all windows. 
+2. **Global Shortcut**: For an easy way to return back to ElectricText, just press `CTRL + F12` (or `CMD + F12` on a Mac) to bring the ElectricMark window to focus and on top of all windows. 
 
 3. **Distraction-Free Writing**: You can toggle full screen mode by pressing `CTRL + SHIFT + F` and toggle auto-hide of the menu by pressing `CTRL + SHIFT + H`.
 
@@ -14,7 +14,7 @@ There are no installers available at the moment, so for now you can get the code
 
 Clone this repository:
 
-    $ git clone https://github.com/craigshoemaker/electricmark.git
+    $ git clone https://github.com/craigshoemaker/electrictext.git
     
 Install the node dependencies:
 

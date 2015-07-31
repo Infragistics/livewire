@@ -5,13 +5,14 @@
   var path = require('path');
   var messenger = require(path.resolve(__dirname, '../messenger'));
   var shell = require('shell');
+  var config = require(path.resolve(__dirname, '../config')).get();
 
   var handlers = {
     issues: function () { 
-      shell.openExternal('https://github.com/craigshoemaker/electric-mark/issues');
+      shell.openExternal(config.urls.repository + '/issues');
     },
     about: function () {
-      shell.openExternal('https://github.com/craigshoemaker/electric-mark');
+      shell.openExternal(config.urls.repository);
     }
   };
 
