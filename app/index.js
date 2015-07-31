@@ -7,6 +7,7 @@
   require.main.require('./modules/menu/view.js');
   require.main.require('./modules/menu/help.js');
   require.main.require('./modules/menu/context.js');
+  require.main.require('./modules/results');
   require.main.require('./modules/editor');
   require.main.require('./modules/footer');
   

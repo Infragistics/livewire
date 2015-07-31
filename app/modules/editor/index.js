@@ -1,45 +1,16 @@
 /// <reference path="../../../typings/jquery/jquery.d.ts"/>
 /* global ace */
 
-(function ($, ace, module) {
+(function (ace, module) {
 
   'use strict';
 
   var editor;
   var session;
-  var $result = $('#result');
-  
-  var marked = require('marked');
-  var renderer = new marked.Renderer();
   
   var path = require('path');
   var messenger = require(path.resolve(__dirname, '../messenger'));
   
-  renderer.table = function(header, body){
-    return '<table class="table table-striped">\n' + header + '\n' + body + '\n</table>'; 
-  };
-  
-  var basePath = '';
-  
-  messenger.subscribe.file('file.pathInfo', function (data, envelope) {
-    basePath = path.dirname(data.path);
-  });
-  
-  renderer.image = function(href, title, text){
-    return '<img ' + 
-                'src="' + path.join(basePath, href) + '" ' + 
-                ((title) ? 'title="' +  title + '" ' : '') + 
-                'data-href="' + href + '" ' + 
-                ((text) ? 'alt="' + text + '"' : '') + 
-                ' />'; 
-  };
-  
-  marked.setOptions({
-    renderer: renderer,
-    gfm: true,
-    tables: true
-  });
-
   editor = ace.edit('editor');
   editor.setOptions({
     fontSize: '18px',
@@ -49,8 +20,7 @@
     showGutter: false
   });
   
-  // required by ace to suppress
-  // a deprication message
+  // required by ace to suppress a deprication message
   editor.$blockScrolling = Infinity;
 
   session = editor.getSession();
@@ -61,13 +31,12 @@
   require('./persistence.js').init(editor);
   require('./formatting.js').init(editor);
 
-  var convertToHTML = function () {
-    var html = marked(editor.getValue());
-    $result.html(html);
+  var onChange = function(){
+    messenger.publish.text('change', { source: editor.getValue() });
   };
+  
+  onChange();
 
-  convertToHTML();
+  editor.on('change', onChange);
 
-  editor.on('change', convertToHTML);
-
-} ($, ace, module.exports));
+} (ace, module.exports));
