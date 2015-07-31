@@ -13,7 +13,7 @@ A [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-ma
 
 ## Formatting Shortcuts
 Description | Shortcut
---| ---|
+---| ---|
 **Bold** | CTRL + B
 *Italic* | CTRL + I
 [Link]() | CTRL + K
