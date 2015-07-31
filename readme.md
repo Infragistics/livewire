@@ -11,6 +11,23 @@ A [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-ma
 
 3. **Distraction-Free Writing**: You can toggle full screen mode by pressing `CTRL + SHIFT + F` and toggle auto-hide of the menu by pressing `CTRL + SHIFT + H`.
 
+## Formatting Shortcuts
+Description | Shortcut
+--| ---|
+**Bold** | CTRL + B
+*Italic* | CTRL + I
+[Link]() | CTRL + K
+`Code` | CTRL + D
+Heading 1 | CTRL + 1
+Heading 2 | CTRL + 2
+Heading 3 | CTRL + 3
+Quote | CTRL + '
+Unordered list item | CTRL + .
+Ordered list item | CTRL + ,
+Horizontal Rule | CTRL + H
+
+**Note:** Replace `CTRL` for `CMD` on a Mac.
+
 ## Running the App
 There are no installers available at the moment, so for now you can get the code directly from GitHub and run from there. 
 

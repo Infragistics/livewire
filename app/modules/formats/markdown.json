@@ -10,5 +10,5 @@
 	"quote":		{ "left" : "> ", "right" : "", "cursorOffset": 0 },
 	"ordered":		{ "left" : "1. ", "right" : "", "cursorOffset": 0 },
 	"unordered":	{ "left" : "-  ", "right" : "", "cursorOffset": 0 },
-	"br":			{ "left" : "----------", "right" : "", "cursorOffset": 0 }
+	"hr":			{ "left" : "----------", "right" : "", "cursorOffset": 0 }
 }

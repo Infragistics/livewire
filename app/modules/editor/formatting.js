@@ -18,50 +18,35 @@
 			editor.clearSelection();
 		}
 	};
+	
+	var buildCommand = function(name, shortcut){
+		return {
+			name: name,
+			bindKey: { 
+				win: shortcut.replace(/Command/, 'Ctrl'), 
+				mac: shortcut.replace(/Ctrl/, 'Command') },
+			exec: function(){
+				wrapSelectedText(formatter[name]);
+			}
+		}
+	};
 
 	module.init = function (editorInstance) {
 		
 		editor = editorInstance;
-
-		editor.commands.addCommand({
-			name: 'bold',
-			bindKey: { win: 'Ctrl-B', mac: 'Command-B' },
-			exec: function (e) {
-				wrapSelectedText(formatter.bold);
-			}
-		});
 		
-		editor.commands.addCommand({
-			name: 'italic',
-			bindKey: { win: 'Ctrl-I', mac: 'Command-I' },
-			exec: function (e) {
-				wrapSelectedText(formatter.italic);
-			}
-		});
-		
-		editor.commands.addCommand({
-			name: 'code',
-			bindKey: { win: 'Ctrl-D', mac: 'Command-D' },
-			exec: function (e) {
-				wrapSelectedText(formatter.code);
-			}
-		});
-		
-		editor.commands.addCommand({
-			name: 'link',
-			bindKey: { win: 'Ctrl-K', mac: 'Command-K' },
-			exec: function (e) {
-				wrapSelectedText(formatter.link);
-			}
-		});
-		
-		editor.commands.addCommand({
-			name: 'image',
-			bindKey: { win: 'Ctrl-Shift-I', mac: 'Command-Shift-I' },
-			exec: function (e) {
-				wrapSelectedText(formatter.image);
-			}
-		});
+		editor.commands.addCommand(buildCommand('bold', 'Ctrl-B'));
+		editor.commands.addCommand(buildCommand('italic', 'Ctrl-I'));
+		editor.commands.addCommand(buildCommand('code', 'Ctrl-D'));
+		editor.commands.addCommand(buildCommand('link', 'Ctrl-K'));
+		editor.commands.addCommand(buildCommand('image', 'Ctrl-Shift-I'));
+		editor.commands.addCommand(buildCommand('h1', 'Ctrl-1'));
+		editor.commands.addCommand(buildCommand('h2', 'Ctrl-2'));
+		editor.commands.addCommand(buildCommand('h2', 'Ctrl-3'));
+		editor.commands.addCommand(buildCommand('quote', 'Ctrl-\''));
+		editor.commands.addCommand(buildCommand('unordered', 'Ctrl-.'));
+		editor.commands.addCommand(buildCommand('ordered', 'Ctrl-,'));
+		editor.commands.addCommand(buildCommand('hr', 'Ctrl-H'));
 	};
 
 } (module.exports));
