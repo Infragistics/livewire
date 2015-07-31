@@ -9,9 +9,17 @@
   var path = require('path');
   var messenger = require(path.resolve(__dirname, '../messenger'));
   var renderer = require(path.resolve(__dirname, './markdown.js')).get();
+  var source = '';
+  var html = '';
    
   messenger.subscribe.text('change', function (data, envelope) {
-    var html = renderer(data.source);
+    source = data.source;
+    html = renderer(source);
+    $result.html(html);
+  });
+  
+  messenger.subscribe.text('rerender', function (data, envelope) {
+    html = renderer(source);
     $result.html(html);
   });
 

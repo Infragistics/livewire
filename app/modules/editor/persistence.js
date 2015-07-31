@@ -43,7 +43,7 @@
     save: function (data, envelope) {
       if (filePath.length > 0) {
         fs.writeFile(filePath, editor.getValue(), { encoding: 'utf8' }, function (err) {
-          // todo: handle error 
+          // todo: handle error
         });
       } else {
         menuHandlers.saveAs(data, envelope);
@@ -60,6 +60,7 @@
 
       dialogs.saveFile(content, options, 'md').then(function(filePath){
         messenger.publish.file('file.pathInfo', {path: filePath});
+        messenger.publish.text('rerender');
       });
     }
   };

@@ -17,12 +17,18 @@
   };
   
   renderer.image = function(href, title, text){
-    return '<img ' + 
+    var value = '<span>[' +  href +  ']</span>';
+    
+    if(basePath.length > 0){
+      value = '<img ' + 
                 'src="' + path.join(basePath, href) + '" ' + 
                 ((title) ? 'title="' +  title + '" ' : '') + 
                 'data-href="' + href + '" ' + 
                 ((text) ? 'alt="' + text + '"' : '') + 
-                ' />'; 
+                ' />';  
+    }
+    
+    return value;
   };
   
   marked.setOptions({
