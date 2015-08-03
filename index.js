@@ -19,7 +19,7 @@
 
 	mainWindow.show();
   
-    mainWindow.openDevTools();
+    //mainWindow.openDevTools();
 
     mainWindow.loadUrl('file://' + __dirname + '/app/index.html');
     
