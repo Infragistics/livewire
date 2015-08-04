@@ -99,16 +99,20 @@
 		}
 
 		var callback = function (filePath) {
-			if(!_.isUndefined(defaultExtension)){
-				filePath = (_.endsWith(filePath, defaultExtension))? filePath : filePath + '.' + defaultExtension;
+			if (!_.isUndefined(filePath)) {
+
+				if (!_.isUndefined(defaultExtension)) {
+					filePath = (_.endsWith(filePath, defaultExtension)) ? filePath : filePath + '.' + defaultExtension;
+				}
+
+				fs.writeFile(filePath, content, 'utf8', function (err) {
+					if (err) {
+						deferred.reject(err);
+					} else {
+						deferred.resolve(filePath);
+					}
+				});
 			}
-			fs.writeFile(filePath, content, 'utf8', function(err){
-				if(err){
-					deferred.reject(err);
-				} else {
-					deferred.resolve(filePath);
-				}			
-			});
 		};
 
 		dialog.showSaveDialog(dialogOptions, callback);

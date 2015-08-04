@@ -1,6 +1,6 @@
 # ElectricText
 
-A [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/) editor built with [Electron](electron.atom.io).
+A [AsciiDoc](http://www.methods.co.nz/asciidoc/) and [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/) editor built with [Electron](electron.atom.io).
 
 ![](screenshot.png)
 

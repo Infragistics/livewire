@@ -15,28 +15,35 @@
   var handlers = {
     
     // File 
-    newFile:      function(){ messenger.publish.menu('file.new') },
-    open:         function(){ messenger.publish.menu('file.open'); },
-    save:         function(){ messenger.publish.menu('file.save'); },
-    saveAs:       function(){ messenger.publish.menu('file.saveAs'); },
-    quit:         function(){ messenger.publish.menu('file.quit'); },
+    newMarkdownFile: function(){ messenger.publish.menu('file.new', {format:'markdown'}) },
+    newAsciiDocFile: function(){ messenger.publish.menu('file.new', {format:'asciidoc'}) },
+    open: function(){ messenger.publish.menu('file.open'); },
+    save: function(){ messenger.publish.menu('file.save'); },
+    saveAs: function(){ messenger.publish.menu('file.saveAs'); },
+    quit: function(){ messenger.publish.menu('file.quit'); },
     
     // View
-    reload:       function(){ messenger.publish.menu('view.reload'); },
-    devTools:     function(){ messenger.publish.menu('view.devToolsToggle'); },
-    fullScreen:   function(){ messenger.publish.menu('view.fullScreenToggle'); },
+    reload: function(){ messenger.publish.menu('view.reload'); },
+    devTools: function(){ messenger.publish.menu('view.devToolsToggle'); },
+    fullScreen: function(){ messenger.publish.menu('view.fullScreenToggle'); },
     autoHideMenu: function(){ messenger.publish.menu('view.autoHideMenu'); },
     
     // Help
-    issues:       function(){ messenger.publish.menu('help.issues'); },
-    about:        function(){ messenger.publish.menu('help.about'); }
+    issues: function(){ messenger.publish.menu('help.issues'); },
+    about: function(){ messenger.publish.menu('help.about'); }
   }
   
   var template = [
     {
       label: 'File',
       submenu: [
-        { label: 'New',     accelerator: 'CmdOrCtrl+N',       click: handlers.newFile },
+        {
+          label: 'New',
+          submenu :[
+            { label: 'AsciiDoc', accelerator: 'CmdOrCtrl+N', click: handlers.newAsciiDocFile },  
+            { label: 'Markdown', accelerator: 'CmdOrCtrl+Shift+N', click: handlers.newMarkdownFile },  
+          ]
+        },
         { type: 'separator' },
         { label: 'Open',    accelerator: 'CmdOrCtrl+O',       click: handlers.open    },
         { type: 'separator' },

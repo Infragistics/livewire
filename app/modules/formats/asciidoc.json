@@ -1,0 +1,20 @@
+{
+	"name": "AsciiDoc",
+	"defaultContent": "= AsciiDoc\n\n",
+	"extensions": ["adoc", "asciidoc"],
+	"defaultExtension": "adoc",
+	"shortcuts": {
+		"bold": 		{ "left" : "*", "right" : "*", "cursorOffset": 0 },
+		"italic":		{ "left" : "_", "right" : "_", "cursorOffset": 0 },
+		"image":		{ "left" : "image:[alt=\"", "right" : "\"]", "cursorOffset": 2 },
+		"link":			{ "left" : "link:[", "right" : "]", "cursorOffset": 2 },
+		"code":			{ "left" : "`", "right" : "`", "cursorOffset": 0 },	
+		"h1":			{ "left" : "= ", "right" : "", "cursorOffset": 0 },
+		"h2":			{ "left" : "== ", "right" : "", "cursorOffset": 0 },
+		"h3":			{ "left" : "=== ", "right" : "", "cursorOffset": 0 },
+		"quote":		{ "left" : "+\n[quote,\"\",\"\"]", "right" : "", "cursorOffset": 0 },
+		"ordered":		{ "left" : ". ", "right" : "", "cursorOffset": 0 },
+		"unordered":	{ "left" : "*  ", "right" : "", "cursorOffset": 0 },
+		"hr":			{ "left" : "'''", "right" : "", "cursorOffset": 0 }
+	}
+}

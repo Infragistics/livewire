@@ -8,7 +8,7 @@
 	var config = null;
 	
 	module.get = function(){
-		
+
 		if(config === null){
 			var fullPath = path.resolve(__dirname, '../../config.json');
 			var text = fs.readFileSync(fullPath, {encoding: 'utf8'});
