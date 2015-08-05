@@ -84,13 +84,13 @@
       };
 
       var content = editor.getValue();
+      var defaultExtension = '';
       
-      // todo - change this
-      if(formatter === null){
-        formatter = formats.get('asciidoc');
+      if(formatter !== null){
+        defaultExtension = formatter.defaultExtension;
       }
 
-      dialogs.saveFile(content, options, formatter.defaultExtension).then(function(newFilePath){
+      dialogs.saveFile(content, options, defaultExtension).then(function(newFilePath){
         filePath = newFilePath;
         basePath = path.dirname(filePath);
         messenger.publish.file('file.pathInfo', {path: filePath});
@@ -109,8 +109,10 @@
       var html = $result.html();
       html = html.replace(exp, 'src="');
       html = '<!doctype html>\n<body>\n' + html + '</body>\n</html>';
-      // todo: handle error
-      dialogs.saveFile(html, options, 'html');
+      
+      dialogs.saveFile(html, options, 'html').catch(function(){
+        // todo: handle error
+      });
     }
   };
   
