@@ -11,7 +11,8 @@
 		menu:			'menu',
 		contextMenu:	'contextMenu',
 		file: 			'file',
-		text: 			'text'
+		text: 			'text',
+		format: 		'format'
 	};
 	
 	var publish = function(channel, topic, data){
@@ -26,14 +27,16 @@
 		menu: 			function(topic, data){ publish(channels.menu, topic, data); },
 		contextMenu:	function(topic, data){ publish(channels.contextMenu, topic, data); },
 		file:			function(topic, data){ publish(channels.file, topic, data); },
-		text:			function(topic, data){ publish(channels.text, topic, data); }
+		text:			function(topic, data){ publish(channels.text, topic, data); },
+		format:			function(topic, data){ publish(channels.format, topic, data); }
 	};	
 	
 	module.subscribe = {
 		menu:			function(topic, callback){ subscribe(channels.menu, topic, callback); },
 		contextMenu:	function(topic, callback){ subscribe(channels.contextMenu, topic, callback); },
 		file:			function(topic, callback){ subscribe(channels.file, topic, callback); },
-		text:			function(topic, callback){ subscribe(channels.text, topic, callback); }
+		text:			function(topic, callback){ subscribe(channels.text, topic, callback); },
+		format:			function(topic, callback){ subscribe(channels.format, topic, callback); }
 	};
 	
 }(module.exports));

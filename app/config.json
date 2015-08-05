@@ -1,5 +1,6 @@
 {
 	"urls": {
 		"repository" : "https://github.com/craigshoemaker/electrictext"
-	}
+	},
+	"defaultFormat": "asciidoc"
 }

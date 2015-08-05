@@ -1,6 +1,6 @@
 # ElectricText
 
-A [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/) editor built with [Electron](electron.atom.io).
+A [AsciiDoc](http://www.methods.co.nz/asciidoc/) and [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/) editor built with [Electron](electron.atom.io).
 
 ![](screenshot.png)
 
@@ -9,7 +9,7 @@ A [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-ma
 
 2. **Global Shortcut**: For an easy way to return back to ElectricText, just press `CTRL + F12` (or `CMD + F12` on a Mac) to bring the ElectricText window to focus and on top of all windows. 
 
-3. **Distraction-Free Writing**: You can toggle full screen mode by pressing `CTRL + SHIFT + F` and toggle auto-hide of the menu by pressing `CTRL + SHIFT + H`.
+3. **Distraction-Free Writing**: You can toggle full screen mode by pressing `CTRL + SHIFT + F` and toggle auto-hide of the menu by pressing `CTRL + SHIFT + M`.
 
 ## Formatting Shortcuts
 Description | Shortcut

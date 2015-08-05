@@ -5,8 +5,15 @@
 	var editor = null;
 	
 	var path = require('path');
+	var messenger = require(path.resolve(__dirname, '../messenger'));
 	
-	var formatter = require(path.resolve(__dirname, '../formats')).get('markdown');
+	var config = require(path.resolve(__dirname, '../config')).get();
+
+	var formatter = require(path.resolve(__dirname, '../formats')).get(config.defaultFormat);
+	
+	messenger.subscribe.format('selectedFormat', function(data, envelope){
+		formatter = envelope.data;
+	});
 	
 	var wrapSelectedText = function(format){
 		var range = editor.getSelectionRange();
@@ -26,7 +33,7 @@
 				win: shortcut.replace(/Command/, 'Ctrl'), 
 				mac: shortcut.replace(/Ctrl/, 'Command') },
 			exec: function(){
-				wrapSelectedText(formatter[name]);
+				wrapSelectedText(formatter.shortcuts[name]);
 			}
 		}
 	};

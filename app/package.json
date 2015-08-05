@@ -4,7 +4,8 @@
   "description": "",
   "main": "../index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "echo Do not run \"npm start\" from this location. Move up to the root directory first."
   },
   "keywords": [
     "markdown",
@@ -13,6 +14,7 @@
   "author": "Craig Shoemaker <craig@craigshoemaker.net>",
   "license": "MIT",
   "dependencies": {
+    "asciidoctor.js": "^1.5.2",
     "marked": "^0.3.4"
   }
 }
