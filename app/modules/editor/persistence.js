@@ -1,4 +1,4 @@
-(function (module) {
+(function ($, module) {
 
   'use strict';
 
@@ -9,10 +9,14 @@
   var messenger = require(path.resolve(__dirname, '../messenger'));
   
   var editor;
+  
   var filePath = '';
+  var basePath = '';
   
   var formats = require(path.resolve(__dirname, '../formats'));
   var formatter = null;
+  
+  var $result = $('#result');
   
   module.init = function(editorInstance){
     editor = editorInstance;
@@ -21,6 +25,7 @@
   messenger.subscribe.file('file.pathInfo', function (data, envelope) {
     if (data.isNewFile) {
       filePath = '';
+      basePath = '';
     }
   });
 
@@ -41,18 +46,24 @@
         filters: []
       };
 
-      formats.getAll(function (formats) {
+      var supportedFormats = formats.getAll();
+      
+      supportedFormats.forEach(function (format) {
+        options.filters.push({ name: format.name, extensions: format.extensions });
+      });
 
-        formats.forEach(function (format) {
-          options.filters.push({ name: format.name, extensions: format.extensions });
-        });
-
-        dialogs.openFile(options).then(function (response) {
-          filePath = response.path;
-          messenger.publish.file('file.pathInfo', { path: response.path });
-          editor.setValue(response.content);
-          editor.clearSelection();
-        });
+      dialogs.openFile(options).then(function (response) {
+        filePath = response.path;
+        basePath = path.dirname(filePath);
+                
+        var data = { path: response.path, ext: path.extname(response.path).replace('.','') };
+        formatter = formats.getByFileExtension(data.ext);
+        messenger.publish.format('selectedFormat', formatter);
+        
+        messenger.publish.file('file.pathInfo', data);
+        
+        editor.setValue(response.content);
+        editor.clearSelection();
       });
       
     },
@@ -81,9 +92,25 @@
 
       dialogs.saveFile(content, options, formatter.defaultExtension).then(function(newFilePath){
         filePath = newFilePath;
+        basePath = path.dirname(filePath);
         messenger.publish.file('file.pathInfo', {path: filePath});
         messenger.publish.text('rerender');
       });
+    },
+    
+    saveAsHtml: function (data, envelope) {
+      var options = {
+        title: 'Save As HTML'
+      };
+      
+      // special characters in regex are craaaaazy
+      var exp = new RegExp('src="' + basePath.replace(/\\/g, '\\\\') + '\\\\', 'gi');
+      
+      var html = $result.html();
+      html = html.replace(exp, 'src="');
+      html = '<!doctype html>\n<body>\n' + html + '</body>\n</html>';
+      // todo: handle error
+      dialogs.saveFile(html, options, 'html');
     }
   };
   
@@ -91,5 +118,6 @@
   messenger.subscribe.menu('file.open', menuHandlers.open);
   messenger.subscribe.menu('file.save', menuHandlers.save);
   messenger.subscribe.menu('file.saveAs', menuHandlers.saveAs);
+  messenger.subscribe.menu('file.saveAsHtml', menuHandlers.saveAsHtml);
 
-} (module.exports));
+} ($, module.exports));

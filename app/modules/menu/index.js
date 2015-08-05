@@ -20,6 +20,7 @@
     open: function(){ messenger.publish.menu('file.open'); },
     save: function(){ messenger.publish.menu('file.save'); },
     saveAs: function(){ messenger.publish.menu('file.saveAs'); },
+    saveAsHtml: function(){ messenger.publish.menu('file.saveAsHtml'); },
     quit: function(){ messenger.publish.menu('file.quit'); },
     
     // View
@@ -49,6 +50,7 @@
         { type: 'separator' },
         { label: 'Save',    accelerator: 'CmdOrCtrl+S',       click: handlers.save    },
         { label: 'Save As', accelerator: 'CmdOrCtrl+Shift+S', click: handlers.saveAs  },
+        { label: 'Save As HTML', accelerator: 'CmdOrCtrl+Shift+H', click: handlers.saveAsHtml  },
         { type: 'separator' },
         { label: 'Quit',    accelerator: 'CmdOrCtrl+Q',       click: handlers.quit    },
       ]
@@ -59,7 +61,7 @@
         { label: 'Reload',                accelerator: 'CmdOrCtrl+R',       click: handlers.reload        },
         { label: 'Toggle DevTools',       accelerator: 'CmdOrCtrl+Shift+T', click: handlers.devTools      },
         { label: 'Toggle Full Screen',    accelerator: 'CmdOrCtrl+Shift+F', click: handlers.fullScreen    },
-        { label: 'Toggle Auto Hide Menu', accelerator: 'CmdOrCtrl+Shift+H', click: handlers.autoHideMenu  }
+        { label: 'Toggle Auto Hide Menu', accelerator: 'CmdOrCtrl+Shift+M', click: handlers.autoHideMenu  }
       ]
     },
     {
