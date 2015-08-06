@@ -27,16 +27,6 @@ Clone this repository:
 Install the node dependencies:
 
     $ npm install
-   
-Install the app dependencies:
-
-    $ cd app
-    $ npm install
-    $ bower install
-    
-Return back to the main folder:
-
-    $ cd..
     
 Start the application
     

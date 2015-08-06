@@ -7,11 +7,12 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
     "release-win64": "electron-packager . Livewire --platform=win32 --arch=x64 --version=0.30.2 --out=../releases",
-    "release": "electron-packager . Livewire --platform=all --arch=all --version=0.30.2 --out=../releases"
+    "release": "electron-packager . Livewire --platform=all --arch=all --version=0.30.2 --out=../releases",
+    "postinstall" : "gulp install"
   },
-  "repository": { 
-      "type": "git",
-      "url": "https://github.com/craigshoemaker/livewire.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/craigshoemaker/livewire.git"
   },
   "keywords": [
     "markdown",
@@ -24,7 +25,8 @@
     "electron-prebuilt": "^0.30.1",
     "gulp": "^3.9.0",
     "gulp-less": "^3.0.3",
-    "i": "^0.3.3"
+    "i": "^0.3.3",
+    "shelljs": "^0.5.1"
   },
   "dependencies": {
     "lodash": "^3.10.0",
