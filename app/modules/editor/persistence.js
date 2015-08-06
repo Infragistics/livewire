@@ -5,6 +5,7 @@
   var path = require('path');
   var fs = require('fs');
   
+  var _ = require('lodash');
   var dialogs = require(path.resolve(__dirname, '../dialogs'));
   var messenger = require(path.resolve(__dirname, '../messenger'));
   
@@ -18,6 +19,9 @@
   
   var $result = $('#result');
   
+  var BOM = '\ufeff';
+  
+  
   module.init = function(editorInstance){
     editor = editorInstance;
   };
@@ -28,7 +32,7 @@
       basePath = '';
     }
   });
-
+ 
   var menuHandlers = {
 
     newFile: function (data, envelope) {
@@ -62,15 +66,23 @@
         
         messenger.publish.file('file.pathInfo', data);
         
-        editor.setValue(response.content);
+        var content = _.trimLeft(response.content, BOM);
+        
+        editor.setValue(content);
         editor.clearSelection();
       });
       
     },
 
     save: function (data, envelope) {
+      
+      var content = editor.getValue();
+      if(!_.startsWith(content, BOM)){
+        content = BOM + content;
+      }
+      
       if (filePath.length > 0) {
-        fs.writeFile(filePath, editor.getValue(), { encoding: 'utf8' }, function (err) {
+        fs.writeFile(filePath, content, { encoding: 'utf8' }, function (err) {
           // todo: handle error
         });
       } else {
@@ -82,8 +94,12 @@
       var options = {
         title: 'Save File'
       };
-
+      
       var content = editor.getValue();
+      if(!_.startsWith(content, BOM)){
+        content = BOM + content;
+      }
+
       var defaultExtension = '';
       
       if(formatter !== null){
