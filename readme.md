@@ -1,10 +1,12 @@
 # Livewire
 
-An [AsciiDoc](http://www.methods.co.nz/asciidoc/) and [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/) editor built with [Electron](electron.atom.io).
+An simple web content editor built with [Electron](electron.atom.io).
 
 ![Livewire](screenshot.png)
 
 ## Features
+1. **Muliple Formats**: Supports both [AsciiDoc](http://www.methods.co.nz/asciidoc/) and [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/)
+
 1. **Easy to find files**: Once you save your file, the name appears in the bar at the bottom of the window. If you click on the bar an Explorer/Finder window will open with the file selected.
 
 2. **Global Shortcut**: For an easy way to return back to Livewire, just press `CTRL + F12` (or `CMD + F12` on a Mac) to bring the Livewire window to focus and on top of all windows. 
@@ -13,32 +15,7 @@ An [AsciiDoc](http://www.methods.co.nz/asciidoc/) and [GitHub Flavored Markdown]
 
 4. **Save As HTML**: From the `File` menu you can select to save your current document as HTML.
 
-## Formatting Shortcuts
-Description | Shortcut
----| ---|
-**Bold** | CTRL + B
-*Italic* | CTRL + I
-[Link]() | CTRL + K
-`Code` | CTRL + D
-Heading 1 | CTRL + 1
-Heading 2 | CTRL + 2
-Heading 3 | CTRL + 3
-Quote | CTRL + '
-Unordered list item | CTRL + .
-Ordered list item | CTRL + ,
-Horizontal Rule | CTRL + H
-
-## Other Shortcuts
-Description | Shortcut
----| ---|
-Save as HTML | CTRL + SHIFT + H
-Window on Top/Focus | CTRL + SHIFT + F12
-New AsciiDoc File | CTRL + N
-New Markdown File | CTRL + SHIFT + N
-Toggle Full Screen | CTRL + SHIFT + F
-Toggle Auto Hide Menu | CTRL + SHIFT + M
-
-**Note:** Replace `CTRL` for `CMD` on a Mac.
+For more informaiton make sure to read the [wiki](wiki).
 
 ## Running the App
 There are _no installers available at the moment_, so for now you can get the code directly and run from there. 
