@@ -39,6 +39,7 @@
     onChange();
   
     editor.on('change', onChange);
+    editor.focus();
   };
   
   module.load('asciidoc');
