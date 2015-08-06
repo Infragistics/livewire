@@ -54,7 +54,7 @@
 		editor.commands.addCommand(buildCommand('image', 'Ctrl-Shift-I'));
 		editor.commands.addCommand(buildCommand('h1', 'Ctrl-1'));
 		editor.commands.addCommand(buildCommand('h2', 'Ctrl-2'));
-		editor.commands.addCommand(buildCommand('h2', 'Ctrl-3'));
+		editor.commands.addCommand(buildCommand('h3', 'Ctrl-3'));
 		editor.commands.addCommand(buildCommand('quote', 'Ctrl-\''));
 		editor.commands.addCommand(buildCommand('unordered', 'Ctrl-.'));
 		editor.commands.addCommand(buildCommand('ordered', 'Ctrl-,'));
