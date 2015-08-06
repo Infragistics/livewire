@@ -3,6 +3,7 @@
 @result-width: 100% - @editor-split;
 @footer-height: 40px;
 @gray-light: #eee;
+@gray-medium-dark: #888;
 @gray-medium: #ccc;
 @editor-top: 50px;
 
@@ -54,4 +55,33 @@
     height: auto;
     color: #999;
     background-color: transparent;
+}
+
+#formatting-toolbar{
+    top:0;
+    padding: 10px;
+    height: @editor-top - 5px;
+    width: 100%;
+    color: @gray-medium-dark;
+    border-bottom: solid 1px @gray-light;
+    
+    button {
+        background-color: transparent;
+        border: 0;
+        margin-left: 10px;
+        margin-right: 10px;
+        padding: 6px;
+    }
+    
+    button:hover {
+        background-color: @gray-light;
+    }
+    
+    .separator {
+        color:lighten(@gray-light, 1%);
+    }
+    
+    .separator:after {
+        content: "|";
+    }
 }
