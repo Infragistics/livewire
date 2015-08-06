@@ -1,13 +1,17 @@
 {
-  "name": "electric-mark",
+  "name": "livewire",
   "version": "0.0.1",
-  "description": "Electron Markdown Editor",
+  "description": "Web Content Editor",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
-    "release-win64": "electron-packager . ElectricText --platform=win32 --arch=x64 --version=0.30.2 --out=releases",
-    "release": "electron-packager . ElectricText --platform=all --arch=all --version=0.30.2 --out=releases"
+    "release-win64": "electron-packager . Livewire --platform=win32 --arch=x64 --version=0.30.2 --out=../releases",
+    "release": "electron-packager . Livewire --platform=all --arch=all --version=0.30.2 --out=../releases"
+  },
+  "repository": { 
+      "type": "git",
+      "url": "https://github.com/craigshoemaker/livewire.git"
   },
   "keywords": [
     "markdown",

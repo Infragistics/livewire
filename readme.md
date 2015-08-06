@@ -1,4 +1,4 @@
-# ElectricText
+# Livewire
 
 A [AsciiDoc](http://www.methods.co.nz/asciidoc/) and [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/) editor built with [Electron](electron.atom.io).
 
@@ -7,7 +7,7 @@ A [AsciiDoc](http://www.methods.co.nz/asciidoc/) and [GitHub Flavored Markdown](
 ## Features
 1. **Easy to find files**: Once you save your file, the name appears in the bar at the bottom of the window. If you click on the bar an Explorer/Finder window will open with the file selected.
 
-2. **Global Shortcut**: For an easy way to return back to ElectricText, just press `CTRL + F12` (or `CMD + F12` on a Mac) to bring the ElectricText window to focus and on top of all windows. 
+2. **Global Shortcut**: For an easy way to return back to Livewire, just press `CTRL + F12` (or `CMD + F12` on a Mac) to bring the Livewire window to focus and on top of all windows. 
 
 3. **Distraction-Free Writing**: You can toggle full screen mode by pressing `CTRL + SHIFT + F` and toggle auto-hide of the menu by pressing `CTRL + SHIFT + M`.
 
@@ -33,7 +33,7 @@ There are no installers available at the moment, so for now you can get the code
 
 Clone this repository:
 
-    $ git clone https://github.com/craigshoemaker/electrictext.git
+    $ git clone https://github.com/craigshoemaker/Livewire.git
     
 Install the node dependencies:
 

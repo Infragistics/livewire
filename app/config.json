@@ -1,6 +1,6 @@
 {
 	"urls": {
-		"repository" : "https://github.com/craigshoemaker/electrictext"
+		"repository" : "https://github.com/craigshoemaker/livewire"
 	},
 	"defaultFormat": "asciidoc"
 }
