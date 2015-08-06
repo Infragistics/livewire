@@ -15,7 +15,7 @@ An simple web content editor built with [Electron](electron.atom.io).
 
 4. **Save As HTML**: From the `File` menu you can select to save your current document as HTML.
 
-For more informaiton make sure to read the [wiki](wiki).
+For more informaiton make sure to read the [wiki](https://github.com/craigshoemaker/livewire/wiki).
 
 ## Running the App
 There are _no installers available at the moment_, so for now you can get the code directly and run from there. 
