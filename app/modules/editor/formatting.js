@@ -15,6 +15,11 @@
 		formatter = envelope.data;
 	});
 	
+	messenger.subscribe.format('wrapText', function(data, envelope){  
+		wrapSelectedText(formatter.shortcuts[envelope.data.shortcut]);
+		editor.focus();
+	});
+	
 	var wrapSelectedText = function(format){
 		var range = editor.getSelectionRange();
 		var selectedText = editor.session.getTextRange(range);
