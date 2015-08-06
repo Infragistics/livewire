@@ -24,7 +24,7 @@ Clone this repository:
 
     $ git clone https://github.com/craigshoemaker/Livewire.git
     
-Install the node dependencies:
+Install the dependencies:
 
     $ npm install
     
@@ -32,4 +32,4 @@ Start the application
     
     $ npm start
     
-Now you can start writing Markdown!
+Now you can start writing web content!
