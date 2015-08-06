@@ -47,6 +47,7 @@
   height: 45px;
   width: 100%;
   color: #888888;
+  min-width: 660px;
   border-bottom: solid 1px #eeeeee;
 }
 #formatting-toolbar button {
