@@ -5,7 +5,7 @@ An simple web content editor built with [Electron](electron.atom.io).
 ![Livewire](screenshot.png)
 
 ## Features
-1. **Muliple Formats**: Supports both [AsciiDoc](http://www.methods.co.nz/asciidoc/) and [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/)
+1. **Multiple Formats**: Supports both [AsciiDoc](http://www.methods.co.nz/asciidoc/) and [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/)
 
 2. **Easy to find files**: Once you save your file, the name appears in the bar at the bottom of the window. If you click on the bar an Explorer/Finder window will open with the file selected.
 
@@ -15,7 +15,7 @@ An simple web content editor built with [Electron](electron.atom.io).
 
 5. **Save As HTML**: From the `File` menu you can select to save your current document as HTML or you can use the `CTRL + SHIFT + H` shortcut.
 
-For more informaiton make sure to read the [wiki](https://github.com/craigshoemaker/livewire/wiki).
+For more information make sure to read the [wiki](https://github.com/craigshoemaker/livewire/wiki).
 
 ## Installing and Running the App
 
