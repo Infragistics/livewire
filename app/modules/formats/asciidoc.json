@@ -4,17 +4,17 @@
 	"extensions": ["adoc", "asciidoc"],
 	"defaultExtension": "adoc",
 	"shortcuts": {
-		"bold": 		{ "left" : "*", "right" : "*", "cursorOffset": 0 },
-		"italic":		{ "left" : "_", "right" : "_", "cursorOffset": 0 },
-		"image":		{ "left" : "image:[alt=\"", "right" : "\"]", "cursorOffset": 2 },
-		"link":			{ "left" : "link:[", "right" : "]", "cursorOffset": 2 },
-		"code":			{ "left" : "`", "right" : "`", "cursorOffset": 0 },	
-		"h1":			{ "left" : "= ", "right" : "", "cursorOffset": 0 },
-		"h2":			{ "left" : "== ", "right" : "", "cursorOffset": 0 },
-		"h3":			{ "left" : "=== ", "right" : "", "cursorOffset": 0 },
-		"quote":		{ "left" : "+\n[quote,\"\",\"\"]", "right" : "", "cursorOffset": 0 },
-		"ordered":		{ "left" : ". ", "right" : "", "cursorOffset": 0 },
-		"unordered":	{ "left" : "*  ", "right" : "", "cursorOffset": 0 },
-		"hr":			{ "left" : "'''", "right" : "", "cursorOffset": 0 }
+		"bold": 		{ "left" : "*", "right" : "*" },
+		"italic":		{ "left" : "_", "right" : "_" },
+		"image":		{ "left" : "image:[alt=\"", "right" : "\"]", "cursorOffset": { "value": 6, "fromLeft": true } },
+		"link":			{ "left" : "link:[", "right" : "]", "cursorOffset": { "value": 5, "fromLeft": true } },
+		"code":			{ "left" : "`", "right" : "`" },	
+		"h1":			{ "left" : "= ", "right" : "" },
+		"h2":			{ "left" : "== ", "right" : "" },
+		"h3":			{ "left" : "=== ", "right" : "" },
+		"quote":		{ "left" : "+\n[quote,\"\",\"\"]", "right" : "" },
+		"ordered":		{ "left" : ". ", "right" : "" },
+		"unordered":	{ "left" : "*  ", "right" : "" },
+		"hr":			{ "left" : "'''", "right" : "" }
 	}
 }

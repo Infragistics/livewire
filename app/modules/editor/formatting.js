@@ -6,6 +6,7 @@ var editor = null;
 
 var path = require('path');
 var messenger = require(path.resolve(__dirname, '../messenger'));
+var _ = require('lodash');
 
 var config = require(path.resolve(__dirname, '../config')).get();
 
@@ -25,8 +26,13 @@ var wrapSelectedText = function(format){
 	var selectedText = editor.session.getTextRange(range);
 	editor.getSession().replace(range, format.left + selectedText + format.right);
 	
-	if(format.cursorOffset > 0){
-		editor.getSelection().moveCursorLeft();
+	if(!_.isUndefined(format.cursorOffset)){
+		if(format.cursorOffset.fromLeft){
+			editor.getSelection().moveCursorTo(range.start.row, range.start.column + format.cursorOffset.value);
+		} else {
+			range = editor.getSelectionRange();
+			editor.getSelection().moveCursorTo(range.start.row, range.end.column - format.cursorOffset.value);			
+		}
 		editor.clearSelection();
 	}
 };
