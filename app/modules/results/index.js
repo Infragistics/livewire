@@ -1,6 +1,4 @@
-/// <reference path="../../../typings/jquery/jquery.d.ts"/>
-
-var $result = $('#result');
+var result = document.getElementById('result');
 
 var 
   path = require('path'),
@@ -18,12 +16,12 @@ messenger.subscribe.format('selectedFormat', function (data, envelope) {
 messenger.subscribe.text('change', function (data, envelope) {
   source = data.source;
   html = renderer(source);
-  $result.html(html);
+  result.innerHTML = html;
 });
 
 messenger.subscribe.text('rerender', function (data, envelope) {
   html = renderer(source);
-  $result.html(html);
+  result.innerHTML = html;
 });
 
 var openExternalLinksInBrowser = function (e) {
