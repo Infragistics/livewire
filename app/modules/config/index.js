@@ -1,23 +1,17 @@
-(function (module) {
+module = module.exports;
 
-	'use strict';
-	
-	var fs = require('fs');
-	var path = require('path');
-	
-	var config = null;
-	
-	module.get = function(){
+var fs = require('fs');
+var path = require('path');
 
-		if(config === null){
-			var fullPath = path.resolve(__dirname, '../../config.json');
-			var text = fs.readFileSync(fullPath, {encoding: 'utf8'});
-			config = JSON.parse(text);
-		}
-		
-		return config;
-		
-	};
+var config = null;
 
+module.get = function () {
 
-} (module.exports));
+	if (config === null) {
+		var fullPath = path.resolve(__dirname, '../../config.json');
+		var text = fs.readFileSync(fullPath, { encoding: 'utf8' });
+		config = JSON.parse(text);
+	}
+
+	return config;
+};

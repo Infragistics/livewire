@@ -1,41 +1,35 @@
 /// <reference path="typings/node/node.d.ts"/>
 
-(function(){
+var app = require('app');
+var BrowserWindow = require('browser-window');
+var globalShortcut = require('global-shortcut');
 
-  'use strict';
+var mainWindow;
 
-  var app = require('app');
-  var BrowserWindow = require('browser-window');
-  var globalShortcut = require('global-shortcut');
+app.on('ready', function () {
 
-  var mainWindow;
+  mainWindow = new BrowserWindow({
+    width: 1000,
+    height: 800
+  });
 
-  app.on('ready', function () {
-
-    mainWindow = new BrowserWindow({
-      width: 1000,
-      height: 800
-    });
-
-	mainWindow.show();
+  mainWindow.show();
   
-    //mainWindow.openDevTools();
+  //mainWindow.openDevTools();
 
-    mainWindow.loadUrl('file://' + __dirname + '/app/index.html');
-    
-    globalShortcut.register('CmdOrCtrl+F12', function(){
-			mainWindow.show();
+  mainWindow.loadUrl('file://' + __dirname + '/app/index.html');
+
+  globalShortcut.register('CmdOrCtrl+F12', function () {
+    mainWindow.show();
 		});
 
-    mainWindow.on('closed', function () {
-      mainWindow = null;
-    });
+  mainWindow.on('closed', function () {
+    mainWindow = null;
   });
+});
 
-  app.on('window-all-closed', function () {
-    if (process.platform != 'darwin') {
-      app.quit();
-    }
-  });
-
-}());
+app.on('window-all-closed', function () {
+  if (process.platform != 'darwin') {
+    app.quit();
+  }
+});

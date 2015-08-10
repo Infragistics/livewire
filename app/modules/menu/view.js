@@ -1,52 +1,45 @@
-(function(module){
-	
-	'use strict';
-  
-  var path = require('path');
-  var remote = require('remote');
-  var app = remote.require('app');
-  var messenger = require(path.resolve(__dirname, '../messenger'));
-  var browserWindow;
-	
-  var handlers = {
+var path = require('path');
+var remote = require('remote');
+var app = remote.require('app');
+var messenger = require(path.resolve(__dirname, '../messenger'));
+var browserWindow;
 
-    quit: function (data, envelope) {
-      var quit = confirm('Are you sure you want to close this application?');
-      if (quit) {
-        app.quit();
-      }
-    },
+var handlers = {
 
-    reload: function () {
-      remote.getCurrentWindow().reload();
-    },
-
-    devToolsToggle: function () {
-      remote.getCurrentWindow().toggleDevTools();
-    },
-
-    fullScreenToggle: function () {
-      var browserWindow = remote.getCurrentWindow();
-      browserWindow.setFullScreen(!browserWindow.isFullScreen());
-    },
-    
-    autoHideMenu: function(){
-      browserWindow = remote.getCurrentWindow();
-      var isMenuBarAutoHide = browserWindow.isMenuBarAutoHide();;
-
-      if (isMenuBarAutoHide) {
-        browserWindow.setAutoHideMenuBar(false);
-        browserWindow.setMenuBarVisibility(true);
-      } else {
-        browserWindow.setAutoHideMenuBar(true);
-      }
+  quit: function (data, envelope) {
+    var quit = confirm('Are you sure you want to close this application?');
+    if (quit) {
+      app.quit();
     }
-  };
-  
-  messenger.subscribe.menu('view.reload', handlers.reload);
-  messenger.subscribe.menu('view.devToolsToggle', handlers.devToolsToggle);
-  messenger.subscribe.menu('view.fullScreenToggle', handlers.fullScreenToggle);
-  messenger.subscribe.menu('view.autoHideMenu', handlers.autoHideMenu);
-	
-	
-}(module.exports));
+  },
+
+  reload: function () {
+    remote.getCurrentWindow().reload();
+  },
+
+  devToolsToggle: function () {
+    remote.getCurrentWindow().toggleDevTools();
+  },
+
+  fullScreenToggle: function () {
+    var browserWindow = remote.getCurrentWindow();
+    browserWindow.setFullScreen(!browserWindow.isFullScreen());
+  },
+
+  autoHideMenu: function () {
+    browserWindow = remote.getCurrentWindow();
+    var isMenuBarAutoHide = browserWindow.isMenuBarAutoHide();;
+
+    if (isMenuBarAutoHide) {
+      browserWindow.setAutoHideMenuBar(false);
+      browserWindow.setMenuBarVisibility(true);
+    } else {
+      browserWindow.setAutoHideMenuBar(true);
+    }
+  }
+};
+
+messenger.subscribe.menu('view.reload', handlers.reload);
+messenger.subscribe.menu('view.devToolsToggle', handlers.devToolsToggle);
+messenger.subscribe.menu('view.fullScreenToggle', handlers.fullScreenToggle);
+messenger.subscribe.menu('view.autoHideMenu', handlers.autoHideMenu);

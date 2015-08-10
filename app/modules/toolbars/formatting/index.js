@@ -1,24 +1,18 @@
 /// <reference path="../../../../typings/jquery/jquery.d.ts"/>
 
-(function ($, module) {
+var path = require('path');
+var messenger = require(path.resolve(__dirname, '../../messenger'));
 
-	'use strict';
+$('#formatting-toolbar button[data-channel="menu"]').click(function () {
+	var $button = $(this);
+	var topic = $button.data('topic');
+	messenger.publish.menu(topic);
+	$button.blur();
+});
 
-	var path = require('path');
-	var messenger = require(path.resolve(__dirname, '../../messenger'));
-
-	$('#formatting-toolbar button[data-channel="menu"]').click(function () {
-		var $button = $(this);
-		var topic = $button.data('topic');
-		messenger.publish.menu(topic);
-		$button.blur();
-	});
-
-	$('#formatting-toolbar button[data-channel="format"]').click(function () {
-		var $button = $(this);
-		var shortcut = $button.data('shortcut');
-		messenger.publish.format('wrapText', { shortcut: shortcut });
-		$button.blur();
-	});
-
-} ($, module.exports));
+$('#formatting-toolbar button[data-channel="format"]').click(function () {
+	var $button = $(this);
+	var shortcut = $button.data('shortcut');
+	messenger.publish.format('wrapText', { shortcut: shortcut });
+	$button.blur();
+});
