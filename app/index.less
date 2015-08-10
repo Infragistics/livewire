@@ -6,7 +6,8 @@
 @gray-light-light: lighten(@gray-light, 5%);
 @gray-medium-dark: #888;
 @gray-medium: #ccc;
-@editor-top: 50px;
+@editor-top: 90px;
+@toolbar-formatting-height: 45px;
 
 #editor,
 #result {
@@ -20,7 +21,6 @@
     border-right: solid 1px @gray-light;
     top: @editor-top;
     width: @editor-width;
-    display: none;
 }
 
 #result {
@@ -62,7 +62,7 @@
 #formatting-toolbar{
     top:0;
     padding: 10px;
-    height: @editor-top - 5px;
+    height: @toolbar-formatting-height;
     width: 100%;
     color: @gray-medium-dark;
     min-width: 660px;
