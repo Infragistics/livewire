@@ -9,6 +9,7 @@
   border-right: solid 1px #eeeeee;
   top: 50px;
   width: 49%;
+  display: none;
 }
 #result {
   top: 50px;
@@ -65,4 +66,55 @@
 }
 #formatting-toolbar .separator:after {
   content: "|";
+}
+#tab-container {
+  position: relative;
+  margin-top: 4px;
+  margin-left: 3px;
+}
+#tab-container .tabs {
+  width: 98%;
+  height: 28px;
+  overflow: hidden;
+  z-index: 200;
+}
+#tab-container .tabs .tab {
+  position: relative;
+  display: inline;
+  border: solid 1px #eeeeee;
+  border-bottom: 0;
+  border-radius: 3px 3px 0;
+  padding: 4px;
+  font-size: 11px;
+  background-color: #fbfbfb;
+  color: #888888;
+  cursor: pointer;
+  line-height: 3em;
+}
+#tab-container .tabs .tab:hover {
+  background-color: #eeeeee;
+}
+#tab-container .tabs .tab button {
+  border: 0;
+  padding: 2px;
+  margin: 0;
+  background-color: transparent;
+  font-size: 12px;
+}
+#tab-container .tabs .tab button:hover {
+  color: maroon;
+}
+#tab-container .tabs .active {
+  border-bottom: 3px solid #fff;
+  background-color: #fff;
+  z-index: 300;
+}
+#tab-container .separator {
+  position: relative;
+  display: block;
+  border-top: 1px solid #eeeeee;
+  width: 100%;
+  height: 1px;
+  z-index: 100;
+  top: 28px;
 }

@@ -3,6 +3,7 @@
 @result-width: 100% - @editor-split;
 @footer-height: 40px;
 @gray-light: #eee;
+@gray-light-light: lighten(@gray-light, 5%);
 @gray-medium-dark: #888;
 @gray-medium: #ccc;
 @editor-top: 50px;
@@ -18,7 +19,8 @@
     left: 10px;
     border-right: solid 1px @gray-light;
     top: @editor-top;
-    width: @editor-width; 
+    width: @editor-width;
+    display: none;
 }
 
 #result {
@@ -84,5 +86,65 @@
     
     .separator:after {
         content: "|";
+    }
+}
+
+#tab-container {
+    position: relative;
+    margin-top: 4px;
+    margin-left: 3px;    
+    
+    .tabs {
+        width: 98%;
+        height: 28px;
+        overflow: hidden;
+        z-index: 200;
+        
+        .tab {
+            position: relative;
+            display: inline;
+            border:solid 1px @gray-light;
+            border-bottom:0;
+            border-radius: 3px 3px 0;
+            padding: 4px;
+
+            font-size: 11px;
+            background-color: @gray-light-light;
+            color: @gray-medium-dark;
+            cursor: pointer;
+            line-height: 3em;
+            
+            &:hover {
+                background-color: @gray-light;
+            }
+            
+            button {
+                border:0;
+                padding:2px;
+                margin:0;
+                background-color:transparent;
+                font-size: 12px;
+                
+                &:hover {
+                    color: maroon;
+                }
+            }
+        }
+        
+        .active {
+            border-bottom: 3px solid #fff;
+            background-color: #fff;
+            z-index: 300;
+        }
+    } 
+    
+    .separator {
+        position: relative;
+        display: block;
+        border-top:1px solid @gray-light;
+        width: 100%;
+        height: 1px;
+        z-index: 100;
+        top:28px;
     }
 }
