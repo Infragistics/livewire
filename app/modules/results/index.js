@@ -2,11 +2,13 @@
 
 var $result = $('#result');
 
-var path = require('path');
-var messenger = require(path.resolve(__dirname, '../messenger'));
-var renderer = require(path.resolve(__dirname, './asciidoc.js')).get();;
-var source = '';
-var html = '';
+var 
+  path = require('path'),
+  messenger = require(path.resolve(__dirname, '../messenger')),
+  renderer = require(path.resolve(__dirname, './asciidoc.js')).get(),
+  source = '',
+  html = '',
+  shell = require('shell');
 
 messenger.subscribe.format('selectedFormat', function (data, envelope) {
   var fullPath = path.resolve(__dirname, './' + data.name.toLowerCase());
@@ -23,3 +25,16 @@ messenger.subscribe.text('rerender', function (data, envelope) {
   html = renderer(source);
   $result.html(html);
 });
+
+var openExternalLinksInBrowser = function (e) {
+  var href;
+  var element = e.target;
+
+  if (element.nodeName === 'A') {
+    href = element.getAttribute('href');
+    shell.openExternal(href);
+    e.preventDefault();
+  }
+};
+
+document.addEventListener('click', openExternalLinksInBrowser, false);
