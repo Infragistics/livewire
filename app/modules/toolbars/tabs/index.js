@@ -3,33 +3,75 @@
 
 module = module.exports;
 
-var path = require('path');
-var messenger = require(path.resolve(__dirname, '../../messenger'));
-var _ = require('lodash');
+var 
+  path = require('path'),
+  messenger = require(path.resolve(__dirname, '../../messenger')),
+  _ = require('lodash'),
+  shell = require('shell'),
 
-var $tabsContainer = $('#lw-tabs');
-var $tabs = $('.lw-tab');
+  
+  $tabsContainer = $('#lw-tabs'),
+  $tabs = null,
+  
+  template = '<div class="lw-tab active" title="PATH">NAME <button class="lw-close" title="close" data-path="PATH"><i class="fa fa-times-circle-o"></i></button></div>',
+  file = { name: '', path: '' };
+  
+var removeActiveClass = function(){
+  $('.lw-tab').removeClass('active');
+};
 
-var template = '<div class="lw-tab active" title=""><span class="name"></span> <button title="close" data-path=""><i class="fa fa-times-circle-o"></i></button></div>';
+var clearSelection = function(){
+  window.getSelection().empty();  
+};
 
-var file = {
-	name: "",
-	path: ""
-}; 
+// Switch documents
+$tabsContainer.on('click', '.lw-tab', function(e){
+  removeActiveClass();
+  $(this).addClass('active');
+});
+
+// Open file in Explorer/Finder
+$tabsContainer.on('dblclick', '.lw-tab', function(e){
+  var filePath = $(this).attr('title');
+  clearSelection();
+  shell.showItemInFolder(filePath);
+});
+
+// Close tab
+$tabsContainer.on('click', '.lw-close', function(e){
+  var $btn, $tab, isTabSelected;
+  
+  debugger;
+  
+  $btn = $(this);
+  $tab = $btn.parents('.lw-tab');
+  
+  isTabSelected = $tab.hasClass('active');
+  
+  $btn.blur();
+  $tab.remove();
+  
+  if(isTabSelected){
+    setTimeout(function() {
+      $('.lw-tab').last().trigger('click');
+    }, 5);
+  }
+  
+  e.stopPropagation();
+  
+});
 
 messenger.subscribe.file('file.pathInfo', function (data, envelope) {
 
   if (!_.isUndefined(data.path)) {
         
-    $('.lw-tab').removeClass('active');
+    removeActiveClass();
     
     file.path = data.path;
     file.name = path.basename(file.path);
-    
-    var $tab = $(template);
-    $tab.find('.name').text(file.name);
-    $tab.attr('title', file.path);
-    $tab.find('button').attr('data-path', file.path);
-    $tabsContainer.append($tab);
+
+    var tab = template.replace(/PATH/g, file.path);
+    tab = tab.replace(/NAME/, file.name);
+    $tabsContainer.append(tab);
   }
 });
