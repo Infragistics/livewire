@@ -20,7 +20,7 @@ messenger.subscribe.file('file.pathInfo', function (data, envelope) {
     file.path = '';
   } else {
     file.path = data.path;
-    file.name = path.basename(file.path);
+    file.name = data.fileName;
   }
 
   $fileNameButton.text(file.name);

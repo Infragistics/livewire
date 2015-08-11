@@ -7,7 +7,7 @@ var path = require('path');
 var messenger = require(path.resolve(__dirname, '../messenger'));
 
 messenger.subscribe.file('file.pathInfo', function (data, envelope) {
-  basePath = path.dirname(data.path);
+  basePath = data.basePath;
 });
 
 renderer.table = function (header, body) {

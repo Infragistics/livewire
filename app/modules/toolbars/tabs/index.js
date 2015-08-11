@@ -10,8 +10,7 @@ var
   shell = require('shell'),
 
   $tabsContainer = $('#lw-tabs'),  
-  template = '<div class="lw-tab active" title="PATH">NAME <button class="lw-close" title="close" data-path="PATH"><i class="fa fa-times-circle-o"></i></button></div>',
-  file = { name: '', path: '' };
+  template = '<div class="lw-tab active" title="PATH">NAME <button class="lw-close" title="close" data-path="PATH"><i class="fa fa-times-circle-o"></i></button></div>';
   
 var removeActiveClass = function(){
   $('.lw-tab').removeClass('active');
@@ -61,12 +60,9 @@ messenger.subscribe.file('file.pathInfo', function (data, envelope) {
   if (!_.isUndefined(data.path)) {
         
     removeActiveClass();
-    
-    file.path = data.path;
-    file.name = path.basename(file.path);
 
-    var tab = template.replace(/PATH/g, file.path);
-    tab = tab.replace(/NAME/, file.name);
+    var tab = template.replace(/PATH/g, data.path);
+    tab = tab.replace(/NAME/, data.fileName);
     $tabsContainer.append(tab);
   }
 });

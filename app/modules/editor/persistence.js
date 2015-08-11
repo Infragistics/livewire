@@ -58,7 +58,13 @@ var menuHandlers = {
       filePath = response.path;
       basePath = path.dirname(filePath);
 
-      var data = { path: response.path, ext: path.extname(response.path).replace('.', '') };
+      var data = { 
+        path: response.path, 
+        ext: path.extname(response.path).replace('.', ''),
+        fileName: path.basename(response.path),
+        basePath: path.dirname(response.path)
+      };
+      
       formatter = formats.getByFileExtension(data.ext);
       messenger.publish.format('selectedFormat', formatter);
 
