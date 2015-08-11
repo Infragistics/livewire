@@ -66,49 +66,54 @@
 #formatting-toolbar .separator:after {
   content: "|";
 }
-#tab-container {
+#lw-tab-container {
   position: relative;
-  margin-top: 4px;
-  margin-left: 3px;
+  background: url(images/diagonal-lines.png);
 }
-#tab-container .tabs {
+#lw-tab-container .lw-tabs {
   width: 98%;
   height: 28px;
   overflow: hidden;
   z-index: 200;
 }
-#tab-container .tabs .tab {
+#lw-tab-container .lw-tabs .lw-tab {
   position: relative;
   display: inline;
   border: solid 1px #eeeeee;
   border-bottom: 0;
   border-radius: 3px 3px 0;
   padding: 4px;
+  margin: 0 2px 0 2px;
   font-size: 11px;
   background-color: #fbfbfb;
   color: #888888;
   cursor: pointer;
   line-height: 3em;
 }
-#tab-container .tabs .tab:hover {
+#lw-tab-container .lw-tabs .lw-tab:hover {
   background-color: #eeeeee;
 }
-#tab-container .tabs .tab button {
+#lw-tab-container .lw-tabs .lw-tab button {
   border: 0;
   padding: 2px;
   margin: 0;
   background-color: transparent;
   font-size: 12px;
 }
-#tab-container .tabs .tab button:hover {
-  color: maroon;
+#lw-tab-container .lw-tabs .lw-tab button:hover {
+  color: #c03;
 }
-#tab-container .tabs .active {
+#lw-tab-container .lw-tabs .active {
   border-bottom: 3px solid #fff;
   background-color: #fff;
   z-index: 300;
+  color: #6f6f6f;
 }
-#tab-container .separator {
+#lw-tab-container .lw-tabs .active:hover {
+  background-color: #fff;
+  border-bottom: inherit;
+}
+#lw-tab-container .lw-separator {
   position: relative;
   display: block;
   border-top: 1px solid #eeeeee;
