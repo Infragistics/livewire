@@ -9,10 +9,7 @@ var
   _ = require('lodash'),
   shell = require('shell'),
 
-  
-  $tabsContainer = $('#lw-tabs'),
-  $tabs = null,
-  
+  $tabsContainer = $('#lw-tabs'),  
   template = '<div class="lw-tab active" title="PATH">NAME <button class="lw-close" title="close" data-path="PATH"><i class="fa fa-times-circle-o"></i></button></div>',
   file = { name: '', path: '' };
   
