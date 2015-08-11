@@ -41,8 +41,6 @@ $tabsContainer.on('dblclick', '.lw-tab', function(e){
 $tabsContainer.on('click', '.lw-close', function(e){
   var $btn, $tab, isTabSelected;
   
-  debugger;
-  
   $btn = $(this);
   $tab = $btn.parents('.lw-tab');
   
