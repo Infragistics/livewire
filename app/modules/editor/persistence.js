@@ -31,6 +31,15 @@ messenger.subscribe.file('file.pathInfo', function (data, envelope) {
   }
 });
 
+var getFileInfo = function(filePath){
+  return { 
+    path: filePath, 
+    ext: path.extname(filePath).replace('.', ''),
+    fileName: path.basename(filePath),
+    basePath: path.dirname(filePath)
+  };
+};
+
 var menuHandlers = {
 
   newFile: function (data, envelope) {
@@ -58,22 +67,15 @@ var menuHandlers = {
       filePath = response.path;
       basePath = path.dirname(filePath);
 
-      var data = { 
-        path: response.path, 
-        ext: path.extname(response.path).replace('.', ''),
-        fileName: path.basename(response.path),
-        basePath: path.dirname(response.path)
-      };
+      var fileInfo = getFileInfo(response.path);
       
-      formatter = formats.getByFileExtension(data.ext);
-      messenger.publish.format('selectedFormat', formatter);
-
-      messenger.publish.file('file.pathInfo', data);
-
-      var content = _.trimLeft(response.content, BOM);
-
-      editor.setValue(content);
-      editor.clearSelection();
+      formatter = formats.getByFileExtension(fileInfo.ext);
+      //messenger.publish.format('selectedFormat', formatter);
+      
+      messenger.publish.file('file.pathInfo', fileInfo);
+      
+      fileInfo.contents = _.trimLeft(response.content, BOM); 
+      messenger.publish.file('fileOpened', fileInfo);
     });
 
   },
@@ -113,8 +115,11 @@ var menuHandlers = {
     dialogs.saveFile(content, options, defaultExtension).then(function (newFilePath) {
       filePath = newFilePath;
       basePath = path.dirname(filePath);
-      messenger.publish.file('file.pathInfo', { path: filePath });
-      messenger.publish.text('rerender');
+
+      var fileInfo = getFileInfo(filePath);
+      
+      messenger.publish.file('file.pathInfo', fileInfo);
+      messenger.publish.file('rerender');
     });
   },
 

@@ -7,6 +7,7 @@ var editor;
 var session;
 var path = require('path');
 var messenger = require(path.resolve(__dirname, '../messenger'));
+var currentFile = {};
 
 module.load = function (mode) {
 
@@ -31,13 +32,25 @@ module.load = function (mode) {
   require('./formatting.js').init(editor);
 
   var onChange = function () {
-    messenger.publish.text('change', { source: editor.getValue() });
+    currentFile.contents = editor.getValue();
+    messenger.publish.file('sourceChange', currentFile);
   };
 
   onChange();
 
   editor.on('change', onChange);
   editor.focus();
+  
+  var handlers = {
+    contentChanged: function(file){
+      currentFile = file;
+      editor.setValue(file.contents);
+      //editor.clearSelection();
+      editor.focus();
+    }
+  };
+  
+  messenger.subscribe.file('contentChanged', handlers.contentChanged);
 };
 
 module.load('asciidoc');

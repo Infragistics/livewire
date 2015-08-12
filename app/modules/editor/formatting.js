@@ -2,18 +2,16 @@
 	
 module = module.exports;
 
-var editor = null;
+var 
+	editor = null,
+	path = require('path'),
+	messenger = require(path.resolve(__dirname, '../messenger')),
+	_ = require('lodash'),
+	config = require(path.resolve(__dirname, '../config')).get(),
+	formatter = require(path.resolve(__dirname, '../formats')).get(config.defaultFormat);
 
-var path = require('path');
-var messenger = require(path.resolve(__dirname, '../messenger'));
-var _ = require('lodash');
-
-var config = require(path.resolve(__dirname, '../config')).get();
-
-var formatter = require(path.resolve(__dirname, '../formats')).get(config.defaultFormat);
-
-messenger.subscribe.format('selectedFormat', function(data, envelope){
-	formatter = envelope.data;
+messenger.subscribe.file('formatChanged', function(data, envelope){
+	formatter = data;
 });
 
 messenger.subscribe.format('wrapText', function(data, envelope){  

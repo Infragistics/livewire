@@ -23,7 +23,13 @@ var clearSelection = function(){
 // Switch documents
 $tabsContainer.on('click', '.lw-tab', function(e){
   removeActiveClass();
-  $(this).addClass('active');
+  
+  var $tab = $(this);
+  $tab.addClass('active');
+  
+  var filePath = $tab.attr('title');
+  
+  messenger.publish.file('fileSelected', {filePath: filePath});
 });
 
 // Open file in Explorer/Finder
@@ -35,9 +41,12 @@ $tabsContainer.on('dblclick', '.lw-tab', function(e){
 
 // Close tab
 $tabsContainer.on('click', '.lw-close', function(e){
-  var $btn, $tab, isTabSelected;
+  var $btn, $tab, isTabSelected, filePath;
+  
+  e.stopPropagation();
   
   $btn = $(this);
+  filePath = $btn.data('path');
   $tab = $btn.parents('.lw-tab');
   
   isTabSelected = $tab.hasClass('active');
@@ -51,16 +60,13 @@ $tabsContainer.on('click', '.lw-close', function(e){
     }, 5);
   }
   
-  e.stopPropagation();
+  messenger.publish.file('fileClosed', {filePath: filePath});
   
 });
 
 messenger.subscribe.file('file.pathInfo', function (data, envelope) {
-
   if (!_.isUndefined(data.path)) {
-        
     removeActiveClass();
-
     var tab = template.replace(/PATH/g, data.path);
     tab = tab.replace(/NAME/, data.fileName);
     $tabsContainer.append(tab);

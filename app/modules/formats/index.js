@@ -4,6 +4,7 @@ var fs = require('fs');
 var path = require('path');
 var _ = require('lodash');
 var formats = [];
+var config = require(path.resolve(__dirname, '../config')).get();
 
 module.get = function (name) {
 	var fullPath = path.resolve(__dirname, './' + name + '.json');
@@ -13,13 +14,22 @@ module.get = function (name) {
 
 module.getByFileExtension = function (ext) {
 	var returnValue = null;
-	formats.forEach(function (format) {
-		if (format.extensions.indexOf(ext) !== -1) {
-			returnValue = format;
-		}
-	});
+	
+	if(ext === undefined) {
+		formats.forEach(function (format) {
+			if (format.name.toLowerCase() === config.defaultFormat.toLowerCase()) {
+				returnValue = format;
+			}
+		});
+	} else {
+		formats.forEach(function (format) {
+			if (format.extensions.indexOf(ext) !== -1) {
+				returnValue = format;
+			}
+		});
+	}
 	if (returnValue == null) {
-		throw new Error('format not found');
+		throw new Error('Format not found. ext: ' + ext);
 	}
 	return returnValue;
 };
