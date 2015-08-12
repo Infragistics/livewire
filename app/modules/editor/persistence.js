@@ -100,48 +100,7 @@ var menuHandlers = {
   },
 
   save: function (data, envelope) {
-
-    var content = editor.getValue();
-    if (!_.startsWith(content, BOM)) {
-      content = BOM + content;
-    }
-
-    if (filePath.length > 0) {
-      fs.writeFile(filePath, content, { encoding: 'utf8' }, function (err) {
-        // todo: handle error
-      });
-    } else {
-      menuHandlers.saveAs(data, envelope);
-    }
-  },
-
-  saveAs: function (data, envelope) {
-    var options = {
-      title: 'Save File'
-    };
-
-    var content = editor.getValue();
-    if (!_.startsWith(content, BOM)) {
-      content = BOM + content;
-    }
-
-    var defaultExtension = '';
-
-    if (formatter !== null) {
-      defaultExtension = formatter.defaultExtension;
-    }
-
-    dialogs.saveFile(content, options, defaultExtension).then(function (newFilePath) {
-      filePath = newFilePath;
-      basePath = path.dirname(filePath);
-
-      var fileInfo = getFileInfo(filePath);
-      
-      fileInfo.isSaveAs = true; 
-      
-      messenger.publish.file('file.pathInfo', fileInfo);
-      messenger.publish.file('rerender');
-    });
+    messenger.publish.file('getSource');      
   },
 
   saveAsHtml: function (data, envelope) {
@@ -162,8 +121,57 @@ var menuHandlers = {
   }
 };
 
+var fileHandlers = {
+    save: function(data, envelope){
+    var fileContent, options, defaultExtension;
+    
+    fileContent = data.source;
+    
+    if(filePath.length > 0){
+      if (!_.startsWith(fileContent, BOM)) {
+        fileContent = BOM + fileContent;
+      }
+
+      fs.writeFile(filePath, fileContent, { encoding: 'utf8' }, function (err) {
+        // todo: handle error
+      }); 
+    } else {
+      
+      options = {
+        title: 'Save File'
+      };
+      
+      if (!_.startsWith(fileContent, BOM)) {
+        fileContent = BOM + fileContent;
+      }
+      
+      defaultExtension = '';
+      
+      if (formatter !== null) {
+        defaultExtension = formatter.defaultExtension;
+      }
+      
+      dialogs.saveFile(fileContent, options, defaultExtension).then(function (newFilePath) {
+        var fileInfo;
+        
+        filePath = newFilePath;
+        basePath = path.dirname(filePath);
+      
+        fileInfo = getFileInfo(filePath);
+        
+        fileInfo.isSaveAs = true; 
+        
+        messenger.publish.file('file.pathInfo', fileInfo);
+        messenger.publish.file('rerender');
+      });
+    }
+  },
+}
+
 messenger.subscribe.menu('file.new', menuHandlers.newFile);
 messenger.subscribe.menu('file.open', menuHandlers.open);
 messenger.subscribe.menu('file.save', menuHandlers.save);
-messenger.subscribe.menu('file.saveAs', menuHandlers.saveAs);
+messenger.subscribe.menu('file.saveAs', menuHandlers.save);
 messenger.subscribe.menu('file.saveAsHtml', menuHandlers.saveAsHtml);
+
+messenger.subscribe.file('getSourceComplete', fileHandlers.save);

@@ -76,8 +76,11 @@ module.load = function (mode) {
       }
     },
     getSource: function(){
-      var source = editor.getValue();
-      messenger.publish.file('getSourceComplete', source);
+      var info = {
+        source: editor.getValue(),
+        cursorPosition: editor.selection.getCursor()
+      };
+      messenger.publish.file('getSourceComplete', info);
     },
     newFile: function(){
       if (editor.getReadOnly()) {
