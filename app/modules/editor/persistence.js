@@ -1,24 +1,20 @@
 module = module.exports;
 
-var path = require('path');
-var fs = require('fs');
-
-var _ = require('lodash');
-var dialogs = require(path.resolve(__dirname, '../dialogs'));
-var messenger = require(path.resolve(__dirname, '../messenger'));
-
-var editor;
-
-var filePath = '';
-var basePath = '';
-
-var formats = require(path.resolve(__dirname, '../formats'));
-var formatter = null;
-
-var $result = $('#result');
-
-var BOM = '\ufeff';
-
+var 
+  path = require('path'),
+  fs = require('fs'),
+  _ = require('lodash'),
+  
+  dialogs = require(path.resolve(__dirname, '../dialogs')),
+  messenger = require(path.resolve(__dirname, '../messenger')),
+  formats = require(path.resolve(__dirname, '../formats')),
+  
+  editor,
+  filePath = '',
+  basePath = '',
+  formatter = null,
+  $result = $('#result'),
+  BOM = '\ufeff';
 
 module.init = function (editorInstance) {
   editor = editorInstance;
@@ -31,24 +27,52 @@ messenger.subscribe.file('file.pathInfo', function (data, envelope) {
   }
 });
 
-var getFileInfo = function(filePath){
-  return { 
+var getFileInfo = function(filePath, formatter){
+  var returnValue;
+  
+  returnValue = { 
     path: filePath, 
     ext: path.extname(filePath).replace('.', ''),
     fileName: path.basename(filePath),
     basePath: path.dirname(filePath)
   };
+  
+  if(filePath === null){
+    returnValue = { 
+      path: '', 
+      ext: formatter.defaultExtension,
+      fileName: 'untitled.' + formatter.defaultExtension,
+      basePath: ''
+    };
+  } else {
+    returnValue = { 
+      path: filePath, 
+      ext: path.extname(filePath).replace('.', ''),
+      fileName: path.basename(filePath),
+      basePath: path.dirname(filePath)
+    };
+  }
+  
+  return returnValue;
 };
 
 var menuHandlers = {
 
   newFile: function (data, envelope) {
-    var formatName = envelope.data.format;
+    var formatName, fileInfo;
+    
+    filePath = '';
+    basePath = '';
+    
+    formatName = envelope.data.format;
     formatter = formats.get(formatName);
-    messenger.publish.format('selectedFormat', formatter);
-    messenger.publish.file('file.pathInfo', { isNewFile: true });
-    editor.setValue(formatter.defaultContent);
-    editor.clearSelection();
+
+    fileInfo = getFileInfo(null, formatter);
+       
+    messenger.publish.file('file.pathInfo', fileInfo);
+    
+    fileInfo.contents = formatter.defaultContent; 
+    messenger.publish.file('fileOpened', fileInfo);
   },
 
   open: function (data, envelope) {
@@ -70,7 +94,6 @@ var menuHandlers = {
       var fileInfo = getFileInfo(response.path);
       
       formatter = formats.getByFileExtension(fileInfo.ext);
-      //messenger.publish.format('selectedFormat', formatter);
       
       messenger.publish.file('file.pathInfo', fileInfo);
       
@@ -117,6 +140,8 @@ var menuHandlers = {
       basePath = path.dirname(filePath);
 
       var fileInfo = getFileInfo(filePath);
+      
+      fileInfo.keepExistingTab = true; 
       
       messenger.publish.file('file.pathInfo', fileInfo);
       messenger.publish.file('rerender');

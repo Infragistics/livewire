@@ -2,9 +2,12 @@ var result = document.getElementById('result');
 
 var 
   path = require('path'),
+  _ = require('lodash'),
+  
   messenger = require(path.resolve(__dirname, '../messenger')),
   renderer = require(path.resolve(__dirname, './asciidoc.js')).get(),
   formats = require(path.resolve(__dirname, '../formats')),
+  
   source = '',
   html = '',
   shell = require('shell'),
@@ -26,7 +29,7 @@ var detectRenderer = function(fileInfo){
 
 var handlers = {
   contentChanged: function(fileInfo){
-    if(fileInfo.contents.length > 0){
+    if(!_.isUndefined(fileInfo) && fileInfo.contents.length > 0){
       detectRenderer(fileInfo);
       source = fileInfo.contents;
       html = renderer(source);

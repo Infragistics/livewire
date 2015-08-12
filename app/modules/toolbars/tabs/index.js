@@ -10,7 +10,7 @@ var
   shell = require('shell'),
 
   $tabsContainer = $('#lw-tabs'),  
-  template = '<div class="lw-tab active" title="PATH">NAME <button class="lw-close" title="close" data-path="PATH"><i class="fa fa-times-circle-o"></i></button></div>';
+  template = '<div class="lw-tab active" title="PATH"><span class="lw-name">NAME</span> <button class="lw-close" title="close" data-path="PATH"><i class="fa fa-times-circle-o"></i></button></div>';
   
 var removeActiveClass = function(){
   $('.lw-tab').removeClass('active');
@@ -22,20 +22,24 @@ var clearSelection = function(){
 
 // Switch documents
 $tabsContainer.on('click', '.lw-tab', function(e){
+  var $tab, filePath;
+  
   removeActiveClass();
   
-  var $tab = $(this);
+  $tab = $(this);
   $tab.addClass('active');
   
-  var filePath = $tab.attr('title');
+  filePath = $tab.attr('title');
   
   messenger.publish.file('fileSelected', {filePath: filePath});
 });
 
 // Open file in Explorer/Finder
 $tabsContainer.on('dblclick', '.lw-tab', function(e){
-  var filePath = $(this).attr('title');
+  var filePath; 
+  
   clearSelection();
+  filePath = $(this).attr('title');
   shell.showItemInFolder(filePath);
 });
 
@@ -61,14 +65,26 @@ $tabsContainer.on('click', '.lw-close', function(e){
   }
   
   messenger.publish.file('fileClosed', {filePath: filePath});
-  
 });
 
-messenger.subscribe.file('file.pathInfo', function (data, envelope) {
-  if (!_.isUndefined(data.path)) {
-    removeActiveClass();
-    var tab = template.replace(/PATH/g, data.path);
-    tab = tab.replace(/NAME/, data.fileName);
-    $tabsContainer.append(tab);
+messenger.subscribe.file('file.pathInfo', function (fileInfo, envelope) {
+  var $tab;
+  
+  var bindTab = function($tab){
+    $tab.attr('title', fileInfo.path);
+    $tab.find('span.lw-name').text(fileInfo.fileName);
+    $tab.find('button.lw-close').data('path', fileInfo.path);
+  };
+  
+  if (!_.isUndefined(fileInfo.path)) {
+    if(fileInfo.keepExistingTab){
+      $tab = $tabsContainer.find('.active');
+      bindTab($tab);
+    } else {
+      removeActiveClass();
+      $tab = $(template);
+      bindTab($tab);
+      $tabsContainer.append($tab); 
+    }
   }
 });

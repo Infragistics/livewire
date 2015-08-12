@@ -3,11 +3,13 @@
 
 module = module.exports;
 
-var editor;
-var session;
-var path = require('path');
-var messenger = require(path.resolve(__dirname, '../messenger'));
-var currentFile = {};
+var 
+  path = require('path'),
+  _ = require('lodash'),
+  messenger = require(path.resolve(__dirname, '../messenger')),
+  editor,
+  session,
+  currentFile = {};
 
 module.load = function (mode) {
 
@@ -42,11 +44,12 @@ module.load = function (mode) {
   editor.focus();
   
   var handlers = {
-    contentChanged: function(file){
-      currentFile = file;
-      editor.setValue(file.contents);
-      //editor.clearSelection();
-      editor.focus();
+    contentChanged: function(fileInfo){
+      if(_.isObject(fileInfo)){
+        currentFile = fileInfo;
+        editor.setValue(fileInfo.contents);
+        editor.focus();
+      }
     }
   };
   
