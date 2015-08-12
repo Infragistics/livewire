@@ -20,18 +20,40 @@ var clearSelection = function(){
   window.getSelection().empty();  
 };
 
+var bindTab = function($tab, fileInfo){
+  $tab.attr('title', fileInfo.path);
+  $tab.attr('id', fileInfo.id);
+  $tab.find('span.lw-name').text(fileInfo.fileName);
+  $tab.find('button.lw-close').data('path', fileInfo.path);
+};
+
+var getFileInfoFromTab = function($tab){
+  var fileInfo = {
+    path: $tab.attr('title'),
+    id: $tab.attr('id'),
+    fileName: $tab.find('span.lw-name').text(),
+  }
+  
+  return fileInfo;
+};
+
 // Switch documents
 $tabsContainer.on('click', '.lw-tab', function(e){
-  var $tab, filePath;
-  
-  removeActiveClass();
+  var $tab, fileInfo, isTabSelected;
   
   $tab = $(this);
-  $tab.addClass('active');
+  isTabSelected = $tab.hasClass('active');
   
-  filePath = $tab.attr('title');
+  if(!isTabSelected){
+    removeActiveClass();
+    
+    $tab.addClass('active');
+    
+    fileInfo = getFileInfoFromTab($tab);
+    
+    messenger.publish.file('fileSelected', fileInfo);
+  }
   
-  messenger.publish.file('fileSelected', {filePath: filePath});
 });
 
 // Open file in Explorer/Finder
@@ -40,20 +62,25 @@ $tabsContainer.on('dblclick', '.lw-tab', function(e){
   
   clearSelection();
   filePath = $(this).attr('title');
-  shell.showItemInFolder(filePath);
+  
+  if(filePath.length > 0){
+    shell.showItemInFolder(filePath);
+  }
+  
 });
 
 // Close tab
 $tabsContainer.on('click', '.lw-close', function(e){
-  var $btn, $tab, isTabSelected, filePath;
+  var $btn, $tab, isTabSelected, fileInfo;
   
   e.stopPropagation();
   
   $btn = $(this);
-  filePath = $btn.data('path');
   $tab = $btn.parents('.lw-tab');
   
   isTabSelected = $tab.hasClass('active');
+  
+  fileInfo = getFileInfoFromTab($tab);
   
   $btn.blur();
   $tab.remove();
@@ -64,26 +91,21 @@ $tabsContainer.on('click', '.lw-close', function(e){
     }, 5);
   }
   
-  messenger.publish.file('fileClosed', {filePath: filePath});
+  messenger.publish.file('fileClosed', fileInfo);
 });
 
 messenger.subscribe.file('file.pathInfo', function (fileInfo, envelope) {
-  var $tab;
-  
-  var bindTab = function($tab){
-    $tab.attr('title', fileInfo.path);
-    $tab.find('span.lw-name').text(fileInfo.fileName);
-    $tab.find('button.lw-close').data('path', fileInfo.path);
-  };
+  var $tab, useExistingTab;
   
   if (!_.isUndefined(fileInfo.path)) {
-    if(fileInfo.keepExistingTab){
+    useExistingTab = fileInfo.isSaveAs;
+    if(useExistingTab){
       $tab = $tabsContainer.find('.active');
-      bindTab($tab);
+      bindTab($tab, fileInfo);
     } else {
       removeActiveClass();
       $tab = $(template);
-      bindTab($tab);
+      bindTab($tab, fileInfo);
       $tabsContainer.append($tab); 
     }
   }

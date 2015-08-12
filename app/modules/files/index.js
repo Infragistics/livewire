@@ -9,7 +9,16 @@ var
 	
 var getIndex = function(info){
 	return _.findIndex(files, function(file){
-		return file.path.toLowerCase() === info.filePath.toLowerCase();
+		var result = false;
+		
+		if((!_.isUndefined(file.path)) && file.path.length > 0){
+			debugger;
+			result = file.path.toLowerCase() === info.path.toLowerCase();
+		} else {
+			result = file.id === info.id;
+		}
+		
+		return result;
 	});
 };
 
@@ -36,10 +45,8 @@ var handlers = {
 		messenger.publish.file('contentChanged', fileInfo);
 	},
 	
-	fileSelected: function(info){
-		
-		var selectedIndex = getIndex(info);
-		
+	fileSelected: function(fileInfo){
+		var selectedIndex = getIndex(fileInfo);
 		messenger.publish.file('contentChanged', files[selectedIndex]);
 	}
 };
@@ -47,3 +54,4 @@ var handlers = {
 messenger.subscribe.file('fileOpened', handlers.fileOpened);
 messenger.subscribe.file('fileClosed', handlers.fileClosed);
 messenger.subscribe.file('fileSelected', handlers.fileSelected);
+messenger.subscribe.file('new', handlers.fileSelected);

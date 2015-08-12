@@ -4,6 +4,7 @@ var
   path = require('path'),
   fs = require('fs'),
   _ = require('lodash'),
+  uuid = require('node-uuid'),
   
   dialogs = require(path.resolve(__dirname, '../dialogs')),
   messenger = require(path.resolve(__dirname, '../messenger')),
@@ -30,13 +31,6 @@ messenger.subscribe.file('file.pathInfo', function (data, envelope) {
 var getFileInfo = function(filePath, formatter){
   var returnValue;
   
-  returnValue = { 
-    path: filePath, 
-    ext: path.extname(filePath).replace('.', ''),
-    fileName: path.basename(filePath),
-    basePath: path.dirname(filePath)
-  };
-  
   if(filePath === null){
     returnValue = { 
       path: '', 
@@ -52,6 +46,8 @@ var getFileInfo = function(filePath, formatter){
       basePath: path.dirname(filePath)
     };
   }
+  
+  returnValue.id = uuid.v1();
   
   return returnValue;
 };
@@ -141,7 +137,7 @@ var menuHandlers = {
 
       var fileInfo = getFileInfo(filePath);
       
-      fileInfo.keepExistingTab = true; 
+      fileInfo.isSaveAs = true; 
       
       messenger.publish.file('file.pathInfo', fileInfo);
       messenger.publish.file('rerender');

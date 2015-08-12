@@ -29,10 +29,15 @@ var detectRenderer = function(fileInfo){
 
 var handlers = {
   contentChanged: function(fileInfo){
-    if(!_.isUndefined(fileInfo) && fileInfo.contents.length > 0){
-      detectRenderer(fileInfo);
-      source = fileInfo.contents;
-      html = renderer(source);
+    
+    if(!_.isUndefined(fileInfo)){
+      if (fileInfo.isBlank) {
+        html = ''; 
+      } else {
+        detectRenderer(fileInfo);
+        source = fileInfo.contents;
+        html = renderer(source);
+      }
       result.innerHTML = html;
     }
   }

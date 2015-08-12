@@ -19,11 +19,25 @@ module.load = function (mode) {
     theme: 'ace/theme/github',
     showPrintMargin: false,
     highlightActiveLine: false,
-    showGutter: false
+    showGutter: false,
+    readOnly: true
   });
+  
+  var showCursor = function(){
+    editor.renderer.$cursorLayer.element.style.opacity = 1;
+  };
+  
+  var hideCursor = function(){
+    editor.renderer.$cursorLayer.element.style.opacity = 0;
+  };
+  
+  var supressAceDepricationMessage = function(){
+    editor.$blockScrolling = Infinity;
+  };
+  
+  hideCursor(/* until a file is opened or new one is created */);
     
-  // required by ace to suppress a deprication message
-  editor.$blockScrolling = Infinity;
+  supressAceDepricationMessage();
 
   session = editor.getSession();
   session.setMode('ace/mode/' + mode);
@@ -46,14 +60,36 @@ module.load = function (mode) {
   var handlers = {
     contentChanged: function(fileInfo){
       if(_.isObject(fileInfo)){
+        
         currentFile = fileInfo;
-        editor.setValue(fileInfo.contents);
+        
+        if(fileInfo.isBlank){
+          hideCursor();
+          editor.setValue('');
+        } else {
+          showCursor();
+          editor.setValue(fileInfo.contents);
+        }
+          
         editor.focus();
+        
+      }
+    },
+    getSource: function(){
+      var source = editor.getValue();
+      messenger.publish.file('getSourceComplete', source);
+    },
+    newFile: function(){
+      if (editor.getReadOnly()) {
+        editor.setReadOnly(false);
+        showCursor();
       }
     }
   };
   
+  messenger.subscribe.menu('file.new', handlers.newFile);
   messenger.subscribe.file('contentChanged', handlers.contentChanged);
+  messenger.subscribe.file('getSource', handlers.getSource);
 };
 
 module.load('asciidoc');
