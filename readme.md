@@ -7,7 +7,7 @@ An simple web content editor built with [Electron](electron.atom.io).
 ## Features
 1. **Multiple Formats**: Supports both [AsciiDoc](http://www.methods.co.nz/asciidoc/) and [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/)
 
-2. **Easy to find files**: Once you save your file, the name appears in the bar at the bottom of the window. If you click on the bar an Explorer/Finder window will open with the file selected.
+2. **Easy to find files**: Double-click on the file name in the tab and an Explorer/Finder window will appear with the file selected.
 
 3. **Global Shortcut**: For an easy way to return back to Livewire, just press `CTRL + F12` (or `CMD + F12` on a Mac) to bring the Livewire window to focus and on top of all windows. 
 
