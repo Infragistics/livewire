@@ -77,9 +77,14 @@ module.load = function (mode) {
         } else {
           showCursor();
           editor.setValue(fileInfo.contents);
+          
+          if(fileInfo.cursorPosition){
+            editor.selection.moveCursorToPosition(fileInfo.cursorPosition);
+          }
         }
           
         editor.focus();
+        editor.selection.clearSelection();
         
       }
     }

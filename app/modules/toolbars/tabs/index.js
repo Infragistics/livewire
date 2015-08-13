@@ -1,3 +1,4 @@
+/* global ace */
 /// <reference path="../../../../typings/node/node.d.ts"/>
 /// <reference path="../../../../typings/jquery/jquery.d.ts"/>
 
@@ -8,6 +9,9 @@ var
   messenger = require(path.resolve(__dirname, '../../messenger')),
   _ = require('lodash'),
   shell = require('shell'),
+  
+  editor = null,
+  selectedPath = '',
 
   $tabsContainer = $('#lw-tabs'),  
   template = '<div class="lw-tab active" title="PATH"><span class="lw-name">NAME</span> <button class="lw-close" title="close" data-path="PATH"><i class="fa fa-times-circle-o"></i></button></div>';
@@ -33,6 +37,7 @@ var bindTab = function($tab, fileInfo){
 };
 
 var getFileInfoFromTab = function($tab){
+  
   var 
     fileName = '', 
     filePath = '', 
@@ -60,9 +65,23 @@ var getFileInfoFromTab = function($tab){
   return fileInfo;
 };
 
+/*
+editor = ace.edit('editor');
+    fileInfo.cursorPosition = editor.selection.getCursor();
+ */
+
 // Switch documents
 $tabsContainer.on('click', '.lw-tab', function(e){
-  var $tab, fileInfo, isTabSelected;
+  var $tab, fileInfo, isTabSelected, cursorInfo;
+  
+  editor = ace.edit('editor');
+  
+  cursorInfo = {
+    position: editor.selection.getCursor(),
+    path: selectedPath
+  };
+  
+  messenger.publish.file('beforeFileSelected', cursorInfo);
   
   $tab = $(this);
   isTabSelected = $tab.hasClass('active');
@@ -73,6 +92,8 @@ $tabsContainer.on('click', '.lw-tab', function(e){
     $tab.addClass('active');
     
     fileInfo = getFileInfoFromTab($tab);
+    
+    selectedPath = fileInfo.path;
     
     messenger.publish.file('fileSelected', fileInfo);
   }
@@ -121,7 +142,11 @@ messenger.subscribe.file('file.pathInfo', function (fileInfo, envelope) {
   var $tab, useActiveTab;
   
   if (!_.isUndefined(fileInfo.path)) {
+    
+    selectedPath = fileInfo.path;
+    
     useActiveTab = fileInfo.isSaveAs;
+    
     if(fileInfo.isFileAlreadyOpen){
       $tab = $tabsContainer.find('div[data-escaped-path="' + escapePath(fileInfo.path) + '"]');
       $tab.trigger('click');      

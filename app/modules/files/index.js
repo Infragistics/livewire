@@ -44,9 +44,23 @@ var handlers = {
 		messenger.publish.file('contentChanged', fileInfo);
 	},
 	
+	beforeFileSelected: function(cursorInfo){
+		
+		for(var i=0; i < files.length; i++){
+			if(files[i].path === cursorInfo.path){
+				files[i].cursorPosition = cursorInfo.position;
+				break;
+			}
+		}
+	},
+	
 	fileSelected: function(fileInfo){
-		var selectedIndex = getIndex(fileInfo);
-		messenger.publish.file('contentChanged', files[selectedIndex]);
+		var selectedIndex, selectedFileInfo;
+		
+		selectedIndex = getIndex(fileInfo);
+		selectedFileInfo = files[selectedIndex];
+		
+		messenger.publish.file('contentChanged', selectedFileInfo);
 	}
 };
 
@@ -67,3 +81,4 @@ messenger.subscribe.file('fileOpened', handlers.fileOpened);
 messenger.subscribe.file('fileClosed', handlers.fileClosed);
 messenger.subscribe.file('fileSelected', handlers.fileSelected);
 messenger.subscribe.file('new', handlers.fileSelected);
+messenger.subscribe.file('beforeFileSelected', handlers.beforeFileSelected);
