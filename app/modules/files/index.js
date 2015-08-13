@@ -12,7 +12,6 @@ var getIndex = function(info){
 		var result = false;
 		
 		if((!_.isUndefined(file.path)) && file.path.length > 0){
-			debugger;
 			result = file.path.toLowerCase() === info.path.toLowerCase();
 		} else {
 			result = file.id === info.id;
@@ -49,6 +48,19 @@ var handlers = {
 		var selectedIndex = getIndex(fileInfo);
 		messenger.publish.file('contentChanged', files[selectedIndex]);
 	}
+};
+
+module.isFileOpen = function(filePath){
+	var result = false;
+	
+	for(var i=0; i < files.length; i++){
+		if(files[i].path.toLowerCase() === filePath.toLowerCase()){
+			result = true;
+			break;
+		}
+	}
+	
+	return result;
 };
 	
 messenger.subscribe.file('fileOpened', handlers.fileOpened);

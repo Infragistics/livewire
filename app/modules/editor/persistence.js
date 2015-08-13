@@ -10,6 +10,7 @@ var
   dialogs = require(path.resolve(__dirname, '../dialogs')),
   messenger = require(path.resolve(__dirname, '../messenger')),
   formats = require(path.resolve(__dirname, '../formats')),
+  files = require(path.resolve(__dirname, '../files')),
   
   editor,
   filePath = '',
@@ -33,14 +34,16 @@ var getFileInfo = function(filePath, formatter){
       path: '', 
       ext: formatter.defaultExtension,
       fileName: 'untitled.' + formatter.defaultExtension,
-      basePath: ''
+      basePath: '',
+      isFileAlreadyOpen: false
     };
   } else {
     returnValue = { 
       path: filePath, 
       ext: path.extname(filePath).replace('.', ''),
       fileName: path.basename(filePath),
-      basePath: path.dirname(filePath)
+      basePath: path.dirname(filePath),
+      isFileAlreadyOpen: files.isFileOpen(filePath)
     };
   }
   
@@ -81,19 +84,21 @@ var menuHandlers = {
     });
 
     dialogs.openFile(options).then(function (response) {
+      var fileInfo;
+      
       filePath = response.path;
       basePath = path.dirname(filePath);
 
-      var fileInfo = getFileInfo(response.path);
-      
+      fileInfo = getFileInfo(response.path);
       formatter = formats.getByFileExtension(fileInfo.ext);
       
       messenger.publish.file('file.pathInfo', fileInfo);
       
-      fileInfo.contents = _.trimLeft(response.content, BOM); 
-      messenger.publish.file('fileOpened', fileInfo);
+      if(!fileInfo.isFileAlreadyOpen){
+        fileInfo.contents = _.trimLeft(response.content, BOM); 
+        messenger.publish.file('fileOpened', fileInfo);
+      }
     });
-
   },
 
   save: function (data, envelope) {

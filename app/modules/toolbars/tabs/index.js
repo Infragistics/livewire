@@ -20,11 +20,16 @@ var clearSelection = function(){
   window.getSelection().empty();  
 };
 
+var escapePath = function(path){
+  return path.replace(/\\/g, '_');
+};
+
 var bindTab = function($tab, fileInfo){
   $tab.attr('title', fileInfo.path);
+  $tab.attr('data-escaped-path', escapePath(fileInfo.path));
   $tab.attr('id', fileInfo.id);
   $tab.find('span.lw-name').text(fileInfo.fileName);
-  $tab.find('button.lw-close').data('path', fileInfo.path);
+  $tab.find('button.lw-close').attr('data-path', fileInfo.path);
 };
 
 var getFileInfoFromTab = function($tab){
@@ -113,11 +118,14 @@ $tabsContainer.on('click', '.lw-close', function(e){
 });
 
 messenger.subscribe.file('file.pathInfo', function (fileInfo, envelope) {
-  var $tab, useExistingTab;
+  var $tab, useActiveTab;
   
   if (!_.isUndefined(fileInfo.path)) {
-    useExistingTab = fileInfo.isSaveAs;
-    if(useExistingTab){
+    useActiveTab = fileInfo.isSaveAs;
+    if(fileInfo.isFileAlreadyOpen){
+      $tab = $tabsContainer.find('div[data-escaped-path="' + escapePath(fileInfo.path) + '"]');
+      $tab.trigger('click');      
+    } else if(useActiveTab){
       $tab = $tabsContainer.find('.active');
       bindTab($tab, fileInfo);
     } else {
