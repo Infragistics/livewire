@@ -72,12 +72,14 @@ var menuHandlers = {
   },
 
   open: function (data, envelope) {
-    var options = {
+    var options, supportedFormats;
+    
+    options = {
       title: 'Open',
       filters: []
     };
 
-    var supportedFormats = formats.getAll();
+    supportedFormats = formats.getAll();
 
     supportedFormats.forEach(function (format) {
       options.filters.push({ name: format.name, extensions: format.extensions });
@@ -159,14 +161,16 @@ var menuHandlers = {
   },
 
   saveAsHtml: function (data, envelope) {
-    var options = {
+    var options, exp, html;
+    
+    options = {
       title: 'Save As HTML'
     };
       
     // special characters in regex are craaaaazy
-    var exp = new RegExp('src="' + basePath.replace(/\\/g, '\\\\') + '\\\\', 'gi');
+    exp = new RegExp('src="' + basePath.replace(/\\/g, '\\\\') + '\\\\', 'gi');
 
-    var html = $result.html();
+    html = $result.html();
     html = html.replace(exp, 'src="');
     html = '<!doctype html>\n<body>\n' + html + '</body>\n</html>';
 

@@ -35,6 +35,13 @@ module.load = function (mode) {
     editor.$blockScrolling = Infinity;
   };
   
+  var activateEditor = function(){
+    if (editor.getReadOnly()) {
+      editor.setReadOnly(false);
+      showCursor();
+    }
+  };
+  
   hideCursor(/* until a file is opened or new one is created */);
     
   supressAceDepricationMessage();
@@ -61,6 +68,8 @@ module.load = function (mode) {
     contentChanged: function(fileInfo){
       if(_.isObject(fileInfo)){
         
+        activateEditor();
+        
         currentFile = fileInfo;
         
         if(fileInfo.isBlank){
@@ -74,16 +83,10 @@ module.load = function (mode) {
         editor.focus();
         
       }
-    },
-    newFile: function(){
-      if (editor.getReadOnly()) {
-        editor.setReadOnly(false);
-        showCursor();
-      }
     }
   };
   
-  messenger.subscribe.menu('file.new', handlers.newFile);
+  messenger.subscribe.menu('file.new', activateEditor);
   messenger.subscribe.file('contentChanged', handlers.contentChanged);
 };
 
