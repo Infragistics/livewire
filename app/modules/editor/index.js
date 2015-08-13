@@ -51,7 +51,6 @@ module.load = function (mode) {
   session.setUseWrapMode(true);
 
   require('./clipboard.js').init(editor);
-  require('./persistence.js');
   require('./formatting.js').init(editor);
 
   var onChange = function () {
