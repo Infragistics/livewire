@@ -28,10 +28,28 @@ var bindTab = function($tab, fileInfo){
 };
 
 var getFileInfoFromTab = function($tab){
+  var 
+    fileName = '', 
+    filePath = '', 
+    ext = '', 
+    basePath = '';
+  
+  fileName = $tab.find('span.lw-name').text();
+  filePath = $tab.attr('title');
+  
+  if(filePath.length === 0){
+    ext = path.extname(fileName);
+  } else {
+    basePath = path.dirname(filePath);
+    ext = path.extname(filePath);
+  }
+  
   var fileInfo = {
-    path: $tab.attr('title'),
+    path: filePath,
     id: $tab.attr('id'),
-    fileName: $tab.find('span.lw-name').text(),
+    fileName: fileName,
+    basePath: basePath,
+    ext: ext
   }
   
   return fileInfo;

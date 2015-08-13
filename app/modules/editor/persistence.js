@@ -1,3 +1,4 @@
+/* global ace */
 module = module.exports;
 
 var 
@@ -16,10 +17,6 @@ var
   formatter = null,
   $result = $('#result'),
   BOM = '\ufeff';
-
-module.init = function (editorInstance) {
-  editor = editorInstance;
-};
 
 messenger.subscribe.file('file.pathInfo', function (data, envelope) {
   if (data.isNewFile) {
@@ -100,7 +97,60 @@ var menuHandlers = {
   },
 
   save: function (data, envelope) {
-    messenger.publish.file('getSource');      
+    var fileContent, editor;
+
+    editor = ace.edit('editor');
+    fileContent = editor.getValue();
+    
+    if(fileContent.length > 0){
+      if (filePath.length > 0) {
+        if (!_.startsWith(fileContent, BOM)) {
+          fileContent = BOM + fileContent;
+        }
+  
+        fs.writeFile(filePath, fileContent, { encoding: 'utf8' }, function (err) {
+          // todo: handle error
+        });
+      } else {
+        menuHandlers.saveAs(data, envelope);
+      }
+    }
+  },
+  
+  saveAs: function(data, envelope){
+    var fileContent, options, defaultExtension, editor;
+
+    editor = ace.edit('editor');
+    fileContent = editor.getValue();
+
+    options = {
+      title: 'Save File'
+    };
+
+    if (!_.startsWith(fileContent, BOM)) {
+      fileContent = BOM + fileContent;
+    }
+
+    defaultExtension = '';
+
+    if (formatter !== null) {
+      defaultExtension = formatter.defaultExtension;
+    }
+
+    dialogs.saveFile(fileContent, options, defaultExtension).then(function (newFilePath) {
+      var fileInfo;
+
+      filePath = newFilePath;
+      basePath = path.dirname(filePath);
+
+      fileInfo = getFileInfo(filePath);
+
+      fileInfo.isSaveAs = true;
+
+      messenger.publish.file('file.pathInfo', fileInfo);
+      messenger.publish.file('rerender');
+    });
+
   },
 
   saveAsHtml: function (data, envelope) {
@@ -122,51 +172,12 @@ var menuHandlers = {
 };
 
 var fileHandlers = {
-    save: function(data, envelope){
-    var fileContent, options, defaultExtension;
-    
-    fileContent = data.source;
-    
-    if(filePath.length > 0){
-      if (!_.startsWith(fileContent, BOM)) {
-        fileContent = BOM + fileContent;
-      }
-
-      fs.writeFile(filePath, fileContent, { encoding: 'utf8' }, function (err) {
-        // todo: handle error
-      }); 
-    } else {
-      
-      options = {
-        title: 'Save File'
-      };
-      
-      if (!_.startsWith(fileContent, BOM)) {
-        fileContent = BOM + fileContent;
-      }
-      
-      defaultExtension = '';
-      
-      if (formatter !== null) {
-        defaultExtension = formatter.defaultExtension;
-      }
-      
-      dialogs.saveFile(fileContent, options, defaultExtension).then(function (newFilePath) {
-        var fileInfo;
-        
-        filePath = newFilePath;
-        basePath = path.dirname(filePath);
-      
-        fileInfo = getFileInfo(filePath);
-        
-        fileInfo.isSaveAs = true; 
-        
-        messenger.publish.file('file.pathInfo', fileInfo);
-        messenger.publish.file('rerender');
-      });
-    }
-  },
-}
+  fileSelected: function(fileInfo, envelope){
+    filePath = fileInfo.path;
+    basePath = fileInfo.basePath;
+    formatter = formats.getByFileExtension(fileInfo.ext);
+  }
+};
 
 messenger.subscribe.menu('file.new', menuHandlers.newFile);
 messenger.subscribe.menu('file.open', menuHandlers.open);
@@ -174,4 +185,4 @@ messenger.subscribe.menu('file.save', menuHandlers.save);
 messenger.subscribe.menu('file.saveAs', menuHandlers.save);
 messenger.subscribe.menu('file.saveAsHtml', menuHandlers.saveAsHtml);
 
-messenger.subscribe.file('getSourceComplete', fileHandlers.save);
+messenger.subscribe.file('fileSelected', fileHandlers.fileSelected);

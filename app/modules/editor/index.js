@@ -44,7 +44,7 @@ module.load = function (mode) {
   session.setUseWrapMode(true);
 
   require('./clipboard.js').init(editor);
-  require('./persistence.js').init(editor);
+  require('./persistence.js');
   require('./formatting.js').init(editor);
 
   var onChange = function () {
@@ -75,13 +75,6 @@ module.load = function (mode) {
         
       }
     },
-    getSource: function(){
-      var info = {
-        source: editor.getValue(),
-        cursorPosition: editor.selection.getCursor()
-      };
-      messenger.publish.file('getSourceComplete', info);
-    },
     newFile: function(){
       if (editor.getReadOnly()) {
         editor.setReadOnly(false);
@@ -92,7 +85,6 @@ module.load = function (mode) {
   
   messenger.subscribe.menu('file.new', handlers.newFile);
   messenger.subscribe.file('contentChanged', handlers.contentChanged);
-  messenger.subscribe.file('getSource', handlers.getSource);
 };
 
 module.load('asciidoc');

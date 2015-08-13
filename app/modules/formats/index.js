@@ -15,6 +15,8 @@ module.get = function (name) {
 module.getByFileExtension = function (ext) {
 	var returnValue = null;
 	
+	ext = (_.startsWith(ext, '.')? ext.replace('.', '') : ext);
+	
 	if(ext === undefined) {
 		formats.forEach(function (format) {
 			if (format.name.toLowerCase() === config.defaultFormat.toLowerCase()) {
