@@ -65,11 +65,6 @@ var getFileInfoFromTab = function($tab){
   return fileInfo;
 };
 
-/*
-editor = ace.edit('editor');
-    fileInfo.cursorPosition = editor.selection.getCursor();
- */
-
 // Switch documents
 $tabsContainer.on('click', '.lw-tab', function(e){
   var $tab, fileInfo, isTabSelected, cursorInfo;
