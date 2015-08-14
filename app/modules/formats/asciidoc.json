@@ -12,7 +12,7 @@
 		"h1":			{ "left" : "= ", "right" : "" },
 		"h2":			{ "left" : "== ", "right" : "" },
 		"h3":			{ "left" : "=== ", "right" : "" },
-		"quote":		{ "left" : "+\n[quote,\"\",\"\"]", "right" : "" },
+		"quote":		{ "left" : "[quote]\n", "right" : "" },
 		"ordered":		{ "left" : ". ", "right" : "" },
 		"unordered":	{ "left" : "*  ", "right" : "" },
 		"hr":			{ "left" : "'''", "right" : "" }
