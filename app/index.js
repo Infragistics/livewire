@@ -5,3 +5,7 @@ require.main.require('./modules/persistence');
 require.main.require('./modules/files');
 require.main.require('./modules/results');
 require.main.require('./modules/editor');
+
+$(function(){
+	$('body').fadeIn('50');
+});
