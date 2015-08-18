@@ -131,7 +131,8 @@ var menuHandlers = {
     fileContent = editor.getValue();
 
     options = {
-      title: 'Save File'
+      title: 'Save File',
+      filters: []
     };
 
     if (!_.startsWith(fileContent, BOM)) {
@@ -143,6 +144,8 @@ var menuHandlers = {
     if (formatter !== null) {
       defaultExtension = formatter.defaultExtension;
     }
+    
+    options.filters.push({ name: formatter.name, extensions: [formatter.defaultExtension] });
 
     dialogs.saveFile(fileContent, options, defaultExtension).then(function (newFilePath) {
       var fileInfo;
@@ -164,7 +167,10 @@ var menuHandlers = {
     var options, exp, html;
     
     options = {
-      title: 'Save As HTML'
+      title: 'Save As HTML',
+      filters: [
+        { name: 'HTML', extensions: ['html'] }
+      ]
     };
       
     // special characters in regex are craaaaazy
