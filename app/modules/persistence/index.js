@@ -72,7 +72,7 @@ var menuHandlers = {
   },
 
   open: function (data, envelope) {
-    var options, supportedFormats;
+    var options, supportedFormats, allFormats;
     
     options = {
       title: 'Open',
@@ -80,10 +80,18 @@ var menuHandlers = {
     };
 
     supportedFormats = formats.getAll();
+    
+    allFormats = {
+      name: 'All',
+      extensions: []
+    };
 
     supportedFormats.forEach(function (format) {
       options.filters.push({ name: format.name, extensions: format.extensions });
+      allFormats.extensions = allFormats.extensions.concat(format.extensions);
     });
+    
+    options.filters.unshift(allFormats);
 
     dialogs.openFile(options).then(function (response) {
       var fileInfo;
