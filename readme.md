@@ -1,4 +1,4 @@
-# Livewire
+﻿# Livewire
 
 An simple web content editor built with [Electron](electron.atom.io).
 
@@ -23,7 +23,7 @@ There are _no installers available at the moment_, so for now you can get the co
 
 Clone this repository:
 
-    $ git clone https://github.com/craigshoemaker/Livewire.git
+    $ git clone https://github.com/infragistics/livewire.git
     
 Install the dependencies:
 
