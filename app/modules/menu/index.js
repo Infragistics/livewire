@@ -11,23 +11,23 @@ require(path.resolve(__dirname, './context.js'));
 var handlers = {
     
   // File 
-  newMarkdownFile: function () { messenger.publish.menu('file.new', { format: 'markdown' }) },
-  newAsciiDocFile: function () { messenger.publish.menu('file.new', { format: 'asciidoc' }) },
-  open: function () { messenger.publish.menu('file.open'); },
-  save: function () { messenger.publish.menu('file.save'); },
-  saveAs: function () { messenger.publish.menu('file.saveAs'); },
-  saveAsHtml: function () { messenger.publish.menu('file.saveAsHtml'); },
-  quit: function () { messenger.publish.menu('file.quit'); },
+  newMarkdownFile: function () { messenger.publish.menu('new', { format: 'markdown' }) },
+  newAsciiDocFile: function () { messenger.publish.menu('new', { format: 'asciidoc' }) },
+  open: function () { messenger.publish.menu('open'); },
+  save: function () { messenger.publish.menu('save'); },
+  saveAs: function () { messenger.publish.menu('saveAs'); },
+  saveAsHtml: function () { messenger.publish.menu('saveAsHtml'); },
+  quit: function () { messenger.publish.menu('quit'); },
     
   // View
-  reload: function () { messenger.publish.menu('view.reload'); },
-  devTools: function () { messenger.publish.menu('view.devToolsToggle'); },
-  fullScreen: function () { messenger.publish.menu('view.fullScreenToggle'); },
-  autoHideMenu: function () { messenger.publish.menu('view.autoHideMenu'); },
+  reload: function () { messenger.publish.menu('reload'); },
+  devTools: function () { messenger.publish.menu('devToolsToggle'); },
+  fullScreen: function () { messenger.publish.menu('fullScreenToggle'); },
+  autoHideMenu: function () { messenger.publish.menu('autoHideMenu'); },
     
   // Help
-  issues: function () { messenger.publish.menu('help.issues'); },
-  about: function () { messenger.publish.menu('help.about'); }
+  issues: function () { messenger.publish.menu('issues'); },
+  about: function () { messenger.publish.menu('about'); }
 }
 
 var template = [

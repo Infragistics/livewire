@@ -12,5 +12,5 @@ var handlers = {
   }
 };
 
-messenger.subscribe.menu('help.issues', handlers.issues);
-messenger.subscribe.menu('help.about', handlers.about);
+messenger.subscribe.menu('issues', handlers.issues);
+messenger.subscribe.menu('about', handlers.about);

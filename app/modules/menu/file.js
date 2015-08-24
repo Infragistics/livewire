@@ -7,7 +7,7 @@ var messenger = require(path.resolve(__dirname, '../messenger'));
 // therefore you will find the rest of the implementation in
 // modules/editor/persistence.js
   
-messenger.subscribe.menu('file.quit', function () {
+messenger.subscribe.menu('quit', function () {
   var quit = confirm('Are you sure you want to close this application?');
 		if (quit) {
     app.quit();

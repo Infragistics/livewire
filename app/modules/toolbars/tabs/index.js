@@ -76,7 +76,7 @@ $tabsContainer.on('click', '.lw-tab', function(e){
     path: selectedPath
   };
   
-  messenger.publish.file('beforeFileSelected', cursorInfo);
+  messenger.publish.file('beforeSelected', cursorInfo);
   
   $tab = $(this);
   isTabSelected = $tab.hasClass('active');
@@ -90,7 +90,7 @@ $tabsContainer.on('click', '.lw-tab', function(e){
     
     selectedPath = fileInfo.path;
     
-    messenger.publish.file('fileSelected', fileInfo);
+    messenger.publish.file('selected', fileInfo);
   }
   
 });
@@ -130,7 +130,7 @@ $tabsContainer.on('click', '.lw-close', function(e){
     }, 5);
   }
   
-  messenger.publish.file('fileClosed', fileInfo);debugger;
+  messenger.publish.file('closed', fileInfo);
   
   openTabCount = $tabsContainer.find('.lw-tab').length;
   
@@ -139,7 +139,7 @@ $tabsContainer.on('click', '.lw-close', function(e){
   }
 });
 
-messenger.subscribe.file('file.pathInfo', function (fileInfo, envelope) {
+messenger.subscribe.file('pathChanged', function (fileInfo, envelope) {
   var $tab, useActiveTab;
   
   if (!_.isUndefined(fileInfo.path)) {

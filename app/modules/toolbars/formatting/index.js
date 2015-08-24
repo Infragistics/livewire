@@ -38,5 +38,5 @@ var handlers = {
 	}
 };
 
-messenger.subscribe.file('fileOpened', handlers.enable);
+messenger.subscribe.file('opened', handlers.enable);
 messenger.subscribe.file('allFilesClosed', handlers.allFilesClosed);

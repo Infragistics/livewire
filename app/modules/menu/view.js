@@ -39,7 +39,7 @@ var handlers = {
   }
 };
 
-messenger.subscribe.menu('view.reload', handlers.reload);
-messenger.subscribe.menu('view.devToolsToggle', handlers.devToolsToggle);
-messenger.subscribe.menu('view.fullScreenToggle', handlers.fullScreenToggle);
-messenger.subscribe.menu('view.autoHideMenu', handlers.autoHideMenu);
+messenger.subscribe.menu('reload', handlers.reload);
+messenger.subscribe.menu('devToolsToggle', handlers.devToolsToggle);
+messenger.subscribe.menu('fullScreenToggle', handlers.fullScreenToggle);
+messenger.subscribe.menu('autoHideMenu', handlers.autoHideMenu);

@@ -22,12 +22,12 @@ var getIndex = function(info){
 };
 
 var handlers = {
-	fileOpened: function(data){
+	opened: function(data){
 		files.push(data);
 		messenger.publish.file('contentChanged', data);
 	},
 	
-	fileClosed: function(info){
+	closed: function(info){
 		
 		var indexOfFileToRemove = getIndex(info);
 		
@@ -77,8 +77,8 @@ module.isFileOpen = function(filePath){
 	return result;
 };
 	
-messenger.subscribe.file('fileOpened', handlers.fileOpened);
-messenger.subscribe.file('fileClosed', handlers.fileClosed);
-messenger.subscribe.file('fileSelected', handlers.fileSelected);
+messenger.subscribe.file('opened', handlers.opened);
+messenger.subscribe.file('closed', handlers.closed);
+messenger.subscribe.file('selected', handlers.fileSelected);
 messenger.subscribe.file('new', handlers.fileSelected);
-messenger.subscribe.file('beforeFileSelected', handlers.beforeFileSelected);
+messenger.subscribe.file('beforeSelected', handlers.beforeFileSelected);

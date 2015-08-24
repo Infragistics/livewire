@@ -19,7 +19,7 @@ var
   $result = $('#result'),
   BOM = '\ufeff';
 
-messenger.subscribe.file('file.pathInfo', function (data, envelope) {
+messenger.subscribe.file('pathChanged', function (data, envelope) {
   if (data.isNewFile) {
     filePath = '';
     basePath = '';
@@ -65,10 +65,10 @@ var menuHandlers = {
 
     fileInfo = getFileInfo(null, formatter);
        
-    messenger.publish.file('file.pathInfo', fileInfo);
+    messenger.publish.file('pathChanged', fileInfo);
     
     fileInfo.contents = formatter.defaultContent; 
-    messenger.publish.file('fileOpened', fileInfo);
+    messenger.publish.file('opened', fileInfo);
   },
 
   open: function (data, envelope) {
@@ -102,11 +102,11 @@ var menuHandlers = {
       fileInfo = getFileInfo(response.path);
       formatter = formats.getByFileExtension(fileInfo.ext);
       
-      messenger.publish.file('file.pathInfo', fileInfo);
+      messenger.publish.file('pathChanged', fileInfo);
       
       if(!fileInfo.isFileAlreadyOpen){
         fileInfo.contents = _.trimLeft(response.content, BOM); 
-        messenger.publish.file('fileOpened', fileInfo);
+        messenger.publish.file('opened', fileInfo);
       }
     });
   },
@@ -165,7 +165,7 @@ var menuHandlers = {
 
       fileInfo.isSaveAs = true;
 
-      messenger.publish.file('file.pathInfo', fileInfo);
+      messenger.publish.file('pathChanged', fileInfo);
       messenger.publish.file('rerender');
     });
 
@@ -202,10 +202,10 @@ var fileHandlers = {
   }
 };
 
-messenger.subscribe.menu('file.new', menuHandlers.newFile);
-messenger.subscribe.menu('file.open', menuHandlers.open);
-messenger.subscribe.menu('file.save', menuHandlers.save);
-messenger.subscribe.menu('file.saveAs', menuHandlers.save);
-messenger.subscribe.menu('file.saveAsHtml', menuHandlers.saveAsHtml);
+messenger.subscribe.menu('new', menuHandlers.newFile);
+messenger.subscribe.menu('open', menuHandlers.open);
+messenger.subscribe.menu('save', menuHandlers.save);
+messenger.subscribe.menu('saveAs', menuHandlers.save);
+messenger.subscribe.menu('saveAsHtml', menuHandlers.saveAsHtml);
 
-messenger.subscribe.file('fileSelected', fileHandlers.fileSelected);
+messenger.subscribe.file('selected', fileHandlers.fileSelected);

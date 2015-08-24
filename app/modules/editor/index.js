@@ -90,7 +90,7 @@ module.load = function (mode) {
     }
   };
   
-  messenger.subscribe.menu('file.new', activateEditor);
+  messenger.subscribe.menu('new', activateEditor);
   messenger.subscribe.file('contentChanged', handlers.contentChanged);
 };
 

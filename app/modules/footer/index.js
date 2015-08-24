@@ -13,7 +13,7 @@ $fileNameButton.click(function () {
   }
 });
 
-messenger.subscribe.file('file.pathInfo', function (data, envelope) {
+messenger.subscribe.file('pathChanged', function (data, envelope) {
 
   if (_.isUndefined(data.path) || data.isNewFile) {
     file.name = '';
