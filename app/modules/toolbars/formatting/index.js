@@ -5,10 +5,12 @@ var
 	messenger = require(path.resolve(__dirname, '../../messenger')),
 	isEnabled = false;
 
-$(' button[data-channel="menu"]').click(function () {
-	var $button, topic;
+$('button[data-channel="menu"]').click(function () {
+	var $button, topic, commandAlwaysAvailable;
 	
-	if(isEnabled){
+	commandAlwaysAvailable = ($(this).data('always-available') === true);
+	
+	if(isEnabled || commandAlwaysAvailable){
 		$button = $(this);
 		topic = $button.data('topic');
 		messenger.publish.menu(topic);
@@ -30,7 +32,11 @@ $('#formatting-toolbar button[data-channel="format"]').click(function () {
 var handlers = {
 	enable: function(){
 		isEnabled = true;
+	},
+	allFilesClosed: function(){
+		isEnabled = false;
 	}
 };
 
 messenger.subscribe.file('fileOpened', handlers.enable);
+messenger.subscribe.file('allFilesClosed', handlers.allFilesClosed);

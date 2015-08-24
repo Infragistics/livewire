@@ -110,7 +110,7 @@ $tabsContainer.on('dblclick', '.lw-tab', function(e){
 
 // Close tab
 $tabsContainer.on('click', '.lw-close', function(e){
-  var $btn, $tab, isTabSelected, fileInfo;
+  var $btn, $tab, isTabSelected, fileInfo, openTabCount;
   
   e.stopPropagation();
   
@@ -130,7 +130,13 @@ $tabsContainer.on('click', '.lw-close', function(e){
     }, 5);
   }
   
-  messenger.publish.file('fileClosed', fileInfo);
+  messenger.publish.file('fileClosed', fileInfo);debugger;
+  
+  openTabCount = $tabsContainer.find('.lw-tab').length;
+  
+  if(openTabCount === 0){
+    messenger.publish.file('allFilesClosed', fileInfo);
+  }
 });
 
 messenger.subscribe.file('file.pathInfo', function (fileInfo, envelope) {
