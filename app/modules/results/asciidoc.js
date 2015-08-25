@@ -8,6 +8,8 @@ var processor = null;
 var useExtensions = true;
 var basePath = '';
 
+var cheerio = require('cheerio');
+
 var messenger = require(path.resolve(__dirname, '../messenger'));
 
 messenger.subscribe.file('pathChanged', function (data, envelope) {
@@ -30,9 +32,22 @@ var options = opal.hash2(
   });
 
 var renderer = function (content) {
-  var html = processor.$convert(content, options);
-  html = html.replace(/src="/g, 'src="' + basePath + '\\');
-  return html;
+  var html, $;
+  
+  html = processor.$convert(content, options);
+  $ = cheerio.load(html);
+  
+  $('table').addClass('table table-striped');
+  $('.admonitionblock table').removeClass('table table-striped');
+  $('img').each(function(){
+    var $img, src;
+    
+    $img = $(this);
+    src = $img.attr('src');
+    $img.attr('src', basePath + '\\' + src);
+  });
+  
+  return $.html();
 };
 
 module.get = function () {
