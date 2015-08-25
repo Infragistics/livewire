@@ -124,3 +124,16 @@
   z-index: 100;
   top: 28px;
 }
+.admonitionblock {
+  margin: 20px 0 20px 0;
+}
+.admonitionblock .icon .title {
+  display: none;
+}
+.admonitionblock .content {
+  border-left: 8px solid #eeeeee;
+  padding-left: 10px;
+}
+.admonitionblock .content .title {
+  font-weight: bold;
+}
