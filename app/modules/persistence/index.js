@@ -68,6 +68,7 @@ var menuHandlers = {
     messenger.publish.file('pathChanged', fileInfo);
     
     fileInfo.contents = formatter.defaultContent; 
+    messenger.publish.file('new', fileInfo);
     messenger.publish.file('opened', fileInfo);
   },
 

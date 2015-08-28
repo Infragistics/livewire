@@ -64,6 +64,9 @@ module.load = function (mode) {
   editor.focus();
   
   var handlers = {
+    fileNew: function(){
+      editor.scrollToLine(0);
+    },
     contentChanged: function(fileInfo){
       if(_.isObject(fileInfo)){
         
@@ -92,6 +95,7 @@ module.load = function (mode) {
   
   messenger.subscribe.menu('new', activateEditor);
   messenger.subscribe.file('contentChanged', handlers.contentChanged);
+  messenger.subscribe.file('new', handlers.fileNew)
 };
 
 module.load('asciidoc');
