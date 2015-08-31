@@ -1,4 +1,4 @@
-var result = document.getElementById('result');
+var $result = $('#result');
 
 var 
   path = require('path'),
@@ -28,6 +28,11 @@ var detectRenderer = function(fileInfo){
 };
 
 var handlers = {
+  newFile: function(){
+    $result.animate({
+        scrollTop: $result.offset().top
+    }, 10);
+  },
   contentChanged: function(fileInfo){
     
     if(!_.isUndefined(fileInfo)){
@@ -38,17 +43,18 @@ var handlers = {
         source = fileInfo.contents;
         html = renderer(source);
       }
-      result.innerHTML = html;
+      $result.html(html);
     }
   }
 };
 
+messenger.subscribe.file('new', handlers.newFile);
 messenger.subscribe.file('contentChanged', handlers.contentChanged);
 messenger.subscribe.file('sourceChange', handlers.contentChanged);
 
 messenger.subscribe.file('rerender', function (data, envelope) {
   html = renderer(source);
-  result.innerHTML = html;
+  $result.html(html);
 });
 
 var openExternalLinksInBrowser = function (e) {
