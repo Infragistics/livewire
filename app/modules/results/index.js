@@ -49,6 +49,7 @@ var handlers = {
 };
 
 messenger.subscribe.file('new', handlers.newFile);
+messenger.subscribe.file('opened', handlers.newFile);
 messenger.subscribe.file('contentChanged', handlers.contentChanged);
 messenger.subscribe.file('sourceChange', handlers.contentChanged);
 
