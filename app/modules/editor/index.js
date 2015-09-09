@@ -9,7 +9,8 @@ var
   messenger = require(path.resolve(__dirname, '../messenger')),
   editor,
   session,
-  currentFile = {};
+  currentFile = {},
+  noop = function(){};
 
 module.load = function (mode) {
 
@@ -68,6 +69,8 @@ module.load = function (mode) {
       editor.scrollToLine(0);
     },
     contentChanged: function(fileInfo){
+      var rowNumber;
+      
       if(_.isObject(fileInfo)){
         
         activateEditor();
@@ -82,7 +85,9 @@ module.load = function (mode) {
           editor.setValue(fileInfo.contents);
           
           if(fileInfo.cursorPosition){
+            rowNumber = fileInfo.cursorPosition.row;
             editor.selection.moveCursorToPosition(fileInfo.cursorPosition);
+            editor.scrollToLine(rowNumber, true /* attempt to center in editor */, true /* animate */, noop);
           }
         }
           
@@ -95,7 +100,7 @@ module.load = function (mode) {
   
   messenger.subscribe.menu('new', activateEditor);
   messenger.subscribe.file('contentChanged', handlers.contentChanged);
-  messenger.subscribe.file('new', handlers.fileNew)
+  messenger.subscribe.file('new', handlers.fileNew);
 };
 
 module.load('asciidoc');
