@@ -10,7 +10,8 @@ app.on('ready', function () {
 
   mainWindow = new BrowserWindow({
     width: 1000,
-    height: 800
+    height: 800,
+    icon: __dirname + '/icon.png'
   });
 
   mainWindow.show();
