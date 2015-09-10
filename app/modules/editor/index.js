@@ -11,7 +11,7 @@ var
   session,
   currentFile = {},
   noop = function(){};
-
+  
 module.load = function (mode) {
 
   editor = ace.edit('editor');
@@ -62,12 +62,19 @@ module.load = function (mode) {
   onChange();
 
   editor.on('change', onChange);
+  
   editor.focus();
   
   var handlers = {
+    
+    menuNew: function(){
+      activateEditor();
+    },
+    
     fileNew: function(){
       editor.scrollToLine(0);
     },
+    
     contentChanged: function(fileInfo){
       var rowNumber;
       
@@ -98,7 +105,7 @@ module.load = function (mode) {
     }
   };
   
-  messenger.subscribe.menu('new', activateEditor);
+  messenger.subscribe.menu('new', handlers.menuNew);
   messenger.subscribe.file('contentChanged', handlers.contentChanged);
   messenger.subscribe.file('new', handlers.fileNew);
 };
