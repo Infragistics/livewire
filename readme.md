@@ -1,6 +1,6 @@
 ﻿# Livewire
 
-An simple web content editor built with [Electron](electron.atom.io).
+A simple web content editor built with [Electron](electron.atom.io).
 
 ![Livewire](screenshot.png)
 
