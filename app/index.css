@@ -137,3 +137,7 @@
 .admonitionblock .content .title {
   font-weight: bold;
 }
+.misspelled {
+  border-bottom: 1px solid #f00;
+  margin-bottom: -1px;
+}

@@ -24,6 +24,8 @@ module.load = function (mode) {
     readOnly: true
   });
   
+  editor.setOption('spellcheck', true);
+  
   var showCursor = function(){
     editor.renderer.$cursorLayer.element.style.opacity = 1;
   };
@@ -53,6 +55,7 @@ module.load = function (mode) {
 
   require('./clipboard.js').init(editor);
   require('./formatting.js').init(editor);
+  //require('./spellcheck.js').init(editor);
 
   var onChange = function () {
     currentFile.contents = editor.getValue();
