@@ -1,53 +1,45 @@
 module = module.exports;
 
-var asciidoctor = require('asciidoctor.js')();
-var opal = asciidoctor.Opal;
-
 var path = require('path');
-var processor = null;
-var useExtensions = true;
 var basePath = '';
-
 var cheerio = require('cheerio');
-
 var messenger = require(path.resolve(__dirname, '../messenger'));
+var renderCallback = function(){};
+
+var handlers = {
+  message: function(e){
+    if(e.data && e.data.html && e.data.html.length > 0){
+      var $ = cheerio.load(e.data.html);
+      
+      $('table').addClass('table table-striped');
+      $('.admonitionblock table').removeClass('table table-striped');
+      $('img').each(function(){
+        var $img, src;
+        
+        $img = $(this);
+        src = $img.attr('src');
+        $img.attr('src', basePath + '\\' + src);
+      });
+      renderCallback({ html: $.html()});
+    }
+  }
+};
+
+var worker = new Worker(path.resolve(__dirname, 'asciidoc-worker.js'));
+worker.onmessage = handlers.message;
+worker.onerror = function(e){
+  console.log(e);
+};
 
 messenger.subscribe.file('pathChanged', function (data, envelope) {
   basePath = data.basePath;
 });
 
-
-if (useExtensions) {
-  processor = asciidoctor.Asciidoctor(true);
-}
-else {
-  processor = asciidoctor.Asciidoctor();
-}
-
-var options = opal.hash2(
-  ['doctype', 'attributes'],
-  {
-    doctype: 'article', // inline
-    attributes: ['showtitle']
-  });
-
-var renderer = function (content) {
-  var html, $;
-  
-  html = processor.$convert(content, options);
-  $ = cheerio.load(html);
-  
-  $('table').addClass('table table-striped');
-  $('.admonitionblock table').removeClass('table table-striped');
-  $('img').each(function(){
-    var $img, src;
-    
-    $img = $(this);
-    src = $img.attr('src');
-    $img.attr('src', basePath + '\\' + src);
-  });
-  
-  return $.html();
+var renderer = function(content, callback){
+  if(content.length > 0){
+    renderCallback = callback;
+    worker.postMessage({source: content});
+  }
 };
 
 module.get = function () {

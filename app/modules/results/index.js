@@ -9,7 +9,6 @@ var
   formats = require(path.resolve(__dirname, '../formats')),
   
   source = '',
-  html = '',
   shell = require('shell'),
   formatter = null;
   
@@ -37,13 +36,15 @@ var handlers = {
     
     if(!_.isUndefined(fileInfo)){
       if (fileInfo.isBlank) {
-        html = ''; 
+        $result.html('');
       } else {
         detectRenderer(fileInfo);
         source = fileInfo.contents;
-        html = renderer(source);
+        //html = renderer(source);
+        renderer(source, function(e){
+          $result.html(e.html);
+        });
       }
-      $result.html(html);
     }
   }
 };
@@ -54,8 +55,9 @@ messenger.subscribe.file('contentChanged', handlers.contentChanged);
 messenger.subscribe.file('sourceChange', handlers.contentChanged);
 
 messenger.subscribe.file('rerender', function (data, envelope) {
-  html = renderer(source);
-  $result.html(html);
+  renderer(source, function(e){
+    $result.html(e.html);
+  });
 });
 
 var openExternalLinksInBrowser = function (e) {
