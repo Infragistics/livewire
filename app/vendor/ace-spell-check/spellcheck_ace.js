@@ -114,5 +114,4 @@ function enable_spellcheck() {
   
   spell_check();
 	setInterval(spell_check, 500);
-	//setTimeout(spell_check, 1000);
 }

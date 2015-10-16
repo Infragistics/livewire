@@ -55,7 +55,6 @@ module.load = function (mode) {
 
   require('./clipboard.js').init(editor);
   require('./formatting.js').init(editor);
-  //require('./spellcheck.js').init(editor);
 
   var onChange = function () {
     currentFile.contents = editor.getValue();
