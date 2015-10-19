@@ -11,10 +11,6 @@ var lang = "en_US";
 var dicPath = path.resolve(__dirname, "../typo/dictionaries/en_US/en_US.dic");
 var affPath = path.resolve(__dirname, "../typo/dictionaries/en_US/en_US.aff");
 
-// Make red underline for gutter and words.
-$("<style type='text/css'>.ace_marker-layer .misspelled { position: absolute; z-index: -2; border-bottom: 1px solid red; margin-bottom: -1px; }</style>").appendTo("head");
-$("<style type='text/css'>.misspelled { border-bottom: 1px solid red; margin-bottom: -1px; }</style>").appendTo("head");
-
 // Load the dictionary.
 // Sequential to ensure the 
 var dictionary = null, dicData, affData;
@@ -32,7 +28,6 @@ $.get(dicPath, function(data) {
   });
 });
 
-// TODO: worker
 // Check the spelling of a line, and return [start, end]-pairs for misspelled words.
 function misspelled(line) {
 	var words = line.split(' ');
@@ -81,18 +76,12 @@ function spell_check() {
   try {
 	  var Range = ace.require('ace/range').Range
 	  var lines = session.getDocument().getAllLines();
-	  for (var i in lines) {
-	  	// Clear the gutter.
-	    //session.removeGutterDecoration(i, "misspelled");
-	    
+	  for (var i in lines) {    
       // Check spelling of this line.
       if(lines[i].split){
         var misspellings = misspelled(lines[i]);
         
         // Add markers and gutter markings.
-        //if (misspellings.length > 0) {
-        //  session.addGutterDecoration(i, "misspelled");
-        //}
         for (var j in misspellings) {
           var range = new Range(i, misspellings[j][0], i, misspellings[j][1]);
           markers_present.push(session.addMarker(range, "misspelled", "typo", true));
