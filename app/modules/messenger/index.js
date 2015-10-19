@@ -10,7 +10,8 @@ var channels = {
 	contextMenu: 'contextMenu',
 	file: 'file',
 	text: 'text',
-	format: 'format'
+	format: 'format',
+	dialog: 'dialog'
 };
 
 var publish = function (channel, topic, data) {
@@ -26,7 +27,8 @@ module.publish = {
 	contextMenu: function (topic, data) { publish(channels.contextMenu, topic, data); },
 	file: function (topic, data) { publish(channels.file, topic, data); },
 	text: function (topic, data) { publish(channels.text, topic, data); },
-	format: function (topic, data) { publish(channels.format, topic, data); }
+	format: function (topic, data) { publish(channels.format, topic, data); },
+	dialog: function (topic, data) { publish(channels.dialog, topic, data); }
 };
 
 module.subscribe = {
@@ -34,5 +36,6 @@ module.subscribe = {
 	contextMenu: function (topic, callback) { subscribe(channels.contextMenu, topic, callback); },
 	file: function (topic, callback) { subscribe(channels.file, topic, callback); },
 	text: function (topic, callback) { subscribe(channels.text, topic, callback); },
-	format: function (topic, callback) { subscribe(channels.format, topic, callback); }
+	format: function (topic, callback) { subscribe(channels.format, topic, callback); },
+	dialog: function (topic, callback) { subscribe(channels.dialog, topic, callback); }
 };

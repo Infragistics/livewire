@@ -29,6 +29,12 @@ $('#formatting-toolbar button[data-channel="format"]').click(function () {
 	}
 });
 
+$('#formatting-toolbar button[data-channel="dialog"]').click(function () {
+	messenger.publish.dialog('help.open', {});
+	$(this).blur();
+});
+
+
 var handlers = {
 	enable: function(){
 		isEnabled = true;

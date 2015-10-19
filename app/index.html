@@ -26,13 +26,13 @@
 			<button data-channel="format" data-shortcut="unordered" title="ctrl + ."><i class="fa fa-list-ul"></i></button>
 			<button data-channel="format" data-shortcut="ordered" title="ctrl + ,"><i class="fa fa-list-ol"></i></button>
 			<button data-channel="format" data-shortcut="hr"  title="ctrl + h"><i class="fa fa-minus"></i></button>
+			<span class="separator"></span>
+			<button data-channel="dialog" title="ctrl + shift + ?"><i class="fa fa-question"></i></button>
 		</div>
 		
 		<div id="lw-tab-container">
 			<div class="lw-separator"></div>
-		    <div id="lw-tabs" class="lw-tabs">
-				
-			</div>
+		    <div id="lw-tabs" class="lw-tabs"></div>
 		</div>
 		
 		<div id="editor-container">
@@ -40,6 +40,24 @@
 		</div>
 		<div id="result"></div>
 		<div id="footer"><button id="file-name-button" title="" class="form-control small text-muted"></button></div>
+		
+		<div id="help-container" class="no-show">
+			<h1>Help: <a href="http://asciidoctor.org/docs/asciidoc-syntax-quick-reference/">AsciiDoc</a> / <a href="https://daringfireball.net/projects/markdown/syntax">Markdown</a></h1>
+			<div class="command"><button class="btn btn-default btn-xs" id="help-close-button">x</button></div>
+			<div id="help">
+				<table class="table table-striped table-responsive">
+					<thead>
+						<tr>
+							<th>Shortcut</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody id="shortcuts-tbody">
+					</tbody>
+				</table>
+			</div>
+		</div>
+		
 		<script>window.$ = window.jQuery = require.main.require('./bower_components/jquery/dist/jquery.js');</script>
 		<script src="./bower_components/ace-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
 		<script src="./bower_components/ace-min-noconflict/ext-spellcheck.js" type="text/javascript" charset="utf-8"></script>

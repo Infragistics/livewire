@@ -89,7 +89,6 @@ function spell_check() {
       }
 	  }
 	} finally {
-    console.log('done');
 		currently_spellchecking = false;
 		contents_modified = false;
 	}

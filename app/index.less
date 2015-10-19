@@ -8,6 +8,13 @@
 @gray-medium: #ccc;
 @editor-top: 90px;
 @toolbar-formatting-height: 45px;
+@background-color: #fff;
+@warning: #c03;
+@help-height: 300px;
+
+.no-show {
+    display: none;
+}
 
 #editor,
 #result {
@@ -55,7 +62,7 @@
     box-shadow: none;
     padding: 0;
     height: auto;
-    color: #999;
+    color: @gray-medium-dark;
     background-color: transparent;
 }
 
@@ -127,20 +134,20 @@
                 font-size: 12px;
                 
                 &:hover {
-                    color: #c03;
+                    color: @warning;
                 }
             }
         }
         
         .active {
-            border-bottom: 3px solid #fff;
-            background-color: #fff;
+            border-bottom: 3px solid @background-color;
+            background-color: @background-color;
             z-index: 300;
             color: darken(@gray-medium-dark, 10%);
             font-weight: bold;
             
             &:hover {
-                background-color: #fff;
+                background-color: @background-color;
                 border-bottom: inherit;
             }
         }
@@ -177,13 +184,52 @@
 }
 
 .misspelled { 
-    border-bottom: 1px solid #f00; 
+    border-bottom: 1px solid @warning; 
     margin-bottom: -1px; 
 }
 
 .ace_marker-layer .misspelled { 
     position: absolute; 
     z-index: -2; 
-    border-bottom: 1px solid red; 
+    border-bottom: 1px solid @warning; 
     margin-bottom: -1px; 
+}
+
+#help-container {
+    position: fixed;
+    background-color: @background-color;
+    bottom: 0px;
+    right: 100px;
+    height: @help-height;
+    width: 400px;
+    border: 1px solid @gray-medium;
+    border-radius: 6px 6px 0 0;
+    padding: 15px;
+    box-shadow: -2px -2px 4px 0px @gray-medium;
+    z-index: 100000;
+    
+    h1 {
+        text-transform: uppercase;
+        font-size: 0.85em;
+        margin:0 0 8px 0;
+        color: @gray-medium-dark;
+        font-weight: bold;
+        text-align: center;
+        letter-spacing: 0.2em;
+    }
+    
+    .command {
+        position:absolute;
+        right: 15px;
+        top: 5px;
+        
+        button {
+            border:0px;
+        }
+    }
+}
+
+#help{
+    overflow: auto;
+    height: @help-height - 50px;
 }
