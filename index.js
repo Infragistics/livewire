@@ -19,10 +19,16 @@ app.on('ready', function () {
   //mainWindow.openDevTools();
 
   mainWindow.loadUrl('file://' + __dirname + '/app/index.html');
+  
+  mainWindow.webContents.on('did-finish-load', function() {
+    if(process.platform.toLowerCase() === 'darwin'){
+      mainWindow.webContents.send('isMac', true);
+    }
+  });
 
   globalShortcut.register('CmdOrCtrl+F12', function () {
     mainWindow.show();
-		});
+	});
 
   mainWindow.on('closed', function () {
     mainWindow = null;
@@ -30,7 +36,7 @@ app.on('ready', function () {
 });
 
 app.on('window-all-closed', function () {
-  if (process.platform != 'darwin') {
+  if (process.platform.toLowerCase() != 'darwin') {
     app.quit();
   }
 });

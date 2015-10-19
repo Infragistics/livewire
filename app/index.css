@@ -1,3 +1,6 @@
+.no-show {
+  display: none;
+}
 #editor,
 #result {
   position: absolute;
@@ -38,7 +41,7 @@
   box-shadow: none;
   padding: 0;
   height: auto;
-  color: #999;
+  color: #888888;
   background-color: transparent;
 }
 #formatting-toolbar {
@@ -102,17 +105,17 @@
   font-size: 12px;
 }
 #lw-tab-container .lw-tabs .lw-tab button:hover {
-  color: #c03;
+  color: #cc0033;
 }
 #lw-tab-container .lw-tabs .active {
-  border-bottom: 3px solid #fff;
-  background-color: #fff;
+  border-bottom: 3px solid #ffffff;
+  background-color: #ffffff;
   z-index: 300;
   color: #6f6f6f;
   font-weight: bold;
 }
 #lw-tab-container .lw-tabs .active:hover {
-  background-color: #fff;
+  background-color: #ffffff;
   border-bottom: inherit;
 }
 #lw-tab-container .lw-separator {
@@ -138,12 +141,46 @@
   font-weight: bold;
 }
 .misspelled {
-  border-bottom: 1px solid #f00;
+  border-bottom: 1px solid #cc0033;
   margin-bottom: -1px;
 }
 .ace_marker-layer .misspelled {
   position: absolute;
   z-index: -2;
-  border-bottom: 1px solid red;
+  border-bottom: 1px solid #cc0033;
   margin-bottom: -1px;
+}
+#help-container {
+  position: fixed;
+  background-color: #ffffff;
+  bottom: 0px;
+  right: 100px;
+  height: 300px;
+  width: 400px;
+  border: 1px solid #cccccc;
+  border-radius: 6px 6px 0 0;
+  padding: 15px;
+  box-shadow: -2px -2px 4px 0px #cccccc;
+  z-index: 100000;
+}
+#help-container h1 {
+  text-transform: uppercase;
+  font-size: 0.85em;
+  margin: 0 0 8px 0;
+  color: #888888;
+  font-weight: bold;
+  text-align: center;
+  letter-spacing: 0.2em;
+}
+#help-container .command {
+  position: absolute;
+  right: 15px;
+  top: 5px;
+}
+#help-container .command button {
+  border: 0px;
+}
+#help {
+  overflow: auto;
+  height: 250px;
 }
