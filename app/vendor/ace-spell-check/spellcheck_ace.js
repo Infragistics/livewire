@@ -73,10 +73,10 @@ function spell_check() {
   var session = ace.edit(editor).getSession();
 
   // Clear the markers.
-  //for (var i in markers_present) {
-  //  session.removeMarker(markers_present[i]);
-  //}
-  //markers_present = [];
+  for (var i in markers_present) {
+    session.removeMarker(markers_present[i]);
+  }
+  markers_present = [];
 
   try {
 	  var Range = ace.require('ace/range').Range
@@ -95,8 +95,7 @@ function spell_check() {
         //}
         for (var j in misspellings) {
           var range = new Range(i, misspellings[j][0], i, misspellings[j][1]);
-          //markers_present[markers_present.length] = session.addMarker(range, "misspelled", "typo", true);
-          session.addMarker(range, "misspelled", "typo", true);
+          markers_present.push(session.addMarker(range, "misspelled", "typo", true));
         }
       }
 	  }
