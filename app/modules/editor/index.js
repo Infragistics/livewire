@@ -24,6 +24,8 @@ module.load = function (mode) {
     readOnly: true
   });
   
+  editor.setOption('spellcheck', true);
+  
   var showCursor = function(){
     editor.renderer.$cursorLayer.element.style.opacity = 1;
   };

@@ -26,7 +26,7 @@ module.openFile = function (options) {
 
 	var callback = function (filePaths) {
 		if (_.isUndefined(filePaths)) {
-			deferred.reject()
+			deferred.reject();
 		} else {
 			var filePath = filePaths[0];
 			fs.readFile(filePath, 'utf8', function (err, contents) {
