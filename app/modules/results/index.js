@@ -40,7 +40,6 @@ var handlers = {
       } else {
         detectRenderer(fileInfo);
         source = fileInfo.contents;
-        //html = renderer(source);
         renderer(source, function(e){
           $result.html(e.html);
         });

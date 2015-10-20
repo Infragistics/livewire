@@ -11,6 +11,8 @@ var lang = "en_US";
 var dicPath = path.resolve(__dirname, "../typo/dictionaries/en_US/en_US.dic");
 var affPath = path.resolve(__dirname, "../typo/dictionaries/en_US/en_US.aff");
 
+var messenger = require(path.resolve(__dirname, '../../modules/messenger'));
+
 // Load the dictionary.
 // Sequential to ensure the 
 var dictionary = null, dicData, affData;
@@ -49,6 +51,14 @@ var contents_modified = true;
 var currently_spellchecking = false;
 var markers_present = [];
 
+var clearMarkers = function(session){
+  session = session || ace.edit(editor).getSession();
+  for (var i in markers_present) {
+    session.removeMarker(markers_present[i]);
+  }
+  markers_present = [];
+};
+
 // Spell check the Ace editor contents.
 function spell_check() {
   // Wait for the dictionary to be loaded.
@@ -68,10 +78,12 @@ function spell_check() {
   var session = ace.edit(editor).getSession();
 
   // Clear the markers.
-  for (var i in markers_present) {
-    session.removeMarker(markers_present[i]);
-  }
-  markers_present = [];
+  //for (var i in markers_present) {
+  //  session.removeMarker(markers_present[i]);
+  //}
+  //markers_present = [];
+  
+  clearMarkers(session);
 
   try {
 	  var Range = ace.require('ace/range').Range
@@ -102,3 +114,11 @@ function enable_spellcheck() {
   spell_check();
 	setInterval(spell_check, 500);
 }
+
+var handlers = {
+  allFilesClosed: function(){
+    
+  }
+};
+
+messenger.publish.file('allFilesClosed', handlers.allFilesClosed);
