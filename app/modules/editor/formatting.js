@@ -62,12 +62,12 @@ module.init = function (editorInstance) {
 	editor.commands.addCommand(buildCommand('quote', 'Ctrl-\''));
 	editor.commands.addCommand(buildCommand('unordered', 'Ctrl-.'));
 	editor.commands.addCommand(buildCommand('ordered', 'Ctrl-,'));
-	editor.commands.addCommand(buildCommand('hr', 'Ctrl-H'));
+	editor.commands.addCommand(buildCommand('hr', 'Ctrl--'));
 	
 	editor.commands.addCommand({
 		name: 'help', // pass through for help dialog
 		bindKey: {
-			win: 'ctrl+shift+?',
+			win: 'ctrl+shift+/',
 			mac: 'cmd+shift+?'
 		},
 		exec: function(){

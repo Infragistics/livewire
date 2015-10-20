@@ -184,3 +184,8 @@
   overflow: auto;
   height: 250px;
 }
+.ace_searchbtn,
+.ace_replacebtn {
+  font-size: 0.7em;
+  padding: 4px !important;
+}

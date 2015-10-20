@@ -12,7 +12,7 @@ module.exports = [
 	{ "shortcut": "quote", "description": "CmdOrCtrl + /" },
 	{ "shortcut": "unordered list item", "description": "CmdOrCtrl + ." },
 	{ "shortcut": "ordered list item", "description": "CmdOrCtrl + ," },
-	{ "shortcut": "horizontal rule", "description": "CmdOrCtrl + h" },
+	{ "shortcut": "horizontal rule", "description": "CmdOrCtrl + -" },
 	{ "shortcut": "save", "description": "CmdOrCtrl + s" },
 	{ "shortcut": "save as", "description": "CmdOrCtrl + shift + s" },
 	{ "shortcut": "save as HTML", "description": "CmdOrCtrl + shift + h" }
