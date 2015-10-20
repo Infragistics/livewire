@@ -10,23 +10,27 @@ $('button[data-channel="menu"]').click(function () {
 	
 	commandAlwaysAvailable = ($(this).data('always-available') === true);
 	
+	$button = $(this);
+	
 	if(isEnabled || commandAlwaysAvailable){
-		$button = $(this);
 		topic = $button.data('topic');
 		messenger.publish.menu(topic);
-		$button.blur();
 	}
+	
+	$button.blur();
 });
 
 $('#formatting-toolbar button[data-channel="format"]').click(function () {
 	var $button, shortcut;
 	
+	$button = $(this);
+	
 	if(isEnabled){
-		$button = $(this);
 		shortcut = $button.data('shortcut');
 		messenger.publish.format('wrapText', { shortcut: shortcut });
-		$button.blur();
 	}
+	
+	$button.blur();
 });
 
 $('#formatting-toolbar button[data-channel="dialog"]').click(function () {

@@ -35,6 +35,11 @@ marked.setOptions({
   tables: true
 });
 
+var _renderer = function(content, callback){
+  var html = marked(content);
+  callback({ html: html });
+};
+
 module.get = function () {
-  return marked;
+  return _renderer;
 };
