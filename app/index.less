@@ -10,7 +10,7 @@
 @toolbar-formatting-height: 45px;
 @background-color: #fff;
 @warning: #c03;
-@help-height: 300px;
+@help-height: 400px;
 
 .no-show {
     display: none;
@@ -211,11 +211,14 @@
     h1 {
         text-transform: uppercase;
         font-size: 0.85em;
-        margin:0 0 8px 0;
+        margin:0;
         color: @gray-medium-dark;
         font-weight: bold;
         text-align: center;
-        letter-spacing: 0.2em;
+    }
+    
+    .links {
+        margin:8px 0 8px 0;
     }
     
     .command {
@@ -229,9 +232,9 @@
     }
 }
 
-#help{
+#help {
     overflow: auto;
-    height: @help-height - 50px;
+    height: @help-height - 65px;
 }
 
 .ace_searchbtn,
