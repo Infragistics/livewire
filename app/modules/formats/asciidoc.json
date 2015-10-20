@@ -12,9 +12,9 @@
 		"h1":			{ "left" : "= ", "right" : "" },
 		"h2":			{ "left" : "== ", "right" : "" },
 		"h3":			{ "left" : "=== ", "right" : "" },
-		"quote":		{ "left" : "[quote]\n", "right" : "" },
-		"ordered":		{ "left" : ". ", "right" : "" },
-		"unordered":	{ "left" : "*  ", "right" : "" },
+		"quote":		{ "left" : "[quote]\n", "right" : "", "cursorOffset": { "wrapAtBeginningOfLine": true } },
+		"ordered":		{ "left" : ". ", "right" : "", "cursorOffset": { "wrapAtBeginningOfLine": true } },
+		"unordered":	{ "left" : "*  ", "right" : "", "cursorOffset": { "wrapAtBeginningOfLine": true } },
 		"hr":			{ "left" : "'''", "right" : "" }
 	}
 }

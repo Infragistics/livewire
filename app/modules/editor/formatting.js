@@ -19,9 +19,25 @@ messenger.subscribe.format('wrapText', function(data, envelope){
 	editor.focus();
 });
 
+var isRangeEmpty = function(range){
+	return range.end.column === range.start.column;
+};
+
 var wrapSelectedText = function(format){
-	var range = editor.getSelectionRange();
-	var selectedText = editor.session.getTextRange(range);
+	var range, selectedText, wrapAtBeginningOfLine = false;
+	
+	range = editor.getSelectionRange();	
+	
+	if(isRangeEmpty(range) && format.cursorOffset){
+		if(format.cursorOffset.wrapAtBeginningOfLine){
+			wrapAtBeginningOfLine = true;
+			editor.selection.selectLine();
+			range = editor.getSelectionRange();
+		}
+	}
+	
+	selectedText = editor.session.getTextRange(range);
+	
 	editor.getSession().replace(range, format.left + selectedText + format.right);
 	
 	if(!_.isUndefined(format.cursorOffset)){
@@ -33,6 +49,11 @@ var wrapSelectedText = function(format){
 		}
 		editor.clearSelection();
 	}
+	
+	if(wrapAtBeginningOfLine){
+		editor.selection.moveCursorLineEnd();
+	}
+	
 };
 
 var buildCommand = function(name, shortcut){
