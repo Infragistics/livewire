@@ -19,7 +19,11 @@ For more information make sure to read the [wiki](https://github.com/craigshoema
 
 ## Installing and Running the App
 
-There are _no installers available at the moment_, so for now you can get the code directly and run from there. 
+### Windows Installer
+
+[You can download the v1.0 Windows 64-bit installer here](http://download.infragistics.com/users/livewire/Livewire-1.0-win-64.exe).
+
+### Cloning 
 
 Clone this repository:
 
