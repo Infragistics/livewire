@@ -63,7 +63,27 @@
 			</div>
 		</div>
 		
+		<div class="modal fade" id="browseDialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">Modal title</h4>
+				</div>
+				<div class="modal-body">
+					<input type="text" id="linkInput" />
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" id="browseBtn">Browse</button>
+					<button type="button" class="btn btn-primary" id="doneBtn" >Done</button>
+				</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		
 		<script>window.$ = window.jQuery = require.main.require('./bower_components/jquery/dist/jquery.js');</script>
+		<script src="./bower_components/bootstrap/dist/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
 		<script src="./bower_components/ace-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
 		<script src="./bower_components/ace-min-noconflict/ext-spellcheck.js" type="text/javascript" charset="utf-8"></script>
 		<script src="./vendor/typo/typo.js" type="text/javascript" charset="utf-8"></script>
