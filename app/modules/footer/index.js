@@ -1,28 +1,29 @@
-var shell = require('shell');
+var _ = require('lodash');
 var path = require('path');
 var messenger = require(path.resolve(__dirname, '../messenger'));
-var _ = require('lodash');
 
-var file = { path: '', name: '' };
+var $buildFlagsContainer = $('#build-flags-container');
+var _buildFlags;
 
-var $fileNameButton = $('#file-name-button');
+var handlers = {
+  
+  buildFlagList: function(buildFlags){
+    $buildFlagsContainer.html('');
+    buildFlags.forEach(function(flag){
+      $buildFlagsContainer.append('<button data-role="build-flag" data-value="' + flag + '" class="btn btn-default btn-xs">' + flag + '</button>');
+    });
+  }  
+};
 
-$fileNameButton.click(function () {
-  if (file.path.length > 0) {
-    shell.showItemInFolder(file.path);
-  }
-});
+messenger.subscribe.metadata('buildFlags', handlers.buildFlagList);
 
-messenger.subscribe.file('pathChanged', function (data, envelope) {
-
-  if (_.isUndefined(data.path) || data.isNewFile) {
-    file.name = '';
-    file.path = '';
-  } else {
-    file.path = data.path;
-    file.name = data.fileName;
-  }
-
-  $fileNameButton.text(file.name);
-  $fileNameButton.attr('title', file.path);
+$buildFlagsContainer.on('click', 'button[data-role="build-flag"]', function(e){
+  var $button = $(this);
+  var buildFlag = $button.data('value');
+  
+  $('[data-role="build-flag"]').removeClass('selected');
+  
+  $button.addClass('selected');
+  
+  messenger.publish.format('buildFlags', [buildFlag]);
 });

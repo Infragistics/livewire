@@ -10,7 +10,10 @@ var
   
   source = '',
   shell = require('shell'),
-  formatter = null;
+  formatter = null,
+  
+  _fileInfo,
+  _buildFlags = [];
   
 var detectRenderer = function(fileInfo){
   var rendererPath, currentFormatter;
@@ -33,18 +36,32 @@ var handlers = {
     }, 10);
   },
   contentChanged: function(fileInfo){
+    var flags = '';
     
-    if(!_.isUndefined(fileInfo)){
-      if (fileInfo.isBlank) {
+    _fileInfo = fileInfo;
+    
+    if(!_.isUndefined(_fileInfo)){
+      if (_fileInfo.isBlank) {
         $result.html('');
       } else {
-        detectRenderer(fileInfo);
-        source = fileInfo.contents;
+        detectRenderer(_fileInfo);
+        source = _fileInfo.contents;
+        
+        _buildFlags.forEach(function(buildFlag){
+          flags += ':' + buildFlag + ':\n'
+        });
+        
+        source = flags + source;
+        
         renderer(source, function(e){
           $result.html(e.html);
         });
       }
     }
+  },
+  buildFlags: function(buildFlags){
+    _buildFlags = buildFlags;
+    handlers.contentChanged(_fileInfo);
   }
 };
 
@@ -52,6 +69,7 @@ messenger.subscribe.file('new', handlers.newFile);
 messenger.subscribe.file('opened', handlers.newFile);
 messenger.subscribe.file('contentChanged', handlers.contentChanged);
 messenger.subscribe.file('sourceChange', handlers.contentChanged);
+messenger.subscribe.format('buildFlags', handlers.buildFlags);
 
 messenger.subscribe.file('rerender', function (data, envelope) {
   renderer(source, function(e){

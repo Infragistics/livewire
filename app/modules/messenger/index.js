@@ -11,7 +11,8 @@ var channels = {
 	file: 'file',
 	text: 'text',
 	format: 'format',
-	dialog: 'dialog'
+	dialog: 'dialog',
+	metadata: 'metadata'
 };
 
 var publish = function (channel, topic, data) {
@@ -28,7 +29,8 @@ module.publish = {
 	file: function (topic, data) { publish(channels.file, topic, data); },
 	text: function (topic, data) { publish(channels.text, topic, data); },
 	format: function (topic, data) { publish(channels.format, topic, data); },
-	dialog: function (topic, data) { publish(channels.dialog, topic, data); }
+	dialog: function (topic, data) { publish(channels.dialog, topic, data); },
+	metadata: function (topic, data) { publish(channels.metadata, topic, data); }
 };
 
 module.subscribe = {
@@ -37,5 +39,6 @@ module.subscribe = {
 	file: function (topic, callback) { subscribe(channels.file, topic, callback); },
 	text: function (topic, callback) { subscribe(channels.text, topic, callback); },
 	format: function (topic, callback) { subscribe(channels.format, topic, callback); },
-	dialog: function (topic, callback) { subscribe(channels.dialog, topic, callback); }
+	dialog: function (topic, callback) { subscribe(channels.dialog, topic, callback); },
+	metadata: function (topic, callback) { subscribe(channels.metadata, topic, callback); }
 };

@@ -6,6 +6,7 @@ require.main.require('./modules/persistence');
 require.main.require('./modules/files');
 require.main.require('./modules/results');
 require.main.require('./modules/editor');
+require.main.require('./modules/footer');
 require.main.require('./modules/help');
 
 $(function(){

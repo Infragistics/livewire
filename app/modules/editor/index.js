@@ -12,6 +12,9 @@ var
   currentFile = {},
   noop = function(){};
   
+  
+var _buildFlags = [];
+  
 module.load = function (mode) {
 
   editor = ace.edit('editor');
@@ -55,9 +58,36 @@ module.load = function (mode) {
 
   require('./clipboard.js').init(editor);
   require('./formatting.js').init(editor);
+  
+  var buildFlagsExpression = /ifdef::(.*?)\[\]/g;
+  
+  var getBuildFlags = function(content){
+    var flags, buildFlags;
+    
+    flags = content.match(buildFlagsExpression);
+    buildFlags = [];
+    
+    if(flags){
+      flags.forEach(function(flag){
+        flag = flag.replace(buildFlagsExpression, function(match) {
+          return match.replace('ifdef::', '').replace('[]', '');
+        });
+          
+        buildFlags = buildFlags.concat(flag.split(','));
+      });
+      
+      buildFlags = _.unique(buildFlags).sort();
+      
+      if(_.difference(buildFlags, _buildFlags).length > 0){
+        _buildFlags = buildFlags;
+        messenger.publish.metadata('buildFlags', buildFlags);
+      } 
+    }
+  };
 
   var onChange = function () {
     currentFile.contents = editor.getValue();
+    getBuildFlags(currentFile.contents);
     messenger.publish.file('sourceChange', currentFile);
   };
 
@@ -74,6 +104,7 @@ module.load = function (mode) {
     },
     
     fileNew: function(){
+      _buildFlags = [];
       editor.scrollToLine(0);
     },
     
@@ -91,6 +122,11 @@ module.load = function (mode) {
           editor.setValue('');
         } else {
           showCursor();
+          
+          _buildFlags = [];
+          
+          getBuildFlags(fileInfo.contents);
+          
           editor.setValue(fileInfo.contents);
           
           if(fileInfo.cursorPosition){
