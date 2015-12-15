@@ -7,7 +7,7 @@
 		"bold": 		{ "left" : "*", "right" : "*" },
 		"italic":		{ "left" : "_", "right" : "_" },
 		"image":		{ "left" : "image:[alt=\"", "right" : "\"]", "cursorOffset": { "value": 6, "fromLeft": true } },
-		"link":			{ "left" : "link:[", "right" : "]", "cursorOffset": { "value": 5, "fromLeft": true } },
+		"link":			{ "left" : "link:{0}[", "right" : "]", "cursorOffset": { "value": 5, "fromLeft": true } },
 		"code":			{ "left" : "`", "right" : "`" },	
 		"h1":			{ "left" : "= ", "right" : "", "cursorOffset": { "wrapAtBeginningOfLine": true } },
 		"h2":			{ "left" : "== ", "right" : "", "cursorOffset": { "wrapAtBeginningOfLine": true } },
