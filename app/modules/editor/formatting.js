@@ -2,6 +2,7 @@
 	
 module = module.exports;
 
+
 var 
 	editor = null,
 	path = require('path'),
@@ -10,7 +11,8 @@ var
 	config = require(path.resolve(__dirname, '../config')).get(),
 	formatter = require(path.resolve(__dirname, '../formats')).get(config.defaultFormat),
 	remote = require('remote'),
-	nodeDialog = remote.require('dialog');
+	nodeDialog = remote.require('dialog'),
+	fileNameCleaner =  require('./fileNameCleaner.js');
 
 messenger.subscribe.file('formatChanged', function(data, envelope){
 	formatter = data;
@@ -91,7 +93,8 @@ var buildDialogCommand = function(name, shortcut){
 					}
 					
 					// transform file name:
-					filePath = filePath.replace(".md", ".html").replace(".adoc", ".html");
+					filePath = filePath.replace(new RegExp("\\.(" + formatter.extensions.join("|") + ")$"), ".html");
+					filePath = fileNameCleaner.clean(filePath);
 					
 					format = $.extend({}, formatter.shortcuts[name]);
 					format.right = format.right.replace("{0}", filePath);
@@ -114,10 +117,8 @@ var buildDialogCommand = function(name, shortcut){
 				var options = {
 					title: 'Open Markdown Files',
 					properties: ['openFile'],
-					//TODO: use formatter settings for name and extensions
-					filters: [{ name: 'Markdown', extensions: ['md'] }, { name: 'AsciiDoc', extensions: ['adoc'] }]
+					filters: [{ name: formatter.name, extensions: formatter.extensions }]
 				};
-				
 				nodeDialog.showOpenDialog(options, callback);
 			});
 			$("#doneBtn").one("click", function(){
