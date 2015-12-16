@@ -13,6 +13,63 @@ var
 	remote = require('remote'),
 	nodeDialog = remote.require('dialog'),
 	fileNameCleaner =  require('./fileNameCleaner.js');
+	
+var $browseDialog, $linkInput, $browseBtn, $doneBtn;
+
+$(function(){
+	$browseDialog = $("#browseDialog");
+	$linkInput = $("#linkInput");
+	$browseBtn = $("#browseBtn");
+	$doneBtn = $("#doneBtn");
+	
+	var createLink = function (filePaths) {
+		var filePath, format, side;
+		if (!filePaths || !filePaths.length) {
+			console.log('No file paths selected');
+		} else {
+			if (typeof filePaths === 'string') {
+				filePath = filePaths;
+			} else {
+				filePath = path.basename(filePaths[0]);
+			}
+			
+			// transform file name:
+			filePath = filePath.replace(new RegExp('\\.(' + formatter.extensions.join('|') + ')$'), '.html');
+			filePath = fileNameCleaner.clean(filePath);
+			
+			format = $.extend({}, formatter.shortcuts.link);
+			
+			side = /\{0\}/.test(format.left) ? 'left': 'right'; 
+			
+			format[side] = format[side].replace('{0}', filePath);
+			wrapSelectedText(format);
+		}
+		$browseDialog.modal('hide');
+		$linkInput.val('').off('keyup');
+		editor.focus(); 
+	};
+	
+	$browseDialog.on('shown.bs.modal', function (e) {
+		$linkInput.focus();
+		$linkInput.on('keyup', function(e){
+			if (e.keyCode === 13) {
+				createLink($linkInput.val());
+			}
+		});
+	});
+	
+	$browseBtn.one('click', function(){
+		var options = {
+			title: 'Select A File',
+			properties: ['openFile'],
+			filters: [{ name: formatter.name, extensions: formatter.extensions }]
+		};
+		nodeDialog.showOpenDialog(options, createLink);
+	});
+	$doneBtn.one('click', function(){
+		createLink($linkInput.val());
+	});
+});
 
 messenger.subscribe.file('formatChanged', function(data, envelope){
 	formatter = data;
@@ -20,7 +77,6 @@ messenger.subscribe.file('formatChanged', function(data, envelope){
 
 messenger.subscribe.format('wrapText', function(data, envelope){  
 	editor.commands.exec(envelope.data.shortcut);
-	//wrapSelectedText(formatter.shortcuts[envelope.data.shortcut]);
 	editor.focus();
 });
 
@@ -39,7 +95,6 @@ var wrapSelectedText = function(format){
 			editor.selection.selectLine();
 			range = editor.getSelectionRange();
 		}
-		
 	}
 	
 	selectedText = editor.session.getTextRange(range);
@@ -81,49 +136,7 @@ var buildDialogCommand = function(name, shortcut){
 			win: shortcut.replace(/Command/, 'Ctrl'), 
 			mac: shortcut.replace(/Ctrl/, 'Command') },
 		exec: function(){
-			var callback = function (filePaths) {
-				var filePath, format;
-				if (!filePaths || !filePaths.length) {
-					console.log('No file paths selected');
-				} else {
-					if (typeof filePaths === "string") {
-						filePath = filePaths;
-					} else {
-						filePath = path.basename(filePaths[0]);
-					}
-					
-					// transform file name:
-					filePath = filePath.replace(new RegExp("\\.(" + formatter.extensions.join("|") + ")$"), ".html");
-					filePath = fileNameCleaner.clean(filePath);
-					
-					format = $.extend({}, formatter.shortcuts[name]);
-					format.right = format.right.replace("{0}", filePath);
-					wrapSelectedText(format);
-				}
-				$("#browseDialog").modal('hide');
-				$("#linkInput").val("").off("keyup");
-				editor.focus(); 
-			};
-			
-			$("#browseDialog").modal().on('shown.bs.modal', function (e) {
-				$("#linkInput").focus().on("keyup", function(e){
-					if (e.keyCode === 13) {
-						callback($("#linkInput").val());
-					}
-				});
-			});
-			
-			$("#browseBtn").one("click", function(){
-				var options = {
-					title: 'Open Markdown Files',
-					properties: ['openFile'],
-					filters: [{ name: formatter.name, extensions: formatter.extensions }]
-				};
-				nodeDialog.showOpenDialog(options, callback);
-			});
-			$("#doneBtn").one("click", function(){
-				callback($("#linkInput").val());
-			});
+			$browseDialog.modal();
 		}
 	}
 };
