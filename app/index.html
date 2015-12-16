@@ -68,23 +68,29 @@
 		<div class="modal" id="browseDialog">
 			<div class="modal-dialog">
 				<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title">Insert Link:</h4>
-				</div>
-				<div class="modal-body">
-					<div class="row">
-						<div class="col-sm-10"><input type="text" id="linkInput" class="form-control" placeholder="Insert link or file path" /></div>
-						<div class="col-sm-2"><button type="button" class="btn btn-primary" id="browseBtn">Browse</button></div>
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title">Insert Link</h4>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-sm-12">	
+								<div class="input-group">
+									<input type="text" id="linkInput" class="form-control" placeholder="Insert link or file path" />
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-default" id="browseBtn">Browse</button>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default btn-link" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary" id="doneBtn" >Done</button>
 					</div>
 				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary" id="doneBtn" >Done</button>
-				</div>
-				</div><!-- /.modal-content -->
-			</div><!-- /.modal-dialog -->
-		</div><!-- /.modal -->
+			</div>
+		</div>
 		
 		<script>window.$ = window.jQuery = require.main.require('./bower_components/jquery/dist/jquery.js');</script>
 		<script src="./bower_components/bootstrap/dist/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
