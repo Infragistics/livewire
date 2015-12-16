@@ -77,7 +77,12 @@ messenger.subscribe.file('formatChanged', function(data, envelope){
 
 messenger.subscribe.format('wrapText', function(data, envelope){  
 	editor.commands.exec(envelope.data.shortcut);
-	editor.focus();
+	
+	// todo: make this generic if more dialogs are
+	// added to the editor
+	if(envelope.data.shortcut !== 'link'){
+		editor.focus();
+	}
 });
 
 var isRangeEmpty = function(range){
