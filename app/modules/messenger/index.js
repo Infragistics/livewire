@@ -12,7 +12,8 @@ var channels = {
 	text: 'text',
 	format: 'format',
 	dialog: 'dialog',
-	metadata: 'metadata'
+	metadata: 'metadata',
+    layout: 'layout'
 };
 
 var publish = function (channel, topic, data) {
@@ -20,7 +21,7 @@ var publish = function (channel, topic, data) {
 };
 
 var subscribe = function (channel, topic, callback) {
-	postal.subscribe({ channel: channel, topic: topic, callback: callback });
+	return postal.subscribe({ channel: channel, topic: topic, callback: callback });
 };
 
 module.publish = {
@@ -30,15 +31,17 @@ module.publish = {
 	text: function (topic, data) { publish(channels.text, topic, data); },
 	format: function (topic, data) { publish(channels.format, topic, data); },
 	dialog: function (topic, data) { publish(channels.dialog, topic, data); },
-	metadata: function (topic, data) { publish(channels.metadata, topic, data); }
+	metadata: function (topic, data) { publish(channels.metadata, topic, data); },
+	layout: function (topic, data) { publish(channels.layout, topic, data); }
 };
 
 module.subscribe = {
-	menu: function (topic, callback) { subscribe(channels.menu, topic, callback); },
-	contextMenu: function (topic, callback) { subscribe(channels.contextMenu, topic, callback); },
-	file: function (topic, callback) { subscribe(channels.file, topic, callback); },
-	text: function (topic, callback) { subscribe(channels.text, topic, callback); },
-	format: function (topic, callback) { subscribe(channels.format, topic, callback); },
-	dialog: function (topic, callback) { subscribe(channels.dialog, topic, callback); },
-	metadata: function (topic, callback) { subscribe(channels.metadata, topic, callback); }
+	menu: function (topic, callback) { return subscribe(channels.menu, topic, callback); },
+	contextMenu: function (topic, callback) { return subscribe(channels.contextMenu, topic, callback); },
+	file: function (topic, callback) { return subscribe(channels.file, topic, callback); },
+	text: function (topic, callback) { return subscribe(channels.text, topic, callback); },
+	format: function (topic, callback) { return subscribe(channels.format, topic, callback); },
+	dialog: function (topic, callback) { return subscribe(channels.dialog, topic, callback); },
+	metadata: function (topic, callback) { return subscribe(channels.metadata, topic, callback); },
+	layout: function (topic, callback) { return subscribe(channels.layout, topic, callback); }
 };
