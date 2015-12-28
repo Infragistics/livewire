@@ -27,19 +27,27 @@
     left: 10px;
     border-right: solid 1px @gray-light;
     top: @editor-top;
-    width: @editor-width;
 }
 
 #result {
     top: @editor-top;
-    left: @editor-split;
     padding-top: 0px; 
     overflow: auto;
-    width: @result-width;
     
     h1:first-child {
         margin-top:0;
     }
+}
+
+#split-controller {
+    position: absolute;
+    display: block;
+    top:50%;
+    width: 15px;
+    height:15px;
+    color:@gray-medium;
+    cursor: pointer;
+    z-index: 100000;
 }
 
 #footer {

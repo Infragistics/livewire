@@ -11,17 +11,24 @@
   left: 10px;
   border-right: solid 1px #eeeeee;
   top: 90px;
-  width: 49%;
 }
 #result {
   top: 90px;
-  left: 50%;
   padding-top: 0px;
   overflow: auto;
-  width: 50%;
 }
 #result h1:first-child {
   margin-top: 0;
+}
+#split-controller {
+  position: absolute;
+  display: block;
+  top: 50%;
+  width: 15px;
+  height: 15px;
+  color: #cccccc;
+  cursor: pointer;
+  z-index: 100000;
 }
 #footer {
   position: absolute;
