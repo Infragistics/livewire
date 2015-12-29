@@ -1,6 +1,8 @@
-var $result = $('#result');
+/* global appSettings */
 
-var 
+var
+  $result, 
+  $splitController,
   path = require('path'),
   _ = require('lodash'),
   
@@ -11,6 +13,7 @@ var
   source = '',
   shell = require('shell'),
   formatter = null,
+  subscriptions = {},
   
   _fileInfo,
   _buildFlags = [];
@@ -62,14 +65,37 @@ var handlers = {
   buildFlags: function(buildFlags){
     _buildFlags = buildFlags;
     handlers.contentChanged(_fileInfo);
+  },
+  hideResults: function(){
+      unsubscribe();
+      $result.hide();
+      $splitController.one('click', function(){
+          $result.show();
+          subscribe();
+          messenger.publish.layout('showResults');
+      });
   }
 };
 
-messenger.subscribe.file('new', handlers.newFile);
-messenger.subscribe.file('opened', handlers.newFile);
-messenger.subscribe.file('contentChanged', handlers.contentChanged);
-messenger.subscribe.file('sourceChange', handlers.contentChanged);
-messenger.subscribe.format('buildFlags', handlers.buildFlags);
+var subscribe = function(){ 
+    subscriptions.newFile = messenger.subscribe.file('new', handlers.newFile);
+    subscriptions.opened = messenger.subscribe.file('opened', handlers.newFile);
+    subscriptions.contentChanged = messenger.subscribe.file('contentChanged', handlers.contentChanged);
+    subscriptions.sourceChanged = messenger.subscribe.file('sourceChange', handlers.contentChanged);
+    subscriptions.buildFlags = messenger.subscribe.format('buildFlags', handlers.buildFlags);
+    subscriptions.hideResults = messenger.subscribe.layout('hideResults', handlers.hideResults);
+};
+
+var unsubscribe = function(){
+    subscriptions.newFile.unsubscribe();
+    subscriptions.opened.unsubscribe();
+    subscriptions.contentChanged.unsubscribe();
+    subscriptions.sourceChanged.unsubscribe();
+    subscriptions.buildFlags.unsubscribe();
+    subscriptions.hideResults.unsubscribe();
+};
+
+subscribe();
 
 messenger.subscribe.file('rerender', function (data, envelope) {
   renderer(source, function(e){
@@ -89,3 +115,12 @@ var openExternalLinksInBrowser = function (e) {
 };
 
 document.addEventListener('click', openExternalLinksInBrowser, false);
+
+$(function(){
+   $result = $('#result');
+   $splitController = $('#split-controller');
+   
+   $result
+        .css('left', appSettings.split()) 
+        .css('width', appSettings.resultsWidth()); 
+});

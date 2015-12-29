@@ -1,4 +1,5 @@
 /// <reference path="../../../typings/jquery/jquery.d.ts"/>
+/* global appSettings */
 /* global ace */
 
 module = module.exports;
@@ -8,6 +9,8 @@ var
     _ = require('lodash'),
     messenger = require(path.resolve(__dirname, '../messenger')),
     editor,
+    $editor,
+    $splitController,
     session,
     currentFile = {},
     noop = function () { };
@@ -16,6 +19,11 @@ var
 var _buildFlags = [];
 
 module.load = function (mode) {
+    
+    $editor = $('#editor');
+    $splitController = $('#split-controller');
+
+    $editor.css('width', appSettings.editorWidth());
 
     editor = ace.edit('editor');
     editor.setOptions({
@@ -28,6 +36,19 @@ module.load = function (mode) {
     });
 
     editor.setOption('spellcheck', true);
+    
+    var hideResults = function(){
+
+        $splitController
+                .removeClass('fa-chevron-right')
+                .addClass('fa-chevron-left');
+                
+        $editor.css('width', '98%');
+                
+        messenger.publish.layout('hideResults');
+    };
+    
+    $splitController.one('click', hideResults);
 
     var showCursor = function () {
         editor.renderer.$cursorLayer.element.style.opacity = 1;
@@ -140,12 +161,24 @@ module.load = function (mode) {
                 editor.selection.clearSelection();
 
             }
+        },
+        
+        showResults: function(){
+            onChange();
+            
+            $splitController
+                .removeClass('fa-chevron-left')
+                .addClass('fa-chevron-right')
+                .one('click', hideResults);
+                
+            $editor.css('width', appSettings.editorWidth());
         }
     };
 
     messenger.subscribe.menu('new', handlers.menuNew);
     messenger.subscribe.file('contentChanged', handlers.contentChanged);
     messenger.subscribe.file('new', handlers.fileNew);
+    messenger.subscribe.layout('showResults', handlers.showResults);
 };
 
 module.load('asciidoc');

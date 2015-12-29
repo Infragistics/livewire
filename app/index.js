@@ -19,7 +19,7 @@ window.appSettings = {
         if(parseInt(appSettings.editorWidth()) > 90){
             return '0px';
         } else {
-            return (100 - parseInt(appSettings.split)) + '%';
+            return (100 - parseInt(appSettings.split()) - 1) + '%';
         }
     }
 };
