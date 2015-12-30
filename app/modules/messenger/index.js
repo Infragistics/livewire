@@ -45,3 +45,7 @@ module.subscribe = {
 	metadata: function (topic, callback) { return subscribe(channels.metadata, topic, callback); },
 	layout: function (topic, callback) { return subscribe(channels.layout, topic, callback); }
 };
+
+module.unsubscribe = function(subscription){
+    postal.unsubscribe(subscription);
+};

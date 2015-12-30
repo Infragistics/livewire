@@ -1,33 +1,40 @@
 .no-show {
   display: none;
 }
-#editor,
-#result {
-  position: absolute;
-  bottom: 40px;
-  padding: 10px;
+.push-down-top-sm {
+  margin-top: 15px;
 }
 #editor {
-  left: 10px;
-  border-right: solid 1px #eeeeee;
-  top: 90px;
-}
-#result {
-  top: 90px;
-  padding-top: 0px;
-  overflow: auto;
-}
-#result h1:first-child {
-  margin-top: 0;
-}
-#split-controller {
   position: absolute;
-  display: block;
-  color: #cccccc;
-  background-color: pink;
+  top: 74px;
+  left: 0px;
+  bottom: 40px;
+  padding: 10px;
+  z-index: 10000;
+}
+#result-container {
+  display: flex;
+}
+#result-pane,
+#result-button {
+  display: flex;
+  flex-direction: column;
+}
+#result-pane {
+  width: 50%;
+  margin-left: 50.5%;
+  overflow: auto;
+  height: 100%;
+}
+#result-button {
+  width: 22px;
+  background-color: #eeeeee;
   cursor: pointer;
-  right: 2px;
-  height: 88%;
+  align-items: center;
+  justify-content: center;
+}
+#result-button:hover {
+  background-color: #cccccc;
 }
 #footer {
   position: absolute;

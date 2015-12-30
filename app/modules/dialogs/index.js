@@ -29,14 +29,18 @@ module.openFile = function (options) {
 			deferred.reject();
 		} else {
 			var filePath = filePaths[0];
-			fs.readFile(filePath, 'utf8', function (err, contents) {
-				if (err) deferred.reject(err);
-				var result = {
-					path: filePath,
-					content: contents
-				}
-				deferred.resolve(result);
-			});
+            fs.stat(filePath, function(statError, fileStats){
+                var bytes = fileStats['size'];
+                fs.readFile(filePath, 'utf8', function (err, contents) {
+                    if (err) deferred.reject(err);
+                    var result = {
+                        path: filePath,
+                        content: contents,
+                        size: bytes
+                    }
+                    deferred.resolve(result);
+                });
+            });
 		}
 	};
 

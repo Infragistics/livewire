@@ -101,6 +101,8 @@ var menuHandlers = {
       basePath = path.dirname(filePath);
 
       fileInfo = getFileInfo(response.path);
+      fileInfo.size = response.size;
+      
       formatter = formats.getByFileExtension(fileInfo.ext);
       
       messenger.publish.file('pathChanged', fileInfo);

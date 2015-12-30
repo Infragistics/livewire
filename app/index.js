@@ -21,7 +21,17 @@ window.appSettings = {
         } else {
             return (100 - parseInt(appSettings.split()) - 1) + '%';
         }
-    }
+    },
+    
+    renderingMarkup: function(){
+        return '<p class="text-muted push-down-top-sm small">Rendering...</p>';
+    },
+    
+    editingContainerOffset: function(){ return 113; },
+    
+    largeFileSizeThresholdBytes: function(){ return 45000; },
+    
+    resultsButtonWidth: function() { return 22; } 
 };
 
 require.main.require('./vendor/ace-spell-check/spellcheck_ace.js');

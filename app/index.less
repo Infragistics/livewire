@@ -16,37 +16,46 @@
     display: none;
 }
 
-#editor,
-#result {
+.push-down-top-sm {
+    margin-top: 15px;
+}
+
+#editor {
     position: absolute;
+    top: 74px;
+    left:0px;
     bottom: @footer-height;
     padding: 10px;
+    z-index: 10000;
 }
 
-#editor { 
-    left: 10px;
-    border-right: solid 1px @gray-light;
-    top: @editor-top;
+#result-container {
+  display: flex;
 }
 
-#result {
-    top: @editor-top;
-    padding-top: 0px; 
-    overflow: auto;
-    
-    h1:first-child {
-        margin-top:0;
-    }
+#result-pane,
+#result-button {
+  display: flex;
+  flex-direction: column;
 }
 
-#split-controller {
-    position: absolute;
-    display: block;
-    color: #cccccc;
-    background-color: pink;
-    cursor: pointer;
-    right: 2px;
-    height: 88%;
+#result-pane {
+  width: 50%;
+  margin-left: 50.5%;
+  overflow: auto;
+  height: 100%;
+}
+
+#result-button {
+  width: 22px;
+  background-color: @gray-light;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
+#result-button:hover {
+    background-color: @gray-medium;
 }
 
 #footer {

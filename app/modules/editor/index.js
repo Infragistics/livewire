@@ -10,7 +10,8 @@ var
     messenger = require(path.resolve(__dirname, '../messenger')),
     editor,
     $editor,
-    $splitController,
+    $resultsButton,
+    $window = $(window),
     session,
     currentFile = {},
     noop = function () { };
@@ -18,10 +19,19 @@ var
 
 var _buildFlags = [];
 
+var setHeight = function(offSetValue){
+    $editor.css('height', $window.height() - offSetValue + 'px');
+    $window.on('resize', function(e){
+        $editor.css('height', $window.height() - offSetValue + 'px');
+    });
+};
+
 module.load = function (mode) {
     
     $editor = $('#editor');
-    $splitController = $('#split-controller');
+    $resultsButton = $('#result-button');
+    
+    setHeight(appSettings.editingContainerOffset());
 
     $editor.css('width', appSettings.editorWidth());
 
@@ -36,19 +46,6 @@ module.load = function (mode) {
     });
 
     editor.setOption('spellcheck', true);
-    
-    var hideResults = function(){
-
-        $splitController
-                .removeClass('fa-chevron-right')
-                .addClass('fa-chevron-left');
-                
-        $editor.css('width', '98%');
-                
-        messenger.publish.layout('hideResults');
-    };
-    
-    $splitController.one('click', hideResults);
 
     var showCursor = function () {
         editor.renderer.$cursorLayer.element.style.opacity = 1;
@@ -106,18 +103,6 @@ module.load = function (mode) {
         }
     };
 
-    var onChange = function () {
-        currentFile.contents = editor.getValue();
-        getBuildFlags(currentFile.contents);
-        messenger.publish.file('sourceChange', currentFile);
-    };
-
-    onChange();
-
-    editor.on('change', onChange);
-
-    editor.focus();
-
     var handlers = {
 
         menuNew: function () {
@@ -127,6 +112,21 @@ module.load = function (mode) {
         fileNew: function () {
             _buildFlags = [];
             editor.scrollToLine(0);
+        },
+        
+        opened: function(fileInfo){
+            if(fileInfo.size >= appSettings.largeFileSizeThresholdBytes()){
+                handlers.hideResults();
+            }
+        },
+        
+        contentChangedInEditor: function(){
+            var value = editor.getValue();
+            if(value.length > 0){
+                currentFile.contents = value;
+                getBuildFlags(currentFile.contents);
+                messenger.publish.file('sourceChange', currentFile);
+            }
         },
 
         contentChanged: function (fileInfo) {
@@ -154,31 +154,36 @@ module.load = function (mode) {
                         rowNumber = fileInfo.cursorPosition.row;
                         editor.selection.moveCursorToPosition(fileInfo.cursorPosition);
                         editor.scrollToLine(rowNumber, true /* attempt to center in editor */, true /* animate */, noop);
+                    } else {
+                        editor.scrollToLine(0, false, false, noop);
                     }
                 }
 
                 editor.focus();
                 editor.selection.clearSelection();
-
             }
         },
         
-        showResults: function(){
-            onChange();
-            
-            $splitController
-                .removeClass('fa-chevron-left')
-                .addClass('fa-chevron-right')
-                .one('click', hideResults);
-                
+        showResults: function(){              
             $editor.css('width', appSettings.editorWidth());
+            handlers.contentChangedInEditor();
+        },
+        
+        hideResults: function(){
+            $editor.css('width', ($window.width() - appSettings.resultsButtonWidth() + 1) + 'px');  
         }
     };
+    
+    handlers.contentChangedInEditor();
+    editor.on('change', handlers.contentChangedInEditor);
+    editor.focus();
 
     messenger.subscribe.menu('new', handlers.menuNew);
     messenger.subscribe.file('contentChanged', handlers.contentChanged);
     messenger.subscribe.file('new', handlers.fileNew);
+    messenger.subscribe.file('opened', handlers.opened)
     messenger.subscribe.layout('showResults', handlers.showResults);
+    messenger.subscribe.layout('hideResults', handlers.hideResults);
 };
 
 module.load('asciidoc');
