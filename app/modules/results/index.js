@@ -94,7 +94,6 @@ var handlers = {
         handlers.contentChanged(_fileInfo);
     },
     showResults: function() {
-        showRenderingMessage();
         subscribe();
         $resultsPane.css('visibility', 'visible');
         

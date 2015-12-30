@@ -170,8 +170,7 @@ module.load = function (mode) {
         },
         
         hideResults: function(){
-            $editor.css('width', ($window.width() - appSettings.resultsButtonWidth() + 1) + 'px');  
-            $editor.width(($window.width() - appSettings.resultsButtonWidth() + 1));  
+            $editor.css('width', ($window.width() - appSettings.resultsButtonWidth() + 1) + 'px');    
         }
     };
     
