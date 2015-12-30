@@ -5,6 +5,7 @@ var
     $resultContainer,
     $resultsButton,
     $resultsPane,
+    $renderingLabel,
     $window = $(window),
     path = require('path'),
     _ = require('lodash'),
@@ -36,10 +37,6 @@ var detectRenderer = function (fileInfo) {
     }
 };
 
-var showRenderingMessage = function(){
-    $result.html(appSettings.renderingMarkup());
-};
-
 var handlers = {
     newFile: function () {
         refreshSubscriptions();
@@ -49,35 +46,16 @@ var handlers = {
     },
     opened: function(fileInfo){
         refreshSubscriptions();
-        if(fileInfo.size >= appSettings.largeFileSizeThresholdBytes()){
-            handlers.hideResults();
-        } else {
-            handlers.newFile();
-        }
+        handlers.newFile();
     },
+
     sourceChanged: function(fileInfo){
-        debugger;
-        //handlers.contentChanged(fileInfo);
-        var flags = '', _fileInfo = fileInfo;
-        detectRenderer(_fileInfo);
-        source = _fileInfo.contents;
-
-        _buildFlags.forEach(function (buildFlag) {
-            flags += ':' + buildFlag + ':\n'
-        });
-
-        source = flags + source;
-        
-        renderer(source, function (e) {
-            $result.html(e.html);
-        });
+        handlers.contentChanged(fileInfo);
     },
     contentChanged: function (fileInfo) {
-        debugger;
+        //debugger;
         if (isEnabled && $result) {
             _fileInfo = fileInfo;
-            
-            showRenderingMessage();
 
             if (!_.isUndefined(_fileInfo)) {
                 if (_fileInfo.isBlank) {
@@ -94,14 +72,23 @@ var handlers = {
 
                         source = flags + source;
                         
+                        if(!$renderingLabel.is(':visible')){
+                            $renderingLabel.fadeIn('fast');
+                        }
+                        
                         renderer(source, function (e) {
                             $result.html(e.html);
+                            
+                            if($renderingLabel.is(':visible')){
+                                $renderingLabel.fadeOut('fast');
+                            }
                         });
                     }
                 }
             }
         }
     },
+
     buildFlags: function (buildFlags) {
         _buildFlags = buildFlags;
         handlers.contentChanged(_fileInfo);
@@ -112,15 +99,15 @@ var handlers = {
         $resultsPane.css('visibility', 'visible');
         
         $resultsButton
-            .removeClass('fa-chevron-right')
-            .addClass('fa-chevron-left')
+            .removeClass('fa-chevron-left')
+            .addClass('fa-chevron-right')
             .one('click', handlers.hideResults);
             
         messenger.publish.layout('showResults');
     },
     hideResults: function () {
         unsubscribe();
-        //$result.html(appSettings.renderingMarkup());
+
         $resultsPane.css('visibility', 'hidden');
         
         $resultsButton
@@ -191,11 +178,11 @@ $(function () {
     $resultContainer = $('#result-container');
     $resultsPane = $('#result-pane');
     $resultsButton = $('#result-button');
+    $renderingLabel = $('#rendering-label');
 
     $resultsPane
         .css('left', appSettings.split())
         .css('width', appSettings.resultsWidth());
-        
         
     $resultsButton.one('click', handlers.hideResults);
 

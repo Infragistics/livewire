@@ -10,8 +10,8 @@ var
     messenger = require(path.resolve(__dirname, '../messenger')),
     editor,
     $editor,
-    $resultsButton,
     $window = $(window),
+    suspendPublishSourceChange = false,
     session,
     currentFile = {},
     noop = function () { };
@@ -29,7 +29,6 @@ var setHeight = function(offSetValue){
 module.load = function (mode) {
     
     $editor = $('#editor');
-    $resultsButton = $('#result-button');
     
     setHeight(appSettings.editingContainerOffset());
 
@@ -114,22 +113,19 @@ module.load = function (mode) {
             editor.scrollToLine(0);
         },
         
-        opened: function(fileInfo){
-            if(fileInfo.size >= appSettings.largeFileSizeThresholdBytes()){
-                handlers.hideResults();
-            }
-        },
-        
-        contentChangedInEditor: function(){
+        contentChangedInternal: function(){
             var value = editor.getValue();
             if(value.length > 0){
                 currentFile.contents = value;
                 getBuildFlags(currentFile.contents);
-                messenger.publish.file('sourceChange', currentFile);
+                
+                if(!suspendPublishSourceChange){
+                    messenger.publish.file('sourceChange', currentFile);
+                }
             }
         },
 
-        contentChanged: function (fileInfo) {
+        contentChangedExternal: function (fileInfo) {
             var rowNumber;
 
             if (_.isObject(fileInfo)) {
@@ -142,12 +138,14 @@ module.load = function (mode) {
                     hideCursor();
                     editor.setValue('');
                 } else {
+                    suspendPublishSourceChange = true;
+                    
                     showCursor();
 
                     _buildFlags = [];
 
                     getBuildFlags(fileInfo.contents);
-
+                    
                     editor.setValue(fileInfo.contents);
 
                     if (fileInfo.cursorPosition) {
@@ -157,6 +155,8 @@ module.load = function (mode) {
                     } else {
                         editor.scrollToLine(0, false, false, noop);
                     }
+                    
+                    suspendPublishSourceChange = false;
                 }
 
                 editor.focus();
@@ -166,22 +166,21 @@ module.load = function (mode) {
         
         showResults: function(){              
             $editor.css('width', appSettings.editorWidth());
-            handlers.contentChangedInEditor();
+            handlers.contentChangedInternal();
         },
         
         hideResults: function(){
             $editor.css('width', ($window.width() - appSettings.resultsButtonWidth() + 1) + 'px');  
+            $editor.width(($window.width() - appSettings.resultsButtonWidth() + 1));  
         }
     };
     
-    handlers.contentChangedInEditor();
-    editor.on('change', handlers.contentChangedInEditor);
+    editor.on('change', _.throttle(handlers.contentChangedInternal, 1000));
     editor.focus();
 
     messenger.subscribe.menu('new', handlers.menuNew);
-    messenger.subscribe.file('contentChanged', handlers.contentChanged);
+    messenger.subscribe.file('contentChanged', handlers.contentChangedExternal);
     messenger.subscribe.file('new', handlers.fileNew);
-    messenger.subscribe.file('opened', handlers.opened)
     messenger.subscribe.layout('showResults', handlers.showResults);
     messenger.subscribe.layout('hideResults', handlers.hideResults);
 };

@@ -23,14 +23,7 @@ window.appSettings = {
         }
     },
     
-    renderingMarkup: function(){
-        return '<p class="text-muted push-down-top-sm small">Rendering...</p>';
-    },
-    
     editingContainerOffset: function(){ return 113; },
-    
-    largeFileSizeThresholdBytes: function(){ return 45000; },
-    
     resultsButtonWidth: function() { return 22; } 
 };
 

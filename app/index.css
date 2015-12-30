@@ -10,7 +10,6 @@
   left: 0px;
   bottom: 40px;
   padding: 10px;
-  z-index: 10000;
 }
 #result-container {
   display: flex;
@@ -25,6 +24,7 @@
   margin-left: 50.5%;
   overflow: auto;
   height: 100%;
+  padding-right: 20px;
 }
 #result-button {
   width: 22px;
@@ -32,6 +32,17 @@
   cursor: pointer;
   align-items: center;
   justify-content: center;
+}
+#rendering-label {
+  position: absolute;
+  top: 74px;
+  right: 38px;
+  font-size: .8em;
+  background-color: #eeeeee;
+  color: #888888;
+  padding: 4px;
+  opacity: .75;
+  display: none;
 }
 #result-button:hover {
   background-color: #cccccc;
@@ -45,6 +56,7 @@
   padding: 10px;
   border-top: solid 1px #eeeeee;
   color: #cccccc;
+  z-index: 10000;
 }
 #footer:hover {
   background-color: #eeeeee;

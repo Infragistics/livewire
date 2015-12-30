@@ -25,11 +25,16 @@ var handlers = {
   }
 };
 
-var worker = new Worker(path.resolve(__dirname, 'asciidoc-worker.js'));
-worker.onmessage = handlers.message;
-worker.onerror = function(e){
-  console.log(e);
+var getWorker = function(){
+    var worker = new Worker(path.resolve(__dirname, 'asciidoc-worker.js'));
+    worker.onmessage = handlers.message;
+    worker.onerror = function(e){
+        console.log(e);
+    };  
+    return worker;  
 };
+
+var worker = getWorker();
 
 messenger.subscribe.file('pathChanged', function (data, envelope) {
   basePath = data.basePath;
@@ -38,6 +43,8 @@ messenger.subscribe.file('pathChanged', function (data, envelope) {
 var renderer = function(content, callback){
   if(content.length > 0){
     renderCallback = callback;
+    worker.terminate();
+    worker = getWorker();
     worker.postMessage({source: content});
   }
 };

@@ -1,6 +1,7 @@
 @editor-width: 49%;
 @editor-split: @editor-width + 1%;
 @result-width: 100% - @editor-split;
+@result-button-width: 22px;
 @footer-height: 40px;
 @gray-light: #eee;
 @gray-light-light: lighten(@gray-light, 5%);
@@ -26,7 +27,6 @@
     left:0px;
     bottom: @footer-height;
     padding: 10px;
-    z-index: 10000;
 }
 
 #result-container {
@@ -44,14 +44,27 @@
   margin-left: 50.5%;
   overflow: auto;
   height: 100%;
+  padding-right: 20px;
 }
 
 #result-button {
-  width: 22px;
+  width: @result-button-width;
   background-color: @gray-light;
   cursor: pointer;
   align-items: center;
   justify-content: center;
+}
+
+#rendering-label {
+    position: absolute;
+    top: 74px;
+    right: 38px;
+    font-size: .8em;
+    background-color: @gray-light;
+    color: @gray-medium-dark;
+    padding: 4px;
+    opacity: .75;
+    display: none;
 }
 
 #result-button:hover {
@@ -67,6 +80,7 @@
     padding:10px;
     border-top: solid 1px @gray-light;
     color: @gray-medium;
+    z-index: 10000;
     
     &:hover {
         background-color: @gray-light;
