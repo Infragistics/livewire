@@ -29,7 +29,11 @@ Clone this repository:
 
     $ git clone https://github.com/infragistics/livewire.git
     
-Install the dependencies:
+Install gulp:
+
+    $ npm install --global gulp
+    
+Install the Livewire dependencies:
 
     $ npm install
     
