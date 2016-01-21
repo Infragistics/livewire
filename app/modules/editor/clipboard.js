@@ -14,7 +14,7 @@ module.init = function (editorInstance) {
 
 var copySelectedText = function () {
   var range = editor.getSelectionRange();
-  var text = editor.session.getTextRange(range);
+  var text = editor.session.getTextRange(range).replace(/\n/g, "\r\n"); //"\r\n" will make sure new lines are handled across all operating systems and editors
   clipboard.writeText(text, key);
   return range;
 };
