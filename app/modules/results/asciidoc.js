@@ -6,6 +6,9 @@ var cheerio = require('cheerio');
 var messenger = require(path.resolve(__dirname, '../messenger'));
 var renderCallback = function(){};
 
+var path = require('path');
+var include = require(path.resolve(__dirname, '../formats/grammar/asciidoc/include'));
+
 var handlers = {
   message: function(e){
     if(e.data && e.data.html && e.data.html.length > 0){
@@ -45,7 +48,12 @@ var renderer = function(content, callback){
     renderCallback = callback;
     worker.terminate();
     worker = getWorker();
-    worker.postMessage({source: content});
+    
+    if(basePath && basePath.length > 0){
+        content = include.apply(content, basePath);
+    }
+    
+    worker.postMessage({source: content, basePath: basePath });
   }
 };
 
