@@ -171,15 +171,32 @@ module.load = function (mode) {
         
         hideResults: function(){
             $editor.css('width', ($window.width() - appSettings.resultsButtonWidth() + 1) + 'px');    
+        },
+
+        scrollTopChanged: function (scrollPercentage) {
+            var maxScroll = editor.renderer.layerConfig.maxHeight - editor.renderer.layerConfig.height;
+            var scrollY = Math.round(scrollPercentage * maxScroll / 100);
+
+            var currentScrollY = session.getScrollTop();
+            if (currentScrollY !== scrollY) {
+                session.setScrollTop(scrollY);
+            }
         }
     };
-    
+
+    session.on('changeScrollTop', function (scrollY) {
+        var maxScroll = editor.renderer.layerConfig.maxHeight - editor.renderer.layerConfig.height;
+        var scrollPercentage = scrollY * 100 / maxScroll;
+        messenger.publish.file('scrollTopChanged', scrollPercentage);
+    });
+
     editor.on('change', _.throttle(handlers.contentChangedInternal, 1000));
     editor.focus();
 
     messenger.subscribe.menu('new', handlers.menuNew);
     messenger.subscribe.file('contentChanged', handlers.contentChangedExternal);
     messenger.subscribe.file('new', handlers.fileNew);
+    messenger.subscribe.file('scrollTopChanged', handlers.scrollTopChanged);
     messenger.subscribe.layout('showResults', handlers.showResults);
     messenger.subscribe.layout('hideResults', handlers.hideResults);
 };
