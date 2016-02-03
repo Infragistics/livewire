@@ -23,6 +23,12 @@ For more information make sure to read the [wiki](https://github.com/craigshoema
 
 [You can download the v1.0 Windows 64-bit installer here](http://download.infragistics.com/users/livewire/Livewire-1.0-win-64.exe).
 
+### Cloning
+
+Clone this repository:
+
+    $ git clone https://github.com/infragistics/livewire.git
+
 ### Pre-requisites
 
 Install [Nodejs](https://nodejs.org/en/download/package-manager/)
@@ -35,11 +41,7 @@ Install bower:
     
     $ npm install -g bower
 
-### Cloning
-
-Clone this repository:
-
-    $ git clone https://github.com/infragistics/livewire.git
+### Running
 
 Install the Livewire dependencies:
 
