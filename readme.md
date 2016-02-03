@@ -23,22 +23,36 @@ For more information make sure to read the [wiki](https://github.com/craigshoema
 
 [You can download the v1.0 Windows 64-bit installer here](http://download.infragistics.com/users/livewire/Livewire-1.0-win-64.exe).
 
-### Cloning 
+### Cloning
 
 Clone this repository:
 
     $ git clone https://github.com/infragistics/livewire.git
-    
+
+### Pre-requisites
+
+Install [Nodejs](https://nodejs.org/en/download/package-manager/)
+
 Install gulp:
 
     $ npm install --global gulp
+
+Install bower:
     
+    $ npm install -g bower
+
+### Running
+
 Install the Livewire dependencies:
 
     $ npm install
-    
+
+Install app bower dependencies:
+
+    $ (cd app/ && bower install)
+
 Start the application
     
     $ npm start
-    
+
 Happy writing!
