@@ -118,16 +118,6 @@ var handlers = {
     },
     fileSelected: function(){
         refreshSubscriptions();
-    },
-
-    scrollTopChanged: function (scrollPercentage) {
-        var maxScroll = $result.height() - $resultsPane.innerHeight();
-        var scrollY = Math.round(scrollPercentage * maxScroll / 100);
-
-        var currentScrollY = $resultsPane.scrollTop();
-        if (currentScrollY !== scrollY) {
-            $resultsPane.scrollTop(scrollY);
-        }
     }
 };
 
@@ -137,8 +127,7 @@ var subscribe = function () {
     subscriptions.push(messenger.subscribe.file('opened', handlers.opened));
     subscriptions.push(messenger.subscribe.file('contentChanged', handlers.contentChanged));
     subscriptions.push(messenger.subscribe.file('sourceChange', handlers.sourceChanged));
-    subscriptions.push(messenger.subscribe.file('scrollTopChanged', handlers.scrollTopChanged));
-    subscriptions.push(messenger.subscribe.format('buildFlags', handlers.buildFlags));
+    subscriptions.push(messenger.subscribe.format('buildFlags', handlers.buildFlags));  
 };
 
 var unsubscribe = function () {
@@ -197,11 +186,4 @@ $(function () {
     $resultsButton.one('click', handlers.hideResults);
 
     setHeight(appSettings.editingContainerOffset());
-
-    $resultsPane.on('scroll', function () {
-        var scrollY = $(this).scrollTop();
-        var maxScroll = $result.height() - $resultsPane.innerHeight();
-        var scrollPercentage = scrollY * 100 / maxScroll;
-        messenger.publish.file('scrollTopChanged', scrollPercentage);
-    });
 });
