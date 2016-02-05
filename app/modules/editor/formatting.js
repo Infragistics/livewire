@@ -10,7 +10,8 @@ var
 	config = require(path.resolve(__dirname, '../config')).get();
     
 var dialogs = {
-    links: require(path.resolve(__dirname, './dialogs/links/index.js'))
+    links: require(path.resolve(__dirname, './dialogs/links/index.js')),
+    images: require(path.resolve(__dirname, './dialogs/images/index.js'))
 };
 
 var $dialogsContainer;
@@ -27,7 +28,7 @@ messenger.subscribe.format('wrapText', (data, envelope) => {
 	
 	// todo: make this generic if more dialogs are
 	// added to the editor
-	if(envelope.data.shortcut !== 'link'){
+	if(envelope.data.shortcut !== 'link' || envelope.data.shortcut !== 'image'){
 		module.editor.focus();
 	}
 });
@@ -82,22 +83,27 @@ var buildCommand = (name, shortcut) => {
 };
 
 var registerDialog = (name, filePath) => {
-    var html = $dialogsContainer.html(); 
+    var html = $dialogsContainer.html();
     
-    fs.readFile(path.resolve(__dirname, filePath), 'utf8', (error, templateHtml) => {
-        if(error) {
-            console.log(error);
-        } else {
-            $dialogsContainer.html(html + templateHtml);
-            dialogs[name].init(module);
-        };
-    });
+    if(filePath){
+        fs.readFile(path.resolve(__dirname, filePath), 'utf8', (error, templateHtml) => {
+            if(error) {
+                console.log(error);
+            } else {
+                $dialogsContainer.html(html + templateHtml);
+                dialogs[name].init(module);
+            };
+        });
+    } else {
+        dialogs[name].init(module);        
+    }
 };
 
 $(() => {
     $dialogsContainer = $('#dialogs-container');
     
     registerDialog('links', './dialogs/links/template.html');
+    registerDialog('images');
 });
 
 
@@ -108,7 +114,6 @@ module.init = (editorInstance) => {
 	module.editor.commands.addCommand(buildCommand('bold', 'Ctrl-B'));
 	module.editor.commands.addCommand(buildCommand('italic', 'Ctrl-I'));
 	module.editor.commands.addCommand(buildCommand('code', 'Ctrl-D'));
-	module.editor.commands.addCommand(buildCommand('image', 'Ctrl-Shift-I'));
 	module.editor.commands.addCommand(buildCommand('h1', 'Ctrl-1'));
 	module.editor.commands.addCommand(buildCommand('h2', 'Ctrl-2'));
 	module.editor.commands.addCommand(buildCommand('h3', 'Ctrl-3'));
