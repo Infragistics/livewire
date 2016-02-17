@@ -11,6 +11,7 @@
 */
 
 importScripts('../../bower_components/asciidoctor.js/dist/asciidoctor-all.js');
+importScripts('../../vendor/asciidoctor.js/asciidoctor-pick-inline-macro.js');
 
 var options = Opal.hash2(
   ['doctype', 'attributes'],
