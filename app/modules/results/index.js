@@ -10,6 +10,7 @@ var
     path = require('path'),
     _ = require('lodash'),
     isEnabled = true,
+    isAllFilesClosed = false,
 
     messenger = require(path.resolve(__dirname, '../messenger')),
     renderer = require(path.resolve(__dirname, './asciidoc.js')).get(),
@@ -39,12 +40,14 @@ var detectRenderer = function (fileInfo) {
 
 var handlers = {
     newFile: function () {
+        isAllFilesClosed = false;
         refreshSubscriptions();
         $result.animate({
             scrollTop: $result.offset().top
         }, 10);
     },
     opened: function(fileInfo){
+        isAllFilesClosed = false;
         refreshSubscriptions();
         handlers.newFile();
     },
@@ -77,10 +80,12 @@ var handlers = {
                         }
                         
                         renderer(source, function (e) {
-                            $result.html(e.html);
-                            
-                            if($renderingLabel.is(':visible')){
-                                $renderingLabel.fadeOut('fast');
+                            if(!isAllFilesClosed){
+                                $result.html(e.html);
+                                
+                                if($renderingLabel.is(':visible')){
+                                    $renderingLabel.fadeOut('fast');
+                                }
                             }
                         });
                     }
@@ -118,6 +123,11 @@ var handlers = {
     },
     fileSelected: function(){
         refreshSubscriptions();
+    },
+    allFilesClosed: function () {
+        isAllFilesClosed = true;
+        $result.html('');
+        $renderingLabel.fadeOut('fast');
     }
 };
 
@@ -127,6 +137,7 @@ var subscribe = function () {
     subscriptions.push(messenger.subscribe.file('opened', handlers.opened));
     subscriptions.push(messenger.subscribe.file('contentChanged', handlers.contentChanged));
     subscriptions.push(messenger.subscribe.file('sourceChange', handlers.sourceChanged));
+    subscriptions.push(messenger.subscribe.file('allFilesClosed', handlers.allFilesClosed));
     subscriptions.push(messenger.subscribe.format('buildFlags', handlers.buildFlags));  
 };
 
