@@ -16,7 +16,7 @@ var
     currentFile = {},
     noop = function () { };
     
-var $buildFlags = require('./buildFlags.js');
+var buildFlags = require('./buildFlags.js');
 
 var setHeight = function(offSetValue){
     $editor.css('height', $window.height() - offSetValue + 'px');
@@ -82,7 +82,6 @@ module.load = function (mode) {
         },
 
         fileNew: function () {
-            $buildFlags.clear();
             editor.scrollToLine(0);
         },
         
@@ -90,9 +89,7 @@ module.load = function (mode) {
             var value = editor.getValue();
             if(value.length > 0){
                 currentFile.contents = value;
-                $buildFlags.detect(currentFile.contents, (detectedFlags) => {
-                    messenger.publish.metadata('buildFlags', detectedFlags);
-                });
+                buildFlags.detect(currentFile.contents);
                 
                 if(!suspendPublishSourceChange){
                     messenger.publish.file('sourceChange', currentFile);
@@ -117,7 +114,7 @@ module.load = function (mode) {
                     
                     showCursor();
 
-                    $buildFlags.detect(fileInfo.contents);
+                    buildFlags.detect(fileInfo.contents);
                     
                     editor.setValue(fileInfo.contents);
 

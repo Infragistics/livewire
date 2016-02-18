@@ -1,22 +1,17 @@
 module = module.exports;
 
-const _ = require('lodash');
+const 
+    _ = require('lodash'),
+    path = require('path'),
+    messenger = require(path.resolve(__dirname, '../messenger'));
 
-var _buildFlags = [];
-
-var buildFlagsExpressions = [
+const buildFlagsExpressions = [
     /ifdef::(.*?)\[\]/g,
     /pick:\[(.*?)\]/gi
 ];
 
-module.clear = () => {
-    _buildFlags = [];
-};
-
-module.detect = (content, callback) => {
-    var flags = [], buildFlags;
-    
-    _buildFlags = [];
+module.detect = (content) => {
+    var flags = [], buildFlags = [];
 
     buildFlagsExpressions.forEach((expression) => {
         var flagMatch = content.match(expression);
@@ -25,42 +20,39 @@ module.detect = (content, callback) => {
         }
     });
 
-    buildFlags = [];
-
-    if (flags) {
-        flags.forEach(function (flag) {
+    flags.forEach((flag) => {
+        
+        buildFlagsExpressions.forEach((expression) => {
             
-            buildFlagsExpressions.forEach((expression, index, values) => {
-                
-                if(flag.indexOf('ifdef:') > -1){
-                    flag = flag.replace(expression, function (match) {
-                        return match.replace('ifdef::', '').replace('[]', '');
-                    });
-                }else if(flag.indexOf('pick:') > -1){
-                    flag = flag.replace(expression, function (pickString) {
-                        var returnValue = '', flagMatches;
-                        
-                        flagMatches = pickString.match(/pick:\[(.*?)=.*?\]/);
-                        if(flagMatches && flagMatches.length > 1){
-                            returnValue = flagMatches[1];
-                        }
-                        return returnValue;
-                    });
-                }
-                
-            });
-
-            buildFlags = buildFlags.concat(flag.split(','));
+            if(flag.indexOf('ifdef:') > -1){
+                flag = flag.replace(expression, (ifdefString) => {
+                    return ifdefString.replace('ifdef::', '').replace('[]', '');
+                });
+            } else if(flag.indexOf('pick:') > -1){
+                flag = flag.replace(expression, (pickString) => {
+                    var returnValue = '', flagMatches;
+                    
+                    flagMatches = pickString.match(/pick:\[(.*?)=.*?\]/);
+                    if(flagMatches && flagMatches.length > 1){
+                        returnValue = flagMatches[1];
+                    }
+                    return returnValue;
+                });
+            }
         });
 
-        buildFlags = _.unique(buildFlags).sort();
+        buildFlags = buildFlags.concat(flag.split(','));
+    });
 
-        if (_.difference(buildFlags, _buildFlags).length > 0) {
-            _buildFlags = buildFlags;
-            
-            if(callback){
-                callback(buildFlags);
-            }
-        }
+    buildFlags = _.unique(buildFlags).sort();
+    messenger.publish.metadata('buildFlags', buildFlags);
+};
+
+var handlers = {
+    clearFlags: () => {
+        messenger.publish.metadata('buildFlags', []);
     }
 };
+
+messenger.subscribe.file('new', handlers.clearFlags);
+messenger.subscribe.file('opened', handlers.clearFlags);

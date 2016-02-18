@@ -56,7 +56,6 @@ var handlers = {
         handlers.contentChanged(fileInfo);
     },
     contentChanged: function (fileInfo) {
-        //debugger;
         if (isEnabled && $result) {
             _fileInfo = fileInfo;
 
@@ -123,6 +122,7 @@ var handlers = {
     },
     fileSelected: function(){
         refreshSubscriptions();
+        _buildFlags = [];
     },
     allFilesClosed: function () {
         isAllFilesClosed = true;
@@ -138,7 +138,7 @@ var subscribe = function () {
     subscriptions.push(messenger.subscribe.file('contentChanged', handlers.contentChanged));
     subscriptions.push(messenger.subscribe.file('sourceChange', handlers.sourceChanged));
     subscriptions.push(messenger.subscribe.file('allFilesClosed', handlers.allFilesClosed));
-    subscriptions.push(messenger.subscribe.format('buildFlags', handlers.buildFlags));  
+    subscriptions.push(messenger.subscribe.format('buildFlags', handlers.buildFlags));
 };
 
 var unsubscribe = function () {
