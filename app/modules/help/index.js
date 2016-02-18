@@ -4,7 +4,7 @@ var
 	row = "<tr><td><%= shortcut %></td><td><%= description %></td></tr>",
 	html = '',
 	
-	ipc = require('ipc'),
+	ipc = require('electron').ipcRenderer,
 	isMac = false,
 	isPC = true,
 	
