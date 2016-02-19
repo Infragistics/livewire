@@ -18,6 +18,12 @@ var
     formatter = null,
     $result = $('#result'),
     BOM = '\ufeff';
+    
+const METADATA_PATTERNS = {
+    FULL: /\/\/\/\/\n\|metadata\|((.|\n)*)\|metadata\|\n\/\/\/\//,
+    LEFT: /\/\/\/\/\n\|metadata\|/g,
+    RIGHT: /\|metadata\|\n\/\/\/\//g
+}; 
 
 messenger.subscribe.file('pathChanged', (data, envelope) => {
     if (data.isNewFile) {
@@ -95,7 +101,7 @@ var menuHandlers = {
         options.filters.unshift(allFormats);
 
         dialogs.openFile(options).then((response) => {
-            var fileInfo;
+            var fileInfo, fileContents, metadataMatches, metadata;
 
             filePath = response.path;
             basePath = path.dirname(filePath);
@@ -108,7 +114,20 @@ var menuHandlers = {
             messenger.publish.file('pathChanged', fileInfo);
 
             if (!fileInfo.isFileAlreadyOpen) {
-                fileInfo.contents = _.trimLeft(response.content, BOM);
+                fileContents = _.trimLeft(response.content, BOM);
+                
+                metadataMatches = fileContents.match(METADATA_PATTERNS.FULL);
+                
+                if(metadataMatches){
+                    metadata = metadataMatches[0].replace(METADATA_PATTERNS.LEFT, '');
+                    metadata = metadata.replace(METADATA_PATTERNS.RIGHT, '');
+                    fileInfo.metadata = JSON.parse(metadata);  
+                }
+                
+                fileContents = fileContents.replace(METADATA_PATTERNS.FULL, '');
+                fileContents = _.trimLeft(fileContents, '\n\n');
+                
+                fileInfo.contents = fileContents;
                 messenger.publish.file('opened', fileInfo);
             }
         });
