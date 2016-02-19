@@ -28,7 +28,7 @@
 }
 #result-button {
   width: 22px;
-  background-color: #eeeeee;
+  background-color: #eee;
   cursor: pointer;
   align-items: center;
   justify-content: center;
@@ -38,14 +38,14 @@
   top: 74px;
   right: 38px;
   font-size: .8em;
-  background-color: #eeeeee;
-  color: #888888;
+  background-color: #eee;
+  color: #888;
   padding: 4px;
   opacity: .75;
   display: none;
 }
 #result-button:hover {
-  background-color: #cccccc;
+  background-color: #ccc;
 }
 #footer {
   position: absolute;
@@ -54,19 +54,19 @@
   right: 0;
   height: 40px;
   padding: 10px;
-  border-top: solid 1px #eeeeee;
-  color: #cccccc;
-  z-index: 10000;
+  border-top: solid 1px #eee;
+  color: #ccc;
+  z-index: 1000;
 }
 #footer:hover {
-  background-color: #eeeeee;
+  background-color: #eee;
 }
 #file-name-button {
   border: 0;
   box-shadow: none;
   padding: 0;
   height: auto;
-  color: #888888;
+  color: #888;
   background-color: transparent;
 }
 #formatting-toolbar {
@@ -74,9 +74,9 @@
   padding: 10px;
   height: 45px;
   width: 100%;
-  color: #888888;
+  color: #888;
   min-width: 660px;
-  border-bottom: solid 1px #eeeeee;
+  border-bottom: solid 1px #eee;
 }
 #formatting-toolbar button {
   background-color: transparent;
@@ -86,7 +86,7 @@
   padding: 6px;
 }
 #formatting-toolbar button:hover {
-  background-color: #eeeeee;
+  background-color: #eee;
 }
 #formatting-toolbar .separator {
   color: #f1f1f1;
@@ -107,20 +107,20 @@
 #lw-tab-container .lw-tabs .lw-tab {
   position: relative;
   display: inline;
-  border: solid 1px #eeeeee;
+  border: solid 1px #eee;
   border-bottom: 0;
   border-radius: 3px 3px 0;
   padding: 4px;
   margin: 0 2px 0 2px;
   font-size: 11px;
   background-color: #fbfbfb;
-  color: #888888;
+  color: #888;
   cursor: pointer;
   line-height: 3em;
   font-weight: normal;
 }
 #lw-tab-container .lw-tabs .lw-tab:hover {
-  background-color: #eeeeee;
+  background-color: #eee;
 }
 #lw-tab-container .lw-tabs .lw-tab button {
   border: 0;
@@ -130,23 +130,23 @@
   font-size: 12px;
 }
 #lw-tab-container .lw-tabs .lw-tab button:hover {
-  color: #cc0033;
+  color: #c03;
 }
 #lw-tab-container .lw-tabs .active {
-  border-bottom: 3px solid #ffffff;
-  background-color: #ffffff;
+  border-bottom: 3px solid #fff;
+  background-color: #fff;
   z-index: 300;
   color: #6f6f6f;
   font-weight: bold;
 }
 #lw-tab-container .lw-tabs .active:hover {
-  background-color: #ffffff;
+  background-color: #fff;
   border-bottom: inherit;
 }
 #lw-tab-container .lw-separator {
   position: relative;
   display: block;
-  border-top: 1px solid #eeeeee;
+  border-top: 1px solid #eee;
   width: 100%;
   height: 1px;
   z-index: 100;
@@ -159,40 +159,40 @@
   display: none;
 }
 .admonitionblock .content {
-  border-left: 8px solid #eeeeee;
+  border-left: 8px solid #eee;
   padding-left: 10px;
 }
 .admonitionblock .content .title {
   font-weight: bold;
 }
 .misspelled {
-  border-bottom: 1px solid #cc0033;
+  border-bottom: 1px solid #c03;
   margin-bottom: -1px;
 }
 .ace_marker-layer .misspelled {
   position: absolute;
   z-index: -2;
-  border-bottom: 1px solid #cc0033;
+  border-bottom: 1px solid #c03;
   margin-bottom: -1px;
 }
 #help-container {
   position: fixed;
-  background-color: #ffffff;
+  background-color: #fff;
   bottom: 0px;
   right: 100px;
   height: 400px;
   width: 400px;
-  border: 1px solid #cccccc;
+  border: 1px solid #ccc;
   border-radius: 6px 6px 0 0;
   padding: 15px;
-  box-shadow: -2px -2px 4px 0px #cccccc;
+  box-shadow: -2px -2px 4px 0px #ccc;
   z-index: 100000;
 }
 #help-container h1 {
   text-transform: uppercase;
   font-size: 0.85em;
   margin: 0;
-  color: #888888;
+  color: #888;
   font-weight: bold;
   text-align: center;
 }
@@ -223,5 +223,5 @@ button[data-role="build-flag"] {
   margin-left: 10px;
 }
 button[data-role="build-flag"].selected {
-  border: 2px solid #888888;
+  border: 2px solid #888;
 }

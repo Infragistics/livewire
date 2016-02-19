@@ -14,18 +14,6 @@ var
     $doneBtn,   
     formatterModule;
 
-var buildDialogCommand = function(name, shortcut){
-	return {
-		name: name,
-		bindKey: { 
-			win: shortcut.replace(/Command/, 'Ctrl'), 
-			mac: shortcut.replace(/Ctrl/, 'Command') },
-		exec: function(){
-			$browseDialog.modal();
-		}
-	}
-};
-
 var createLink = (filePaths) => {
     var filePath, format, side;
     if (!filePaths || !filePaths.length) {
@@ -53,9 +41,12 @@ var createLink = (filePaths) => {
     formatterModule.editor.focus();
 };
 
-module.init = (formatterMod) => {
+module.init = (formatterMod, dialogModule) => {
     formatterModule = formatterMod;
-    formatterModule.editor.commands.addCommand(buildDialogCommand('link', 'Ctrl-K'));
+    
+    formatterModule.editor.commands.addCommand(dialogModule.buildDialogCommand('link', 'Ctrl-K', () => {
+        $browseDialog.modal();
+    }));
     
     $browseDialog = $('#browseDialog');
     $linkInput = $('#linkInput');

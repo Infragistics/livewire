@@ -7,15 +7,9 @@ var
 	messenger = require(path.resolve(__dirname, '../messenger')),
 	_ = require('lodash'),
     fs = require('fs'),
-	config = require(path.resolve(__dirname, '../config')).get();
+	config = require(path.resolve(__dirname, '../config')).get(),
+    dialogs = require('./dialogs');;
     
-var dialogs = {
-    links: require(path.resolve(__dirname, './dialogs/links/index.js')),
-    images: require(path.resolve(__dirname, './dialogs/images/index.js'))
-};
-
-var $dialogsContainer;
-
 module.editor = null;
 module.formatter = require(path.resolve(__dirname, '../formats')).get(config.defaultFormat);
   
@@ -82,31 +76,6 @@ var buildCommand = (name, shortcut) => {
 	}
 };
 
-var registerDialog = (name, filePath) => {
-    var html = $dialogsContainer.html();
-    
-    if(filePath){
-        fs.readFile(path.resolve(__dirname, filePath), 'utf8', (error, templateHtml) => {
-            if(error) {
-                console.log(error);
-            } else {
-                $dialogsContainer.html(html + templateHtml);
-                dialogs[name].init(module);
-            };
-        });
-    } else {
-        dialogs[name].init(module);        
-    }
-};
-
-$(() => {
-    $dialogsContainer = $('#dialogs-container');
-    
-    registerDialog('links', './dialogs/links/template.html');
-    registerDialog('images');
-});
-
-
 module.init = (editorInstance) => {
 	
 	module.editor = editorInstance;
@@ -132,4 +101,6 @@ module.init = (editorInstance) => {
 			messenger.publish.dialog('help.open');
 		}
 	});
+    
+    dialogs.init(module);
 };
