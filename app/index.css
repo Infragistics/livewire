@@ -225,3 +225,12 @@ button[data-role="build-flag"] {
 button[data-role="build-flag"].selected {
   border: 2px solid #888;
 }
+.tt-menu {
+  padding: 10px;
+  background-color: #fff;
+  cursor: pointer;
+  line-height: 1.5em;
+  border: solid 1px #eee;
+  border-radius: 3px;
+  margin-top: 3px;
+}
