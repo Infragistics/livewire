@@ -233,4 +233,21 @@ button[data-role="build-flag"].selected {
   border: solid 1px #eee;
   border-radius: 3px;
   margin-top: 3px;
+  -webkit-box-shadow: 2px 2px 5px 0px #b5b5b5;
+  -moz-box-shadow: 2px 2px 5px 0px #b5b5b5;
+  box-shadow: 2px 2px 5px 0px #b5b5b5;
+}
+#metadata-tags-container {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: solid 1px #eee;
+  -webkit-column-count: 3;
+  overflow: auto;
+  max-height: 550px;
+}
+#metadata-tags-container label {
+  display: inline-block;
+  font-weight: normal;
+  cursor: pointer;
+  margin-left: 5px;
 }

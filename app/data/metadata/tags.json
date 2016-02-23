@@ -1,305 +1,305 @@
 [{
-		"EN_NAME": "API",
-		"JP_NAME": "API"
+		"en": "API",
+		"jp": "API"
 	}, {
-		"EN_NAME": "Application Blocks",
-		"JP_NAME": "アプリケーション ブロック"
+		"en": "Application Blocks",
+		"jp": "アプリケーション ブロック"
 	}, {
-		"EN_NAME": "Application Scenarios",
-		"JP_NAME": "アプリケーション シナリオ"
+		"en": "Application Scenarios",
+		"jp": "アプリケーション シナリオ"
 	}, {
-		"EN_NAME": "Appointments",
-		"JP_NAME": "予定"
+		"en": "Appointments",
+		"jp": "予定"
 	}, {
-		"EN_NAME": "Azure",
-		"JP_NAME": "アジュール"
+		"en": "Azure",
+		"jp": "アジュール"
 	}, {
-		"EN_NAME": "Breaking Changes",
-		"JP_NAME": "重大な変更点"
+		"en": "Breaking Changes",
+		"jp": "重大な変更点"
 	}, {
-		"EN_NAME": "Calculations",
-		"JP_NAME": "計算"
+		"en": "Calculations",
+		"jp": "計算"
 	}, {
-		"EN_NAME": "Charting",
-		"JP_NAME": "チャート作成"
+		"en": "Charting",
+		"jp": "チャート作成"
 	}, {
-		"EN_NAME": "Commands",
-		"JP_NAME": "コマンド"
+		"en": "Commands",
+		"jp": "コマンド"
 	}, {
-		"EN_NAME": "Composite UI Application Block",
-		"JP_NAME": "複合 UI アプリケーション ブロック"
+		"en": "Composite UI Application Block",
+		"jp": "複合 UI アプリケーション ブロック"
 	}, {
-		"EN_NAME": "Compression",
-		"JP_NAME": "圧縮"
+		"en": "Compression",
+		"jp": "圧縮"
 	}, {
-		"EN_NAME": "CTP",
-		"JP_NAME": "CTP"
+		"en": "CTP",
+		"jp": "CTP"
 	}, {
-		"EN_NAME": "Data Binding",
-		"JP_NAME": "データ バインディング"
+		"en": "Data Binding",
+		"jp": "データ バインディング"
 	}, {
-		"EN_NAME": "Data Presentation",
-		"JP_NAME": "データ プレゼンテーション"
+		"en": "Data Presentation",
+		"jp": "データ プレゼンテーション"
 	}, {
-		"EN_NAME": "Deployment",
-		"JP_NAME": "デプロイメント"
+		"en": "Deployment",
+		"jp": "デプロイメント"
 	}, {
-		"EN_NAME": "Design Environment",
-		"JP_NAME": "デザイン環境"
+		"en": "Design Environment",
+		"jp": "デザイン環境"
 	}, {
-		"EN_NAME": "Drilldown",
-		"JP_NAME": "ドリルダウン"
+		"en": "Drilldown",
+		"jp": "ドリルダウン"
 	}, {
-		"EN_NAME": "Editing",
-		"JP_NAME": "編集"
+		"en": "Editing",
+		"jp": "編集"
 	}, {
-		"EN_NAME": "Error Handling",
-		"JP_NAME": "エラー処理"
+		"en": "Error Handling",
+		"jp": "エラー処理"
 	}, {
-		"EN_NAME": "Events",
-		"JP_NAME": "イベント"
+		"en": "Events",
+		"jp": "イベント"
 	}, {
-		"EN_NAME": "Exporting",
-		"JP_NAME": "エクスポート"
+		"en": "Exporting",
+		"jp": "エクスポート"
 	}, {
-		"EN_NAME": "Extending",
-		"JP_NAME": "拡張"
+		"en": "Extending",
+		"jp": "拡張"
 	}, {
-		"EN_NAME": "FAQ",
-		"JP_NAME": "よくある質問"
+		"en": "FAQ",
+		"jp": "よくある質問"
 	}, {
-		"EN_NAME": "Filtering",
-		"JP_NAME": "フィルタリング"
+		"en": "Filtering",
+		"jp": "フィルタリング"
 	}, {
-		"EN_NAME": "Formatting",
-		"JP_NAME": "書式設定"
+		"en": "Formatting",
+		"jp": "書式設定"
 	}, {
-		"EN_NAME": "Getting Started",
-		"JP_NAME": "はじめに"
+		"en": "Getting Started",
+		"jp": "はじめに"
 	}, {
-		"EN_NAME": "Grids",
-		"JP_NAME": "グリッド"
+		"en": "Grids",
+		"jp": "グリッド"
 	}, {
-		"EN_NAME": "Grouping",
-		"JP_NAME": "グループ化"
+		"en": "Grouping",
+		"jp": "グループ化"
 	}, {
-		"EN_NAME": "How Do I",
-		"JP_NAME": "方法"
+		"en": "How Do I",
+		"jp": "方法"
 	}, {
-		"EN_NAME": "Known Issues",
-		"JP_NAME": "既知の問題"
+		"en": "Known Issues",
+		"jp": "既知の問題"
 	}, {
-		"EN_NAME": "Layouts",
-		"JP_NAME": "レイアウト"
+		"en": "Layouts",
+		"jp": "レイアウト"
 	}, {
-		"EN_NAME": "LINQ",
-		"JP_NAME": "LINQ"
+		"en": "LINQ",
+		"jp": "LINQ"
 	}, {
-		"EN_NAME": "Localization",
-		"JP_NAME": "ローカライズ"
+		"en": "Localization",
+		"jp": "ローカライズ"
 	}, {
-		"EN_NAME": "MVC",
-		"JP_NAME": "MVC"
+		"en": "MVC",
+		"jp": "MVC"
 	}, {
-		"EN_NAME": "Navigation",
-		"JP_NAME": "ナビゲーション"
+		"en": "Navigation",
+		"jp": "ナビゲーション"
 	}, {
-		"EN_NAME": "Paging",
-		"JP_NAME": "ページング"
+		"en": "Paging",
+		"jp": "ページング"
 	}, {
-		"EN_NAME": "Patterns and Practices",
-		"JP_NAME": "パターンと手法"
+		"en": "Patterns and Practices",
+		"jp": "パターンと手法"
 	}, {
-		"EN_NAME": "Performance",
-		"JP_NAME": "パフォーマンス"
+		"en": "Performance",
+		"jp": "パフォーマンス"
 	}, {
-		"EN_NAME": "Persistence",
-		"JP_NAME": "永続化"
+		"en": "Persistence",
+		"jp": "永続化"
 	}, {
-		"EN_NAME": "Printing",
-		"JP_NAME": "印刷"
+		"en": "Printing",
+		"jp": "印刷"
 	}, {
-		"EN_NAME": "Recurrences",
-		"JP_NAME": "定期的な予定"
+		"en": "Recurrences",
+		"jp": "定期的な予定"
 	}, {
-		"EN_NAME": "Reporting",
-		"JP_NAME": "レポート"
+		"en": "Reporting",
+		"jp": "レポート"
 	}, {
-		"EN_NAME": "Resource Strings",
-		"JP_NAME": "リソース文字列"
+		"en": "Resource Strings",
+		"jp": "リソース文字列"
 	}, {
-		"EN_NAME": "Sample Data Source",
-		"JP_NAME": "サンプル データ ソース"
+		"en": "Sample Data Source",
+		"jp": "サンプル データ ソース"
 	}, {
-		"EN_NAME": "Scheduling",
-		"JP_NAME": "スケジュール"
+		"en": "Scheduling",
+		"jp": "スケジュール"
 	}, {
-		"EN_NAME": "Section 508",
-		"JP_NAME": "セクション 508"
+		"en": "Section 508",
+		"jp": "セクション 508"
 	}, {
-		"EN_NAME": "Selection",
-		"JP_NAME": "選択"
+		"en": "Selection",
+		"jp": "選択"
 	}, {
-		"EN_NAME": "SharePoint",
-		"JP_NAME": "シェアポイント"
+		"en": "SharePoint",
+		"jp": "シェアポイント"
 	}, {
-		"EN_NAME": "Sorting",
-		"JP_NAME": "並べ替え"
+		"en": "Sorting",
+		"jp": "並べ替え"
 	}, {
-		"EN_NAME": "Styling",
-		"JP_NAME": "スタイル設定"
+		"en": "Styling",
+		"jp": "スタイル設定"
 	}, {
-		"EN_NAME": "Summaries",
-		"JP_NAME": "集計"
+		"en": "Summaries",
+		"jp": "集計"
 	}, {
-		"EN_NAME": "Templating",
-		"JP_NAME": "テンプレート"
+		"en": "Templating",
+		"jp": "テンプレート"
 	}, {
-		"EN_NAME": "Theming",
-		"JP_NAME": "テーマ"
+		"en": "Theming",
+		"jp": "テーマ"
 	}, {
-		"EN_NAME": "Tips and Tricks",
-		"JP_NAME": "ヒントと注意点"
+		"en": "Tips and Tricks",
+		"jp": "ヒントと注意点"
 	}, {
-		"EN_NAME": "Validation",
-		"JP_NAME": "検証"
+		"en": "Validation",
+		"jp": "検証"
 	}, {
-		"EN_NAME": "Virtualization",
-		"JP_NAME": "仮想化"
+		"en": "Virtualization",
+		"jp": "仮想化"
 	}, {
-		"EN_NAME": "Resizing",
-		"JP_NAME": "サイズ変更"
+		"en": "Resizing",
+		"jp": "サイズ変更"
 	}, {
-		"EN_NAME": "JSON",
-		"JP_NAME": "JSON"
+		"en": "JSON",
+		"jp": "JSON"
 	}, {
-		"EN_NAME": "XML",
-		"JP_NAME": "XML"
+		"en": "XML",
+		"jp": "XML"
 	}, {
-		"EN_NAME": "DataTable",
-		"JP_NAME": "DataTable"
+		"en": "DataTable",
+		"jp": "DataTable"
 	}, {
-		"EN_NAME": "ASP.NET MVC",
-		"JP_NAME": "ASP.NET MVC"
+		"en": "ASP.NET MVC",
+		"jp": "ASP.NET MVC"
 	}, {
-		"EN_NAME": "Knockout",
-		"JP_NAME": "Knockout"
+		"en": "Knockout",
+		"jp": "Knockout"
 	}, {
-		"EN_NAME": "Lazy Loading",
-		"JP_NAME": "遅延読み込み"
+		"en": "Lazy Loading",
+		"jp": "遅延読み込み"
 	}, {
-		"EN_NAME": "Web API",
-		"JP_NAME": "Web API"
+		"en": "Web API",
+		"jp": "Web API"
 	}, {
-		"EN_NAME": "Feature Chooser",
-		"JP_NAME": "機能セレクター"
+		"en": "Feature Chooser",
+		"jp": "機能セレクター"
 	}, {
-		"EN_NAME": "History.js",
-		"JP_NAME": "History.js"
+		"en": "History.js",
+		"jp": "History.js"
 	}, {
-		"EN_NAME": "Cell Merging",
-		"JP_NAME": "セルの結合"
+		"en": "Cell Merging",
+		"jp": "セルの結合"
 	}, {
-		"EN_NAME": "Unbound Column",
-		"JP_NAME": "列バインド解除"
+		"en": "Unbound Column",
+		"jp": "列バインド解除"
 	}, {
-		"EN_NAME": "Row Selectors",
-		"JP_NAME": "行セレクター"
+		"en": "Row Selectors",
+		"jp": "行セレクター"
 	}, {
-		"EN_NAME": "Column Fixing",
-		"JP_NAME": "列固定"
+		"en": "Column Fixing",
+		"jp": "列固定"
 	}, {
-		"EN_NAME": "Tooltips",
-		"JP_NAME": "ツールチップ"
+		"en": "Tooltips",
+		"jp": "ツールチップ"
 	}, {
-		"EN_NAME": "Column Hiding",
-		"JP_NAME": "列の非表示"
+		"en": "Column Hiding",
+		"jp": "列の非表示"
 	}, {
-		"EN_NAME": "Column Resizing",
-		"JP_NAME": "列サイズの変更"
+		"en": "Column Resizing",
+		"jp": "列サイズの変更"
 	}, {
-		"EN_NAME": "Column Moving",
-		"JP_NAME": "列移動"
+		"en": "Column Moving",
+		"jp": "列移動"
 	}, {
-		"EN_NAME": "Multi-Column Headers",
-		"JP_NAME": "複数列ヘッダー"
+		"en": "Multi-Column Headers",
+		"jp": "複数列ヘッダー"
 	}, {
-		"EN_NAME": "Responsive Web Design",
-		"JP_NAME": "レスポンシブ Web デザイン"
+		"en": "Responsive Web Design",
+		"jp": "レスポンシブ Web デザイン"
 	}, {
-		"EN_NAME": "jsRender",
-		"JP_NAME": "jsRender"
+		"en": "jsRender",
+		"jp": "jsRender"
 	}, {
-		"EN_NAME": "DataSet",
-		"JP_NAME": "DataSet"
+		"en": "DataSet",
+		"jp": "DataSet"
 	}, {
-		"EN_NAME": "File explorer",
-		"JP_NAME": "ファイル エクスプローラー"
+		"en": "File explorer",
+		"jp": "ファイル エクスプローラー"
 	}, {
-		"EN_NAME": "Balance Sheet",
-		"JP_NAME": "貸借対照表"
+		"en": "Balance Sheet",
+		"jp": "貸借対照表"
 	}, {
-		"EN_NAME": "OLAP",
-		"JP_NAME": "OLAP"
+		"en": "OLAP",
+		"jp": "OLAP"
 	}, {
-		"EN_NAME": "Drag and Drop",
-		"JP_NAME": "ドラッグ アンド ドロップ"
+		"en": "Drag and Drop",
+		"jp": "ドラッグ アンド ドロップ"
 	}, {
-		"EN_NAME": "Expanding and Collapsing",
-		"JP_NAME": "拡張と縮小"
+		"en": "Expanding and Collapsing",
+		"jp": "拡張と縮小"
 	}, {
-		"EN_NAME": "ASP.NET",
-		"JP_NAME": "ASP.NET"
+		"en": "ASP.NET",
+		"jp": "ASP.NET"
 	}, {
-		"EN_NAME": "Titles",
-		"JP_NAME": "タイトル"
+		"en": "Titles",
+		"jp": "タイトル"
 	}, {
-		"EN_NAME": "Highlighting",
-		"JP_NAME": "強調表示"
+		"en": "Highlighting",
+		"jp": "強調表示"
 	}, {
-		"EN_NAME": "Legend",
-		"JP_NAME": "凡例"
+		"en": "Legend",
+		"jp": "凡例"
 	}, {
-		"EN_NAME": "Labels",
-		"JP_NAME": "ラベル"
+		"en": "Labels",
+		"jp": "ラベル"
 	}, {
-		"EN_NAME": "Animation",
-		"JP_NAME": "アニメーション"
+		"en": "Animation",
+		"jp": "アニメーション"
 	}, {
-		"EN_NAME": "Keyboard navigation",
-		"JP_NAME": "キーボード ナビゲーション"
+		"en": "Keyboard navigation",
+		"jp": "キーボード ナビゲーション"
 	}, {
-		"EN_NAME": "OData",
-		"JP_NAME": "OData"
+		"en": "OData",
+		"jp": "OData"
 	}, {
-		"EN_NAME": "Advertisements",
-		"JP_NAME": "広告"
+		"en": "Advertisements",
+		"jp": "広告"
 	}, {
-		"EN_NAME": "TypeScript",
-		"JP_NAME": "TypeScript"
+		"en": "TypeScript",
+		"jp": "TypeScript"
 	}, {
-		"EN_NAME": "AngularJS",
-		"JP_NAME": "AngularJS"
+		"en": "AngularJS",
+		"jp": "AngularJS"
 	}, {
-		"EN_NAME": "WAI-ARIA",
-		"JP_NAME": "WAI-ARIA"
+		"en": "WAI-ARIA",
+		"jp": "WAI-ARIA"
 	}, {
-		"EN_NAME": "RowSelectors",
-		"JP_NAME": "RowSelectors"
+		"en": "RowSelectors",
+		"jp": "RowSelectors"
 	}, {
-		"EN_NAME": "Feature Integration",
-		"JP_NAME": "機能の統合"
+		"en": "Feature Integration",
+		"jp": "機能の統合"
 	}, {
-		"EN_NAME": "Combo Grouping",
-		"JP_NAME": "コンボのグループ化"
+		"en": "Combo Grouping",
+		"jp": "コンボのグループ化"
 	}, {
-		"EN_NAME": "Accessibility",
-		"JP_NAME": "アクセシビリティ"
+		"en": "Accessibility",
+		"jp": "アクセシビリティ"
 	}, {
-		"EN_NAME": "Migration",
-		"JP_NAME": "移動"
+		"en": "Migration",
+		"jp": "移動"
 	}, {
-		"EN_NAME": "Order",
-		"JP_NAME": "並べ替え順序"
+		"en": "Order",
+		"jp": "並べ替え順序"
 	}
 ]
