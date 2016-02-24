@@ -12,13 +12,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/craigshoemaker/livewire.git"
+    "url": "https://github.com/infragistics/livewire.git"
   },
   "keywords": [
     "markdown",
     "electron"
   ],
-  "author": "Craig Shoemaker <craig@craigshoemaker.net>",
+  "author": "Craig Shoemaker <cshoemaker@infragistics.com>",
   "license": "MIT",
   "devDependencies": {
     "electron-packager": "^5.0.1",

@@ -11,7 +11,7 @@
     "markdown",
     "electron"
   ],
-  "author": "Craig Shoemaker <craig@craigshoemaker.net>",
+  "author": "Craig Shoemaker <cshoemaker@infragistics.com>",
   "license": "MIT",
   "dependencies": {
     "asciidoctor.js": "^1.5.2",
