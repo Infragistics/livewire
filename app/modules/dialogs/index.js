@@ -6,7 +6,6 @@
  */
 module = module.exports;
 
-var Q = require('q');
 var _ = require('lodash');
 var fs = require('fs');
 
@@ -14,129 +13,119 @@ var remote = require('remote');
 var dialog = remote.require('dialog');
 
 module.openFile = function (options) {
-	var deferred = Q.defer();
+    return new Promise((resolve, reject) => {
+        var dialogOptions = {
+            properties: ['openFile']
+        };
 
-	var dialogOptions = {
-		properties: ['openFile']
-	};
+        if (!_.isUndefined(options)) {
+            dialogOptions = _.defaults(dialogOptions, options);
+        }
 
-	if (!_.isUndefined(options)) {
-		dialogOptions = _.defaults(dialogOptions, options);
-	}
-
-	var callback = function (filePaths) {
-		if (_.isUndefined(filePaths)) {
-			deferred.reject();
-		} else {
-			var filePath = filePaths[0];
-            fs.stat(filePath, function(statError, fileStats){
-                var bytes = fileStats['size'];
-                fs.readFile(filePath, 'utf8', function (err, contents) {
-                    if (err) deferred.reject(err);
-                    var result = {
-                        path: filePath,
-                        content: contents,
-                        size: bytes
-                    }
-                    deferred.resolve(result);
+        var callback = function (filePaths) {
+            if (_.isUndefined(filePaths)) {
+                reject();
+            } else {
+                var filePath = filePaths[0];
+                fs.stat(filePath, function(statError, fileStats){
+                    var bytes = fileStats['size'];
+                    fs.readFile(filePath, 'utf8', function (err, contents) {
+                        if (err) reject(err);
+                        var result = {
+                            path: filePath,
+                            content: contents,
+                            size: bytes
+                        }
+                        resolve(result);
+                    });
                 });
-            });
-		}
-	};
+            }
+        };
 
-	dialog.showOpenDialog(dialogOptions, callback);
-
-	return deferred.promise;
+        dialog.showOpenDialog(dialogOptions, callback); 
+    });
 };
 
 module.openDirectory = function (options) {
-	var deferred = Q.defer();
+	return new Promise((resolve, reject) => {
+        var dialogOptions = {
+            properties: ['openDirectory', 'multiSelections']
+        };
 
-	var dialogOptions = {
-		properties: ['openDirectory', 'multiSelections']
-	};
+        if (!_.isUndefined(options)) {
+            dialogOptions = _.defaults(dialogOptions, options);
+        }
 
-	if (!_.isUndefined(options)) {
-		dialogOptions = _.defaults(dialogOptions, options);
-	}
+        var callback = function (directoryPaths) {
+            directoryPaths = (_.isUndefined(directoryPaths)) ? [] : directoryPaths;
+            resolve(directoryPaths);
+        };
 
-	var callback = function (directoryPaths) {
-		directoryPaths = (_.isUndefined(directoryPaths)) ? [] : directoryPaths;
-		deferred.resolve(directoryPaths);
-	};
-
-	dialog.showOpenDialog(dialogOptions, callback);
-
-	return deferred.promise;
+        dialog.showOpenDialog(dialogOptions, callback); 
+    });
 };
 
 module.createDirectory = function (options) {
-	var deferred = Q.defer();
+	return new Promise((resolve, reject) => {
+        var dialogOptions = {
+            properties: ['createDirectory']
+        };
 
-	var dialogOptions = {
-		properties: ['createDirectory']
-	};
+        if (!_.isUndefined(options)) {
+            dialogOptions = _.defaults(dialogOptions, options);
+        }
 
-	if (!_.isUndefined(options)) {
-		dialogOptions = _.defaults(dialogOptions, options);
-	}
+        var callback = function (directoryPath) {
+            resolve(directoryPath);
+        };
 
-	var callback = function (directoryPath) {
-		deferred.resolve(directoryPath);
-	};
-
-	dialog.showOpenDialog(dialogOptions, callback);
-
-	return deferred.promise;
+        dialog.showOpenDialog(dialogOptions, callback); 
+    });
 };
 
 module.saveFile = function (content, options, defaultExtension) {
-	var deferred = Q.defer();
+	return new Promise((resolve, reject) => {
+        var dialogOptions = {};
 
-	var dialogOptions = {};
+        if (!_.isUndefined(options)) {
+            dialogOptions = _.defaults(dialogOptions, options);
+        }
 
-	if (!_.isUndefined(options)) {
-		dialogOptions = _.defaults(dialogOptions, options);
-	}
+        var callback = function (filePath) {
+            if (!_.isUndefined(filePath)) {
 
-	var callback = function (filePath) {
-		if (!_.isUndefined(filePath)) {
+                if (!_.isUndefined(defaultExtension)) {
+                    filePath = (_.endsWith(filePath, defaultExtension)) ? filePath : filePath + '.' + defaultExtension;
+                }
 
-			if (!_.isUndefined(defaultExtension)) {
-				filePath = (_.endsWith(filePath, defaultExtension)) ? filePath : filePath + '.' + defaultExtension;
-			}
+                fs.writeFile(filePath, content, 'utf8', function (err) {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(filePath);
+                    }
+                });
+            }
+        };
 
-			fs.writeFile(filePath, content, 'utf8', function (err) {
-				if (err) {
-					deferred.reject(err);
-				} else {
-					deferred.resolve(filePath);
-				}
-			});
-		}
-	};
-
-	dialog.showSaveDialog(dialogOptions, callback);
-
-	return deferred.promise;
+        dialog.showSaveDialog(dialogOptions, callback); 
+    });
 };
 
 module.messageBox = function (options) {
-	var deferred = Q.defer();
+	return new Promise((resolve, reject) => {
+        var dialogOptions = {};
 
-	var dialogOptions = {};
+        if (!_.isUndefined(options)) {
+            dialogOptions = _.defaults(dialogOptions, options);
+        }
 
-	if (!_.isUndefined(options)) {
-		dialogOptions = _.defaults(dialogOptions, options);
-	}
+        var callback = function (buttonIndex) {
+            resolve(buttonIndex);
+        };
 
-	var callback = function (buttonIndex) {
-		deferred.resolve(buttonIndex);
-	};
-
-	dialog.showMessageBox(dialogOptions, callback);
-
-	return deferred.promise;
+        dialog.showMessageBox(dialogOptions, callback); 
+    });
 };
 
 module.error = function (title, content) {
