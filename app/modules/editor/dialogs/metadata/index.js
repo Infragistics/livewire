@@ -3,7 +3,8 @@ module = module.exports;
 const
     _ = require('lodash'),
     path = require('path'),
-    data = require(path.resolve(__dirname, '../../../../data'));
+    data = require(path.resolve(__dirname, '../../../../data')),
+    messenger = require(path.resolve(__dirname, '../../../messenger'));
 
 var 
     $dialog,
@@ -18,7 +19,7 @@ var openDialog = () => {
     $dialog.modal();
 };
 
-var substringMatcher = function(strs) {
+var substringMatcher = (strs) => {
   return function findMatches(q, cb) {
     var matches, substringRegex;
 
@@ -30,7 +31,7 @@ var substringMatcher = function(strs) {
 
     // iterate through the pool of strings and for any string that
     // contains the substring `q`, add it to the `matches` array
-    $.each(strs, function(i, str) {
+    $.each(strs, (i, str) => {
       if (substrRegex.test(str)) {
         matches.push(str);
       }
@@ -86,7 +87,25 @@ module.init = (formatterModule, dialogModule) => {
     });
         
     $doneButton.click((e) => {
+        var checkboxes = $tagsContainer.find(':checked');
+        var tags = [];
+        
+        checkboxes.each((index, checkbox) => {
+            var $checkbox = $(checkbox);
+            tags.push($checkbox.data('tag'));
+        });
+        
+        console.log(tags);
+        messenger.publish.metadata('tags', tags);
         
         $dialog.modal('hide');
     })
 };
+
+var handlers = {
+    fileOpened: (e) => {
+        $controlNameBox.val(e.metadata.controlName.join(','));
+    }
+};
+
+messenger.subscribe.file('opened', handlers.fileOpened);

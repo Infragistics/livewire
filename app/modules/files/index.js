@@ -5,7 +5,8 @@ var
 	 
 	path = require('path'),
 	messenger = require(path.resolve(__dirname, '../messenger')),
-	_ = require('lodash');
+	_ = require('lodash'),
+    _selectedIndex = 0;
 	
 var getIndex = function(info){
 	return _.findIndex(files, function(file){
@@ -55,10 +56,10 @@ var handlers = {
 	},
 	
 	fileSelected: function(fileInfo){
-		var selectedIndex, selectedFileInfo;
+		var selectedFileInfo;
 		
-		selectedIndex = getIndex(fileInfo);
-		selectedFileInfo = files[selectedIndex];
+		_selectedIndex = getIndex(fileInfo);
+		selectedFileInfo = files[_selectedIndex];
 		
 		messenger.publish.file('contentChanged', selectedFileInfo);
 	}
@@ -75,6 +76,17 @@ module.isFileOpen = function(filePath){
 	}
 	
 	return result;
+};
+
+module.getCurrentMetadataString = () => {
+    var metadata = '';
+    
+    metadata = JSON.stringify(files[_selectedIndex].metadata);
+    
+    //todo: delgate comment formatting to formatting module
+    metadata = `////\n|metadata|\n${metadata}\n|metadata|\n////\n\n`;
+    
+    return metadata;
 };
 	
 messenger.subscribe.file('opened', handlers.opened);

@@ -20,9 +20,9 @@ var
     BOM = '\ufeff';
     
 const METADATA_PATTERNS = {
-    FULL: /\/\/\/\/\n\|metadata\|((.|\n)*)\|metadata\|\n\/\/\/\//,
-    LEFT: /\/\/\/\/\n\|metadata\|/g,
-    RIGHT: /\|metadata\|\n\/\/\/\//g
+    FULL: /\/\/\/\/\n?\|metadata\|((.|\n)*)\|metadata\|\n?\/\/\/\//,
+    LEFT: /\/\/\/\/\n?\|metadata\|/g,
+    RIGHT: /\|metadata\|\n?\/\/\/\//g
 }; 
 
 messenger.subscribe.file('pathChanged', (data, envelope) => {
@@ -141,12 +141,17 @@ var menuHandlers = {
 
         if (fileContent.length > 0) {
             if (filePath.length > 0) {
+                
+                ///
+                var metadata = files.getCurrentMetadataString();
+                ///
+                
                 if (!_.startsWith(fileContent, BOM)) {
-                    fileContent = BOM + fileContent;
+                    fileContent = BOM + metadata + fileContent;
                 }
 
                 fs.writeFile(filePath, fileContent, { encoding: 'utf8' }, (err) => {
-                    // todo: handle error
+                    console.log(err);
                 });
             } else {
                 menuHandlers.saveAs(data, envelope);
