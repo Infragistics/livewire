@@ -141,10 +141,8 @@ var menuHandlers = {
 
         if (fileContent.length > 0) {
             if (filePath.length > 0) {
-                
-                ///
-                var metadata = files.getCurrentMetadataString();
-                ///
+
+                var metadata = files.getCurrentMetadataString(formatter);
                 
                 if (!_.startsWith(fileContent, BOM)) {
                     fileContent = BOM + metadata + fileContent;

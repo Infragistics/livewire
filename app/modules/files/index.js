@@ -82,13 +82,11 @@ module.isFileOpen = function(filePath){
 	return result;
 };
 
-module.getCurrentMetadataString = () => {
+module.getCurrentMetadataString = (formatter) => {
     var metadata = '';
     
     metadata = JSON.stringify(files[_selectedIndex].metadata);
-    
-    //todo: delgate comment formatting to formatting module
-    metadata = `////\n|metadata|\n${metadata}\n|metadata|\n////\n\n`;
+    metadata = formatter.wrapTextInComment(`|metadata|\n${metadata}\n|metadata|`)
     
     return metadata;
 };

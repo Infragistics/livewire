@@ -16,5 +16,8 @@ module.exports = {
 		ordered:	{ left : ". ", right : "", cursorOffset: { wrapAtBeginningOfLine: true } },
 		unordered:	{ left : "*  ", right : "", cursorOffset: { wrapAtBeginningOfLine: true } },
 		hr:			{ left : "\n\n'''\n\n", right : "" }
-	}
+	},
+    wrapTextInComment: (text) => {
+        return `////\n${text}\n////\n\n`;  
+    }
 };
