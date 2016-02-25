@@ -7,9 +7,11 @@ var formats = [];
 var config = require(path.resolve(__dirname, '../config')).get();
 
 module.get = function (name) {
-	var fullPath = path.resolve(__dirname, './' + name + '.json');
-	var format = fs.readFileSync(fullPath, { encoding: 'utf8' });
-	return JSON.parse(format);
+	//var fullPath = path.resolve(__dirname, './' + name + '.json');
+	//var format = fs.readFileSync(fullPath, { encoding: 'utf8' });
+	//return JSON.parse(format);
+    var format = require('./' + name) 
+    return format;
 };
 
 module.getByFileExtension = function (ext) {
@@ -40,11 +42,11 @@ module.getByFileExtension = function (ext) {
 module.getAll = function () {
 	if (formats.length === 0) {
 		var filePaths = fs.readdirSync(__dirname);
-		var jsons = _.filter(filePaths, function (file) {
-			return _.endsWith(file, '.json');
+		var supportedFormats = _.filter(filePaths, function (file) {
+			return (file !== 'index.js') && (_.endsWith(file, '.js'));
 		});
 
-		jsons.forEach(function (filePath) {
+		supportedFormats.forEach(function (filePath) {
 			var name = path.basename(filePath).replace(/.json/, '');
 			var format = module.get(name);
 			formats.push(format);

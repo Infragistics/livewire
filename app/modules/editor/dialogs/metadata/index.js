@@ -133,7 +133,11 @@ var handlers = {
         _metadata = e.metadata;
     },
     contentChanged: (selectedFileInfo) => {
-        _metadata = selectedFileInfo.metadata;
+        if(selectedFileInfo.metadata){
+            _metadata = selectedFileInfo.metadata;
+        } else {
+            _metadata = {};
+        }
     }
 };
 
