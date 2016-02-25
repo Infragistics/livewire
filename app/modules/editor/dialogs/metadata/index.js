@@ -11,9 +11,12 @@ var
     $doneButton,
     $controlNameBox,
     $tagsContainer,
+    $tagsCheckboxes,
     
     _controls,
-    _tags;
+    _tags,
+    
+    _metadata;
 
 var openDialog = () => {
     $dialog.modal();
@@ -41,12 +44,23 @@ var substringMatcher = (strs) => {
   };
 };
 
+var bind = () => {
+    $tagsCheckboxes.prop('checked', 'false');
+    
+    $controlNameBox.typeahead('val', _metadata.controlName.join(','));
+        
+    _metadata.tags.forEach((tag) => {
+        $(`#metadata-dialog [data-tag="${tag}"]`).prop('checked', 'true');
+    });
+};
+
 module.init = (formatterModule, dialogModule) => {
     
     $dialog = $('#metadata-dialog');
     $doneButton = $('#metadata-done-button');
     $controlNameBox = $('#metadata-control-name-box');
     $tagsContainer = $('#metadata-tags-container');
+    $tagsCheckboxes = $tagsContainer.find('input [type="checkbox"]');
     
     formatterModule.editor.commands.addCommand(
         dialogModule.buildDialogCommand('image', 'Ctrl-Shift-M', openDialog));
@@ -58,7 +72,10 @@ module.init = (formatterModule, dialogModule) => {
         _tags.forEach((tag) => {
             id = 'tag-' + tag.en.toLowerCase().replace(' ','-');
             tagText = tag.en;
-            $tagsContainer.append(`<div><input type="checkbox" data-tag="${tagText}" id="${id}" /><label for="${id}">${tagText}</label></div>`);
+            $tagsContainer.append(`<div>
+                                    <input type="checkbox" data-tag="${tagText}" id="${id}" />
+                                    <label for="${id}">${tagText}</label>
+                                   </div>`);
         });
     });
         
@@ -79,11 +96,15 @@ module.init = (formatterModule, dialogModule) => {
     
     $dialog.on('shown.bs.modal', (e) => {
         $controlNameBox.focus();
-    });
-    
-    $dialog.on('hidden.bs.modal', (e) => {
-        var checkboxes = $tagsContainer.find(':checked');
-        checkboxes.attr('checked', false);
+        bind();
+        
+        // typeahead shows the suggestion list by default
+        // and it takes a little time to build it
+        // this ensures it is closed after focus is set 
+        // to the box
+        setTimeout(function() {
+            $controlNameBox.typeahead('close');
+        }, 5);
     });
         
     $doneButton.click((e) => {
@@ -95,8 +116,13 @@ module.init = (formatterModule, dialogModule) => {
             tags.push($checkbox.data('tag'));
         });
         
-        console.log(tags);
-        messenger.publish.metadata('tags', tags);
+        _metadata.tags = tags;
+        _metadata.controlName = $controlNameBox.typeahead('val').split(',');
+        
+        messenger.publish.metadata('metadataChanged', _metadata);
+        
+        checkboxes.attr('checked', false);
+        $controlNameBox.val('');
         
         $dialog.modal('hide');
     })
@@ -104,8 +130,12 @@ module.init = (formatterModule, dialogModule) => {
 
 var handlers = {
     fileOpened: (e) => {
-        $controlNameBox.val(e.metadata.controlName.join(','));
+        _metadata = e.metadata;
+    },
+    contentChanged: (selectedFileInfo) => {
+        _metadata = selectedFileInfo.metadata;
     }
 };
 
 messenger.subscribe.file('opened', handlers.fileOpened);
+messenger.subscribe.file('contentChanged', handlers.contentChanged);

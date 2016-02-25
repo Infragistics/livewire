@@ -62,7 +62,11 @@ var handlers = {
 		selectedFileInfo = files[_selectedIndex];
 		
 		messenger.publish.file('contentChanged', selectedFileInfo);
-	}
+	},
+    
+    metadataChanged: (metadata) => {
+        files[_selectedIndex].metadata = metadata;
+    }
 };
 
 module.isFileOpen = function(filePath){
@@ -94,3 +98,4 @@ messenger.subscribe.file('closed', handlers.closed);
 messenger.subscribe.file('selected', handlers.fileSelected);
 messenger.subscribe.file('new', handlers.fileSelected);
 messenger.subscribe.file('beforeSelected', handlers.beforeFileSelected);
+messenger.subscribe.metadata('metadataChanged', handlers.metadataChanged);
