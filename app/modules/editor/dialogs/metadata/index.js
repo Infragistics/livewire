@@ -133,7 +133,7 @@ var handlers = {
         _metadata = e.metadata;
     },
     contentChanged: (selectedFileInfo) => {
-        if(selectedFileInfo.metadata){
+        if(selectedFileInfo && selectedFileInfo.metadata){
             _metadata = selectedFileInfo.metadata;
         } else {
             _metadata = {};
