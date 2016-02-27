@@ -130,6 +130,9 @@ var menuHandlers = {
                 fileInfo.contents = fileContents;
                 messenger.publish.file('opened', fileInfo);
             }
+        }).catch((error) => {
+            debugger;
+            console.log(error);
         });
     },
 
@@ -192,6 +195,9 @@ var menuHandlers = {
 
             messenger.publish.file('pathChanged', fileInfo);
             messenger.publish.file('rerender');
+        }).catch((error) => {
+            debugger;
+            console.log(error);
         });
 
     },
@@ -213,8 +219,9 @@ var menuHandlers = {
         html = html.replace(exp, 'src="');
         html = '<!doctype html>\n<body>\n' + html + '</body>\n</html>';
 
-        dialogs.saveFile(html, options, 'html').catch(() => {
+        dialogs.saveFile(html, options, 'html').catch((err) => {
             // todo: handle error
+            console.log(err);
         });
     }
 };

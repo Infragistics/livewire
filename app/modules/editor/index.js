@@ -14,7 +14,9 @@ var
     suspendPublishSourceChange = false,
     session,
     currentFile = {},
-    noop = function () { };
+    noop = function () { },
+    
+    _suspendOnChangeEventHandler = false;
     
 var buildFlags = require('./buildFlags.js');
 
@@ -23,6 +25,12 @@ var setHeight = function(offSetValue){
     $window.on('resize', function(e){
         $editor.css('height', $window.height() - offSetValue + 'px');
     });
+};
+
+var setEditorValueSilent = (value) => {
+    _suspendOnChangeEventHandler = true;
+    editor.setValue(value, -1);
+    _suspendOnChangeEventHandler = false;
 };
 
 module.load = function (mode) {
@@ -86,13 +94,15 @@ module.load = function (mode) {
         },
         
         contentChangedInternal: function(){
-            var value = editor.getValue();
-            if(value.length > 0){
-                currentFile.contents = value;
-                buildFlags.detect(currentFile.contents);
-                
-                if(!suspendPublishSourceChange){
-                    messenger.publish.file('sourceChange', currentFile);
+            if(!_suspendOnChangeEventHandler){
+                var value = editor.getValue();
+                if(value.length > 0){
+                    currentFile.contents = value;
+                    buildFlags.detect(currentFile.contents);
+                    
+                    if(!suspendPublishSourceChange){
+                        messenger.publish.file('sourceChange', currentFile);
+                    }
                 }
             }
         },
@@ -108,15 +118,15 @@ module.load = function (mode) {
 
                 if (fileInfo.isBlank) {
                     hideCursor();
-                    editor.setValue('');
+                    setEditorValueSilent('');
                 } else {
                     suspendPublishSourceChange = true;
                     
                     showCursor();
-
+                    
                     buildFlags.detect(fileInfo.contents);
                     
-                    editor.setValue(fileInfo.contents);
+                    setEditorValueSilent(fileInfo.contents);
 
                     if (fileInfo.cursorPosition) {
                         rowNumber = fileInfo.cursorPosition.row;
