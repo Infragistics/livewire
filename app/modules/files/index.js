@@ -25,6 +25,7 @@ var getIndex = function(info){
 var handlers = {
 	opened: function(data){
 		files.push(data);
+        _selectedIndex = files.length - 1;
 		messenger.publish.file('contentChanged', data);
 	},
 	
@@ -64,7 +65,7 @@ var handlers = {
 		messenger.publish.file('contentChanged', selectedFileInfo);
 	},
     
-    metadataChanged: (metadata) => {
+    metadataChanged: (metadata) => {debugger;
         files[_selectedIndex].metadata = metadata;
     }
 };
