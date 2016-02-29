@@ -65,7 +65,7 @@ var handlers = {
 		messenger.publish.file('contentChanged', selectedFileInfo);
 	},
     
-    metadataChanged: (metadata) => {debugger;
+    metadataChanged: (metadata) => {
         files[_selectedIndex].metadata = metadata;
     }
 };
