@@ -18,12 +18,6 @@ var
     formatter = null,
     $result = $('#result'),
     BOM = '\ufeff';
-    
-const METADATA_PATTERNS = {
-    FULL: /\/\/\/\/\n?\|metadata\|((.|\n)*)\|metadata\|\n?\/\/\/\//,
-    LEFT: /\/\/\/\/\n?\|metadata\|/g,
-    RIGHT: /\|metadata\|\n?\/\/\/\//g
-}; 
 
 messenger.subscribe.file('pathChanged', (data, envelope) => {
     if (data.isNewFile) {
@@ -116,15 +110,15 @@ var menuHandlers = {
             if (!fileInfo.isFileAlreadyOpen) {
                 fileContents = _.trimLeft(response.content, BOM);
                 
-                metadataMatches = fileContents.match(METADATA_PATTERNS.FULL);
+                metadataMatches = fileContents.match(formatter.metadataPatterns.full);
                 
                 if(metadataMatches){
-                    metadata = metadataMatches[0].replace(METADATA_PATTERNS.LEFT, '');
-                    metadata = metadata.replace(METADATA_PATTERNS.RIGHT, '');
+                    metadata = metadataMatches[0].replace(formatter.metadataPatterns.left, '');
+                    metadata = metadata.replace(formatter.metadataPatterns.right, '');
                     fileInfo.metadata = JSON.parse(metadata);  
                 }
                 
-                fileContents = fileContents.replace(METADATA_PATTERNS.FULL, '');
+                fileContents = fileContents.replace(formatter.metadataPatterns.full, '');
                 fileContents = _.trimLeft(fileContents, '\n\n');
                 
                 fileInfo.contents = fileContents;
@@ -171,8 +165,10 @@ var menuHandlers = {
             filters: []
         };
 
+        var metadata = files.getCurrentMetadataString(formatter);
+                
         if (!_.startsWith(fileContent, BOM)) {
-            fileContent = BOM + fileContent;
+            fileContent = BOM + metadata + fileContent;
         }
 
         defaultExtension = '';

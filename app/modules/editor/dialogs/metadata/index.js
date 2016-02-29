@@ -16,7 +16,7 @@ var
     _controls,
     _tags,
     
-    _metadata;
+    _metadata = {};
 
 var openDialog = () => {
     $dialog.modal();
@@ -47,11 +47,15 @@ var substringMatcher = (strs) => {
 var bind = () => {
     $tagsCheckboxes.prop('checked', 'false');
     
-    $controlNameBox.typeahead('val', _metadata.controlName.join(','));
-        
-    _metadata.tags.forEach((tag) => {
-        $(`#metadata-dialog [data-tag="${tag}"]`).prop('checked', 'true');
-    });
+    if(_metadata.controlName){
+        $controlNameBox.typeahead('val', _metadata.controlName.join(','));
+    }
+    
+    if(_metadata.tags){
+        _metadata.tags.forEach((tag) => {
+            $(`#metadata-dialog [data-tag="${tag}"]`).prop('checked', 'true');
+        });
+    }
 };
 
 module.init = (formatterModule, dialogModule) => {
@@ -106,6 +110,18 @@ module.init = (formatterModule, dialogModule) => {
             $controlNameBox.typeahead('close');
         }, 5);
     });
+    
+    $dialog.on('hidden.bs.modal', (e) => {
+        $controlNameBox.typeahead('val', '');
+        $tagsContainer.find(':checked').prop('checked', false);
+        messenger.publish.dialog('modal.closed', {});
+    });
+    
+    $dialog.keydown((e) => {
+        if(e.keyCode === 13){
+            $doneButton.click();
+        }
+    });
         
     $doneButton.click((e) => {
         var checkboxes = $tagsContainer.find(':checked');
@@ -121,7 +137,7 @@ module.init = (formatterModule, dialogModule) => {
         
         messenger.publish.metadata('metadataChanged', _metadata);
         
-        checkboxes.attr('checked', false);
+        checkboxes.prop('checked', false);
         $controlNameBox.val('');
         
         $dialog.modal('hide');
@@ -129,17 +145,17 @@ module.init = (formatterModule, dialogModule) => {
 };
 
 var handlers = {
-    fileOpened: (e) => {
-        _metadata = e.metadata;
-    },
     contentChanged: (selectedFileInfo) => {
         if(selectedFileInfo && selectedFileInfo.metadata){
             _metadata = selectedFileInfo.metadata;
         } else {
             _metadata = {};
         }
+    },
+    dialogToggle: () => {
+        $dialog.modal();
     }
 };
 
-messenger.subscribe.file('opened', handlers.fileOpened);
 messenger.subscribe.file('contentChanged', handlers.contentChanged);
+messenger.subscribe.dialog('metadata.open', handlers.dialogToggle);

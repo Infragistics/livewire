@@ -19,5 +19,10 @@ module.exports = {
 	},
     wrapTextInComment: (text) => {
         return `<!---\n${text}\n--->\n\n`;  
-    }
+    },
+    metadataPatterns: {
+        full: /\<\!---\n?\|metadata\|((.|\n)*)\|metadata\|\n?---\>/,
+        left: /\<\!---\n?\|metadata\|/g,
+        right: /\|metadata\|\n?---\>/g
+    } 
 }

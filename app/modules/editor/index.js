@@ -157,6 +157,10 @@ module.load = function (mode) {
         
         hideResults: function(){
             $editor.css('width', ($window.width() - appSettings.resultsButtonWidth() + 1) + 'px');    
+        },
+        
+        modalClosed: function () {
+            editor.focus();
         }
     };
     
@@ -168,6 +172,7 @@ module.load = function (mode) {
     messenger.subscribe.file('new', handlers.fileNew);
     messenger.subscribe.layout('showResults', handlers.showResults);
     messenger.subscribe.layout('hideResults', handlers.hideResults);
+    messenger.subscribe.dialog('modal.closed', handlers.modalClosed);
 };
 
 module.load('asciidoc');
