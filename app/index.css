@@ -241,6 +241,9 @@ button[data-role="build-flag"].selected {
   padding-top: 10px;
   border-top: solid 1px #eee;
   -webkit-column-count: 3;
+  column-count: 3;
+  -webkit-column-rule: 1px solid #eee;
+  column-rule: 1px solid #eee;
   overflow: auto;
   max-height: 550px;
 }

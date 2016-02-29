@@ -153,10 +153,12 @@ module.load = function (mode) {
         showResults: function(){              
             $editor.css('width', appSettings.editorWidth());
             handlers.contentChangedInternal();
+            editor.resize();    
         },
         
-        hideResults: function(){
-            $editor.css('width', ($window.width() - appSettings.resultsButtonWidth() + 1) + 'px');    
+        hideResults: function(){    
+            $editor.css('width', ($window.width() - appSettings.resultsButtonWidth() + 1) + 'px');
+            editor.resize();    
         },
         
         modalClosed: function () {
