@@ -86,8 +86,10 @@ module.isFileOpen = function(filePath){
 module.getCurrentMetadataString = (formatter) => {
     var metadata = '';
     
-    metadata = JSON.stringify(files[_selectedIndex].metadata);
-    metadata = formatter.wrapTextInComment(`|metadata|\n${metadata}\n|metadata|`)
+    if(files[_selectedIndex].metadata){
+        metadata = JSON.stringify(files[_selectedIndex].metadata);
+        metadata = formatter.wrapTextInComment(`|metadata|\n${metadata}\n|metadata|`)
+    }
     
     return metadata;
 };
