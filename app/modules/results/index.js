@@ -10,7 +10,6 @@ var
     path = require('path'),
     _ = require('lodash'),
     isEnabled = true,
-    isAllFilesClosed = false,
 
     messenger = require(path.resolve(__dirname, '../messenger')),
     renderer = require(path.resolve(__dirname, './asciidoc.js')).get(),
@@ -39,17 +38,11 @@ var detectRenderer = function (fileInfo) {
 };
 
 var handlers = {
-    newFile: function () {
-        isAllFilesClosed = false;
+    opened: function(fileInfo){
         refreshSubscriptions();
         $result.animate({
             scrollTop: $result.offset().top
         }, 10);
-    },
-    opened: function(fileInfo){
-        isAllFilesClosed = false;
-        refreshSubscriptions();
-        handlers.newFile();
     },
 
     sourceChanged: function(fileInfo){
@@ -79,12 +72,10 @@ var handlers = {
                         }
                         
                         renderer(source, function (e) {
-                            if(!isAllFilesClosed){
-                                $result.html(e.html);
-                                
-                                if($renderingLabel.is(':visible')){
-                                    $renderingLabel.fadeOut('fast');
-                                }
+                            $result.html(e.html);
+                            
+                            if($renderingLabel.is(':visible')){
+                                $renderingLabel.fadeOut('fast');
                             }
                         });
                     }
@@ -125,7 +116,6 @@ var handlers = {
         _buildFlags = [];
     },
     allFilesClosed: function () {
-        isAllFilesClosed = true;
         $result.html('');
         $renderingLabel.fadeOut('fast');
     }
@@ -133,7 +123,7 @@ var handlers = {
 
 var subscribe = function () {
     isEnabled = true;
-    subscriptions.push(messenger.subscribe.file('new', handlers.newFile));
+    subscriptions.push(messenger.subscribe.file('new', handlers.opened));
     subscriptions.push(messenger.subscribe.file('opened', handlers.opened));
     subscriptions.push(messenger.subscribe.file('contentChanged', handlers.contentChanged));
     subscriptions.push(messenger.subscribe.file('sourceChange', handlers.sourceChanged));
