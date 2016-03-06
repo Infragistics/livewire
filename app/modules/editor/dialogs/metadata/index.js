@@ -67,7 +67,7 @@ module.init = (formatterModule, dialogModule) => {
     $tagsCheckboxes = $tagsContainer.find('input [type="checkbox"]');
     
     formatterModule.editor.commands.addCommand(
-        dialogModule.buildDialogCommand('image', 'Ctrl-Shift-M', openDialog));
+        dialogModule.buildDialogCommand('metadata', 'Ctrl-Shift-M', openDialog));
         
     data.getTags().then((tags) => {
         _tags = tags;
