@@ -51,6 +51,7 @@ module.detect = (content) => {
 var handlers = {
     clearFlags: () => {
         messenger.publish.metadata('buildFlags', []);
+        messenger.publish.metadata('buildFlags.clear', []);
     }
 };
 

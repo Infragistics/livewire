@@ -83,7 +83,9 @@ var handlers = {
             }
         }
     },
-
+    clearBuildFlags: function (params) {
+        _buildFlags = [];
+    },
     buildFlags: function (buildFlags) {
         _buildFlags = buildFlags;
         handlers.contentChanged(_fileInfo);
@@ -129,6 +131,7 @@ var subscribe = function () {
     subscriptions.push(messenger.subscribe.file('sourceChange', handlers.sourceChanged));
     subscriptions.push(messenger.subscribe.file('allFilesClosed', handlers.allFilesClosed));
     subscriptions.push(messenger.subscribe.format('buildFlags', handlers.buildFlags));
+    subscriptions.push(messenger.subscribe.metadata('buildFlags.clear', handlers.clearBuildFlags));
 };
 
 var unsubscribe = function () {
