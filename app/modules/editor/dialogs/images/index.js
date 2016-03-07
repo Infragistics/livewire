@@ -23,7 +23,7 @@ var openDialog = () => {
     };
 
     dialogs.openFile(options)
-        .fail((error) => {
+        .catch((error) => {
             dialogs.error('Error while attempting to add image', error);
         })
         .then((imageFileInfo) => {
