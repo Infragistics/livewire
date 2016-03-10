@@ -12,8 +12,13 @@ var
   
   editor = null,
   selectedPath = '',
+  _files = [], 
 
-  $tabsContainer = $('#lw-tabs'),  
+  $explorer = $('#lw-explorer'),
+  $tabsContainer = $('#lw-tabs'),
+  $explorerButton = $('#lw-explorer-button'),
+  $window = $(window),
+  
   template = '<div class="lw-tab active" title="PATH"><span class="lw-name">NAME</span> <button class="lw-close" title="close" data-path="PATH"><i class="fa fa-times-circle-o"></i></button></div>';
   
 var removeActiveClass = function(){
@@ -34,6 +39,16 @@ var bindTab = function($tab, fileInfo){
   $tab.attr('id', fileInfo.id);
   $tab.find('span.lw-name').text(fileInfo.fileName);
   $tab.find('button.lw-close').attr('data-path', fileInfo.path);
+  _files.push(fileInfo);
+};
+
+var bindExplorer = () => {
+    $explorer.html('');
+    var markup = '';
+    _files.forEach((file) => {
+        markup = `<div class="fileName" data-escaped-path="${escapePath(file.path)}">${file.fileName}</div>`;
+        $explorer.append(markup);
+    });
 };
 
 var getFileInfoFromTab = function($tab){
@@ -84,13 +99,9 @@ var handlers = {
     
     if(!isTabSelected){
       removeActiveClass();
-      
-      $tab.addClass('active');
-      
+      $tab.addClass('active');   
       fileInfo = getFileInfoFromTab($tab);
-      
       selectedPath = fileInfo.path;
-      
       messenger.publish.file('selected', fileInfo);
     }
     
@@ -105,7 +116,6 @@ var handlers = {
     if(filePath.length > 0){
       shell.showItemInFolder(filePath);
     }
-    
   },
   
   closeTab: function(e){
@@ -119,6 +129,10 @@ var handlers = {
     isTabSelected = $tab.hasClass('active');
     
     fileInfo = getFileInfoFromTab($tab);
+    
+    _files = _.remove(_files, (file) => {
+        return file.fileName != fileInfo.fileName;
+    });
     
     $btn.blur();
     $tab.remove();
@@ -159,11 +173,42 @@ var handlers = {
         $tabsContainer.append($tab); 
       }
     }
+  },
+  
+  selectFile: (e) => {
+      var $file = $(e.target);
+      var path = $file.data('escaped-path');
+      $tab = $tabsContainer.find(`div[data-escaped-path="${path}"]`);
+      $tab.trigger('click');
+      $explorer.fadeToggle('fast');   
+  },
+  
+  toggleExplorer: () => {
+      if(!$explorer.is(':visible') && _files.length > 0){
+        bindExplorer();
+        $explorer.fadeIn('fast');
+      } else {
+        $explorer.fadeOut('fast');          
+      }
   }
 };
 
 $tabsContainer.on('click', '.lw-close', handlers.closeTab);
 $tabsContainer.on('dblclick', '.lw-tab', handlers.openFileInExplorerOrFinder);
 $tabsContainer.on('click', '.lw-tab', handlers.switchDocuments);
+
+$explorerButton.click(handlers.toggleExplorer);
+$explorer.on('click', '.fileName', handlers.selectFile)
+
+$window.click((e) => {
+    setTimeout(function() {
+        if($explorer.is(':visible')){
+            $target = $(e.target);
+            if(!$target.hasClass('explorerButton')){
+                $explorer.fadeOut('fast');
+            }
+        }
+    }, 250);
+});
 
 messenger.subscribe.file('pathChanged', handlers.pathChanged);

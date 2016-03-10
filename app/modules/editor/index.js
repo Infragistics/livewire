@@ -24,6 +24,7 @@ var setHeight = function(offSetValue){
     $editor.css('height', $window.height() - offSetValue + 'px');
     $window.on('resize', function(e){
         $editor.css('height', $window.height() - offSetValue + 'px');
+        editor.resize();
     });
 };
 

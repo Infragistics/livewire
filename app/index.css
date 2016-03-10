@@ -32,6 +32,11 @@
   cursor: pointer;
   align-items: center;
   justify-content: center;
+  color: #ccc;
+}
+#result-button:hover {
+  background-color: #ccc;
+  color: #888;
 }
 #rendering-label {
   position: absolute;
@@ -43,9 +48,6 @@
   padding: 4px;
   opacity: .75;
   display: none;
-}
-#result-button:hover {
-  background-color: #ccc;
 }
 #footer {
   position: absolute;
@@ -99,7 +101,7 @@
   background: url(images/diagonal-lines.png);
 }
 #lw-tab-container .lw-tabs {
-  width: 98%;
+  width: 98.5%;
   height: 28px;
   overflow: hidden;
   z-index: 200;
@@ -184,7 +186,7 @@
   border: 1px solid #ccc;
   border-radius: 6px 6px 0 0;
   padding: 15px;
-  box-shadow: -2px -2px 4px 0px #ccc;
+  box-shadow: 0px 0px 10px 0px #ccc;
   z-index: 100000;
 }
 #help-container h1 {
@@ -252,4 +254,48 @@ button[data-role="build-flag"].selected {
   font-weight: normal;
   cursor: pointer;
   margin-left: 5px;
+}
+#lw-explorer-button {
+  position: absolute;
+  right: 0px;
+  cursor: pointer;
+  width: 21px;
+  height: 28px;
+  display: block;
+  background-color: #eee;
+  color: #ccc;
+  padding-left: 8px;
+  padding-top: 3px;
+}
+#lw-explorer-button:hover {
+  background-color: #ccc;
+  color: #888;
+}
+#lw-explorer {
+  position: absolute;
+  right: 2%;
+  top: 27px;
+  max-height: 400px;
+  min-width: 300px;
+  border: 1px solid #eee;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 2px;
+  overflow: auto;
+  z-index: 1000;
+  box-shadow: 0px 0px 10px 0px #ccc;
+}
+#lw-explorer:active {
+  border: 1px solid #eee;
+}
+#lw-explorer .fileName {
+  padding: 4px;
+  font-size: .8em;
+  border-bottom: 1px solid #fbfbfb;
+  background-color: #fff;
+  cursor: pointer;
+  color: #888;
+}
+#lw-explorer .fileName:hover {
+  background-color: #eee;
 }
