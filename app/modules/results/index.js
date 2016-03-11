@@ -38,6 +38,10 @@ var detectRenderer = function (fileInfo) {
 };
 
 var handlers = {
+    fileNew: (fileInfo) => {
+        _buildFlags = [];
+        handlers.opened(fileInfo);
+    },
     opened: function(fileInfo){
         refreshSubscriptions();
         $result.animate({
@@ -83,9 +87,6 @@ var handlers = {
             }
         }
     },
-    clearBuildFlags: function (params) {
-        _buildFlags = [];
-    },
     buildFlags: function (buildFlags) {
         _buildFlags = buildFlags;
         handlers.contentChanged(_fileInfo);
@@ -110,8 +111,7 @@ var handlers = {
             .removeClass('fa-chevron-right')
             .addClass('fa-chevron-left')
             .one('click', handlers.showResults);
-            
-        messenger.publish.layout('hideResults');        
+            messenger.publish.layout('hideResults');       
     },
     fileSelected: function(){
         refreshSubscriptions();
@@ -125,13 +125,12 @@ var handlers = {
 
 var subscribe = function () {
     isEnabled = true;
-    subscriptions.push(messenger.subscribe.file('new', handlers.opened));
+    subscriptions.push(messenger.subscribe.file('new', handlers.fileNew));
     subscriptions.push(messenger.subscribe.file('opened', handlers.opened));
     subscriptions.push(messenger.subscribe.file('contentChanged', handlers.contentChanged));
     subscriptions.push(messenger.subscribe.file('sourceChange', handlers.sourceChanged));
     subscriptions.push(messenger.subscribe.file('allFilesClosed', handlers.allFilesClosed));
     subscriptions.push(messenger.subscribe.format('buildFlags', handlers.buildFlags));
-    subscriptions.push(messenger.subscribe.metadata('buildFlags.clear', handlers.clearBuildFlags));
 };
 
 var unsubscribe = function () {

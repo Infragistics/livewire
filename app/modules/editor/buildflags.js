@@ -40,20 +40,16 @@ module.detect = (content) => {
                 });
             }
         });
+        
+        var splitChar = ',';
+        
+        if(flag.indexOf('.') > -1){
+            splitChar = '.';
+        }
 
-        buildFlags = buildFlags.concat(flag.split(','));
+        buildFlags = buildFlags.concat(flag.split(splitChar));            
     });
 
     buildFlags = _.unique(buildFlags).sort();
     messenger.publish.metadata('buildFlags', buildFlags);
 };
-
-var handlers = {
-    clearFlags: () => {
-        messenger.publish.metadata('buildFlags', []);
-        messenger.publish.metadata('buildFlags.clear', []);
-    }
-};
-
-messenger.subscribe.file('new', handlers.clearFlags);
-messenger.subscribe.file('opened', handlers.clearFlags);
