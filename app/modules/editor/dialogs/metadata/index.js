@@ -85,17 +85,10 @@ module.init = (formatterModule, dialogModule) => {
         
     data.getControls().then((controls => {
         _controls = controls;
-        
-        var allControls = [];
-        
-        var keys = _.keys(_controls);
-        keys.forEach((key) => {
-            allControls = allControls.concat(_controls[key]);
-        });
-        
+               
         $controlNameBox.typeahead(
             { hint: true, highlight: true, minLength: 1 },
-            { name: 'controls', source: substringMatcher(allControls) });
+            { name: 'controls', source: substringMatcher(_controls) });
     }));
     
     $dialog.on('shown.bs.modal', (e) => {
