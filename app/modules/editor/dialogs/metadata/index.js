@@ -68,31 +68,35 @@ module.init = (formatterModule, dialogModule) => {
     
     formatterModule.editor.commands.addCommand(
         dialogModule.buildDialogCommand('metadata', 'Ctrl-Shift-M', openDialog));
-        
-    data.getTags().then((tags) => {
-        _tags = tags;
-        
-        var id, tagText;
-        _tags.forEach((tag) => {
-            id = 'tag-' + tag.en.toLowerCase().replace(' ','-');
-            tagText = tag.en;
-            $tagsContainer.append(`<div>
-                                    <input type="checkbox" data-tag="${tagText}" id="${id}" />
-                                    <label for="${id}">${tagText}</label>
-                                   </div>`);
-        });
-    });
-        
-    data.getControls().then((controls => {
-        _controls = controls;
-               
-        $controlNameBox.typeahead(
-            { hint: true, highlight: true, minLength: 1 },
-            { name: 'controls', source: substringMatcher(_controls) });
-    }));
     
     $dialog.on('shown.bs.modal', (e) => {
-        $controlNameBox.focus();
+        
+        if(_tags === undefined){
+            data.getTags().then((tags) => {
+                _tags = tags;
+                
+                var id, tagText;
+                _tags.forEach((tag) => {
+                    id = 'tag-' + tag.en.toLowerCase().replace(' ','-');
+                    tagText = tag.en;
+                    $tagsContainer.append(`<div>
+                                            <input type="checkbox" data-tag="${tagText}" id="${id}" />
+                                            <label for="${id}">${tagText}</label>
+                                            </div>`);
+                });
+            });
+        }
+        
+        if(_controls === undefined){
+            data.getControls().then((controls => {
+                _controls = controls;
+                        
+                $controlNameBox.typeahead(
+                    { hint: true, highlight: true, minLength: 1 },
+                    { name: 'controls', source: substringMatcher(_controls) });
+            }));
+        }
+        
         bind();
         
         // typeahead shows the suggestion list by default
@@ -101,7 +105,8 @@ module.init = (formatterModule, dialogModule) => {
         // to the box
         setTimeout(function() {
             $controlNameBox.typeahead('close');
-        }, 5);
+            $controlNameBox.focus();
+        }, 200);
     });
     
     $dialog.on('hidden.bs.modal', (e) => {
