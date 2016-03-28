@@ -222,6 +222,7 @@
 }
 button[data-role="build-flag"] {
   margin-left: 10px;
+  border-radius: 0;
 }
 button[data-role="build-flag"].selected {
   border: 2px solid #888;
