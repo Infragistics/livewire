@@ -19,6 +19,10 @@ For more information make sure to read the [wiki](https://github.com/craigshoema
 
 ## Installing and Running the App
 
+### Prerequisites
+ - [Node.js](https://nodejs.org/)
+ - [Bower](http://bower.io/#install-bower)
+
 ### Cloning 
 
 Clone this repository:
