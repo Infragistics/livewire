@@ -8,6 +8,9 @@ var renderCallback = function(){};
 
 var path = require('path');
 var include = require(path.resolve(__dirname, '../formats/grammar/asciidoc/include'));
+var pickInlineMacro = require('./pick-inline-macro')
+
+var _buildFlags = [];
 
 var handlers = {
   message: function(e){
@@ -25,6 +28,9 @@ var handlers = {
       });
       renderCallback({ html: $.html()});
     }
+  },
+  buildFlags: function(e){
+      _buildFlags = e;
   }
 };
 
@@ -43,6 +49,8 @@ messenger.subscribe.file('pathChanged', function (data, envelope) {
   basePath = data.basePath;
 });
 
+messenger.subscribe.format('buildFlags', handlers.buildFlags);
+
 var renderer = function(content, callback){
   if(content.length > 0){
     renderCallback = callback;
@@ -53,7 +61,9 @@ var renderer = function(content, callback){
         content = include.apply(content, basePath);
     }
     
-    worker.postMessage({source: content, basePath: basePath });
+    content = pickInlineMacro.process(content, _buildFlags);
+    
+    worker.postMessage({source: content, basePath: basePath, buildFlags: _buildFlags.join(',') });
   }
 };
 
