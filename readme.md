@@ -19,25 +19,25 @@ For more information make sure to read the [wiki](https://github.com/craigshoema
 
 ## Installing and Running the App
 
-### Prerequisites
- - [Node.js](https://nodejs.org/)
- - [Bower](http://bower.io/#install-bower)
+If you do not have Node.js installed, download the installer [here](https://nodejs.org/).
 
-### Cloning 
+Once Node.js is installed, then open a command prompt and install Bower (if you don't already have it installed) by executing this command:
 
-Clone this repository:
+    $ npm install -g bower
+
+After Bower is installed, switch directories to where you want to download Livewire and clone this repository by using this command:
 
     $ git clone https://github.com/infragistics/livewire.git
     
-Install gulp:
+Next, install gulp:
 
-    $ npm install --global gulp
+    $ npm install --g gulp
     
-Install the Livewire dependencies:
+and then install the Livewire dependencies:
 
     $ npm install
     
-Start the application
+Finally, you can start the application:
     
     $ npm start
     
