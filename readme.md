@@ -33,7 +33,11 @@ Next, install gulp:
 
     $ npm install --g gulp
     
-and then install the Livewire dependencies:
+Next, change directories into `livewire`:
+
+    $ cd livewire 
+    
+Then, install the Livewire dependencies:
 
     $ npm install
     
