@@ -87,6 +87,7 @@ module.init = (editorInstance) => {
 	module.editor.commands.addCommand(buildCommand('h2', 'Ctrl-2'));
 	module.editor.commands.addCommand(buildCommand('h3', 'Ctrl-3'));
 	module.editor.commands.addCommand(buildCommand('quote', 'Ctrl-\''));
+	module.editor.commands.addCommand(buildCommand('comment', 'Ctrl-m'));
 	module.editor.commands.addCommand(buildCommand('unordered', 'Ctrl-.'));
 	module.editor.commands.addCommand(buildCommand('ordered', 'Ctrl-,'));
 	module.editor.commands.addCommand(buildCommand('hr', 'Ctrl--'));
