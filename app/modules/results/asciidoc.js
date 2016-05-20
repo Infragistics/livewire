@@ -8,7 +8,7 @@ var renderCallback = function(){};
 
 var path = require('path');
 var include = require(path.resolve(__dirname, '../formats/grammar/asciidoc/include'));
-var pickInlineMacro = require('./pick-inline-macro')
+var pickInlineMacro = require('./pick-inline-macro');
 
 var _buildFlags = [];
 
@@ -30,7 +30,7 @@ var handlers = {
     }
   },
   buildFlags: function(e){
-      _buildFlags = e;
+    _buildFlags = e;
   }
 };
 

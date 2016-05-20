@@ -1,6 +1,19 @@
 {
 	"urls": {
-		"repository" : "https://github.com/craigshoemaker/livewire"
+		"repository" : "https://github.com/infragistics/livewire"
 	},
-	"defaultFormat": "asciidoc"
+	"defaultFormat": "asciidoc",
+	"buildFlagsToProductsMap": {
+		"android": ["android"],
+		"android-ex": ["jquery", "xamarin", "sl", "wpf", "win-forms"],
+		"asp.net": ["asp.net"],
+		"ios": ["ios"],
+		"jquery": ["jquery"],
+		"sl": ["sl"],
+		"win-forms": ["win-forms"],
+		"wpf": ["wpf"],
+		"xamarin": ["xamarin"],
+		"xaml": ["sl", "wpf", "xamarin"],
+		"xaml-xf-ex": ["sl", "wpf"]
+	}
 }
