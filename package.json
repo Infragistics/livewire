@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
-    "release-win64": "electron-packager . Livewire --platform=win32 --arch=x64 --version=0.30.2 --out=../releases",
-    "release": "electron-packager . Livewire --platform=all --arch=all --version=0.30.2 --out=../releases",
+    "release-win64": "electron-packager . Livewire --platform=win32 --arch=x64 --out=../releases",
+    "release": "electron-packager . Livewire --platform=all --arch=all --out=../releases",
     "postinstall": "gulp install"
   },
   "repository": {
