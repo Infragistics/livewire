@@ -17,11 +17,16 @@ A simple web content editor built with [Electron](electron.atom.io).
 
 For more information make sure to read the [wiki](https://github.com/craigshoemaker/livewire/wiki).
 
-## Installing and Running the App
+		  
+## Windows Installer		
+ 
+ [You can download the v1.1 Windows 64-bit installer here](http://download.infragistics.com/users/livewire/Livewire-1.1-win-64.msi).
 
-If you do not have Node.js installed, download the installer [here](https://nodejs.org/).
+## Running the App from Source
 
-Once Node.js is installed, then open a command prompt and install Bower (if you don't already have it installed) by executing this command:
+First, make sure you have [Node.js](https://nodejs.org/) and [Git](https://git-scm.com/downloads) installed on your machine.
+
+Then open a command prompt and install Bower (if you don't already have it installed) by executing this command:
 
     $ npm install -g bower
 
@@ -29,7 +34,7 @@ After Bower is installed, switch directories to where you want to download Livew
 
     $ git clone https://github.com/infragistics/livewire.git
     
-Next, install gulp:
+Next, install Gulp:
 
     $ npm install --g gulp
     
