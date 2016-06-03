@@ -6,14 +6,16 @@
 	"buildFlagsToProductsMap": {
 		"android": ["android"],
 		"android-ex": ["jquery", "xamarin", "sl", "wpf", "win-forms"],
-		"asp.net": ["asp.net"],
+		"aspnet": ["aspnet"],
 		"ios": ["ios"],
 		"jquery": ["jquery"],
 		"sl": ["sl"],
 		"win-forms": ["win-forms"],
+		"win-phone": ["win-phone"],
 		"wpf": ["wpf"],
+		"wpf-ta": ["wpf"],
 		"xamarin": ["xamarin"],
-		"xaml": ["sl", "wpf", "xamarin"],
+		"xaml": ["sl", "wpf", "xamarin", "win-phone"],
 		"xaml-xf-ex": ["sl", "wpf"]
 	}
 }
