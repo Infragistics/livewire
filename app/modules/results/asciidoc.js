@@ -17,6 +17,9 @@ var handlers = {
     if(e.data && e.data.html && e.data.html.length > 0){
       var $ = cheerio.load(e.data.html);
       
+
+      // format tables with Bootstrap classes
+      // fix image paths
       $('table').addClass('table table-striped');
       $('.admonitionblock table').removeClass('table table-striped');
       $('img').each(function(){
@@ -26,6 +29,11 @@ var handlers = {
         src = $img.attr('src');
         $img.attr('src', basePath + '\\' + src);
       });
+
+      // remove AsciiDoc table of contents label
+      //  <div id="toctitle" class="title">Table of Contents</div>
+      $('#toctitle').remove();
+
       renderCallback({ html: $.html()});
     }
   },
@@ -62,6 +70,10 @@ var renderer = function(content, callback){
     }
     
     content = pickInlineMacro.process(content, _buildFlags);
+
+    if(/toc::\[/.test(content)){
+      content = ':toc: macro\n' + content;
+    }
     
     worker.postMessage({source: content, basePath: basePath, buildFlags: _buildFlags.join(',') });
   }
