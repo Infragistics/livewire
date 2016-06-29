@@ -49,7 +49,7 @@ var getFlagList = (src) => {
     var matches = src.match(/(.+)=/);
     var list = [];
     if (matches && matches.length >= 2) {
-        list = matches[1].split('.'); // todo: change back to ;
+        list = matches[1].split(','); // todo: change back to ;
     }
     return list;
 };
