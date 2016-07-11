@@ -22,8 +22,8 @@ module.exports = {
         return `////\n${text}\n////\n\n`;  
     },
     metadataPatterns: {
-        full: /\/\/\/\/\n?\|metadata\|((.|\n)*)\|metadata\|\n?\/\/\/\//,
-        left: /\/\/\/\/\n?\|metadata\|/g,
-        right: /\|metadata\|\n?\/\/\/\//g
+        full: /\/{4,4}\s{0,}\|metadata\|(.|\s)+?\|metadata\|\s{0,}\/{4,4}/,
+        left: /\/{4,4}\s{0,}\|metadata\|/g,
+        right: /\|metadata\|\s{0,}\/{4,4}/g
     } 
 };
