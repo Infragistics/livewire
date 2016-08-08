@@ -32,7 +32,7 @@ var handlers = {
 
       // remove AsciiDoc table of contents label
       //  <div id="toctitle" class="title">Table of Contents</div>
-      $('#toctitle').remove();
+      $('#toctitle').html('<h2>In This Topic:</h2>');
 
       renderCallback({ html: $.html()});
     }
