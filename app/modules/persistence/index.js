@@ -213,7 +213,16 @@ var menuHandlers = {
 
         html = $result.html();
         html = html.replace(exp, 'src="');
-        html = '<!doctype html>\n<body>\n' + html + '</body>\n</html>';
+
+        html = html.replace(/…​/g, '...');
+        html = html.replace(/’/g, "'");
+
+        html = `<!DOCTYPE html>
+<html>
+    <body>
+    ${html}
+    </body>
+</html>`;
 
         dialogs.saveFile(html, options, 'html').catch((err) => {
             // todo: handle error
