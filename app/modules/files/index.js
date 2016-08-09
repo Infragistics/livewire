@@ -85,9 +85,28 @@ module.isFileOpen = function(filePath){
 
 module.getCurrentMetadataString = (formatter) => {
     var metadata = '';
+	var arrayPattern = /\[((\s|.)+?)\]/g;
     
     if(files[_selectedIndex].metadata){
         metadata = JSON.stringify(files[_selectedIndex].metadata, null, 2);
+
+		var indentSpaceMatch = metadata.match(/(\s+)\"/);
+		var indentSpaces = '  ';
+
+		if(indentSpaceMatch && indentSpaceMatch.length > 0){
+			indentSpaces = indentSpaceMatch[0].replace('\n', '');
+		}
+
+		metadata = metadata.replace(/\[((\s|.)+?)\]/g, (match, array) => {
+			var returnValue = match.replace(/\n/g, '');
+			returnValue = returnValue.replace(/\[\s+/g, '[');
+			returnValue = returnValue.replace(/,\s+/g, ',');
+			returnValue = returnValue.replace(/\s\]/g, ']');
+			return returnValue;
+		});
+
+		metadata = metadata.replace(/\],\"/g, `],\n${indentSpaces}`);
+		metadata = metadata.replace(/" \],/g, '"],');
         metadata = formatter.wrapTextInComment(`|metadata|\n${metadata}\n|metadata|`)
     }
     

@@ -30,7 +30,7 @@ var setHeight = function(offSetValue){
 
 var setEditorValueSilent = (value) => {
     _suspendOnChangeEventHandler = true;
-    editor.setValue(value, -1);
+    editor.setValue(value.trim(), -1);
     
     // needed to work around ACE's tendancy
     // to raise change events after setting
