@@ -31,7 +31,7 @@ app.on('ready', function () {
   
   //mainWindow.openDevTools();
 
-  mainWindow.loadUrl('file://' + __dirname + '/app/index.html');
+  mainWindow.loadURL('file://' + __dirname + '/app/index.html');
   
   mainWindow.webContents.on('did-finish-load', function() {
     if(process.platform.toLowerCase() === 'darwin'){

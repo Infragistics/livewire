@@ -87,7 +87,7 @@ module.getCurrentMetadataString = (formatter) => {
     var metadata = '';
     
     if(files[_selectedIndex].metadata){
-        metadata = JSON.stringify(files[_selectedIndex].metadata);
+        metadata = JSON.stringify(files[_selectedIndex].metadata, null, 2);
         metadata = formatter.wrapTextInComment(`|metadata|\n${metadata}\n|metadata|`)
     }
     
