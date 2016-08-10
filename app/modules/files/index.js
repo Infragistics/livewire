@@ -83,31 +83,87 @@ module.isFileOpen = function(filePath){
 	return result;
 };
 
+var indentSpaces =  '    "';
+
+const metadataCleanUpRules = {
+	arrays: [
+		{
+			description: 'strips line breaks from array definitions',
+			pattern: /\n/g,
+			replacement: (match) => ''
+		},
+		{
+			description: 'strips stray spaces after array brackets',
+			pattern: /\[\s+/g,
+			replacement: (match) => '['
+		},
+		{
+			description: 'strips stray spaces before array brackets',
+			pattern: /"\s+]/g,
+			replacement: (match) => '"]'
+		},
+		{
+			description: 'strips stray spaces after property members',
+			pattern: /,\s+/g,
+			replacement: (match) => ','
+		},
+		{
+			description: 'ensures indentation is uniform',
+			pattern: /\s\]/g,
+			replacement: (match) => ']'
+		},
+		{
+			description: 'strips stray line before line break',
+			pattern: /\s+\n/g,
+			replacement: (match) => '\n'
+		}
+	],
+	all: [
+		{
+			description: 'adds missing line breaks to members',
+			pattern: /\],\"/g,
+			replacement: (match) => `],\n${indentSpaces}`
+		},
+		{
+			description: 'removes extra spaces between array brackets',
+			pattern: /" \],/g,
+			replacement: (match) => '"],'
+		},
+		{
+			description: 'makes spaces before members uniform',
+			pattern: /\n {1,}"/g,
+			replacement: (match) => `\n${indentSpaces}`
+		}
+	]
+};
+
 module.getCurrentMetadataString = (formatter) => {
     var metadata = '';
-	var arrayPattern = /\[((\s|.)+?)\]/g;
     
     if(files[_selectedIndex].metadata){
-        metadata = JSON.stringify(files[_selectedIndex].metadata, null, 2);
 
-		var indentSpaceMatch = metadata.match(/(\s+)\"/);
-		var indentSpaces = '  ';
+		metadata = JSON.stringify(files[_selectedIndex].metadata, null, 4);
+
+		const firstIndentPattern = /(\s+)\"/;
+		var indentSpaceMatch = metadata.match(firstIndentPattern);
 
 		if(indentSpaceMatch && indentSpaceMatch.length > 0){
 			indentSpaces = indentSpaceMatch[0].replace('\n', '');
 		}
 
-		metadata = metadata.replace(/\[((\s|.)+?)\]/g, (match, array) => {
-			var returnValue = match.replace(/\n/g, '');
-			returnValue = returnValue.replace(/\[\s+/g, '[');
-			returnValue = returnValue.replace(/,\s+/g, ',');
-			returnValue = returnValue.replace(/\s\]/g, ']');
-			return returnValue;
+		const arrayItemPattern = /\[((\s|.)+?)\]/g;
+		metadata = metadata.replace(arrayItemPattern, (match, array) => {
+			metadataCleanUpRules.arrays.forEach((rule) => {
+				match = match.replace(rule.pattern, rule.replacement);    
+			});
+			return match;
 		});
 
-		metadata = metadata.replace(/\],\"/g, `],\n${indentSpaces}`);
-		metadata = metadata.replace(/" \],/g, '"],');
-        metadata = formatter.wrapTextInComment(`|metadata|\n${metadata}\n|metadata|`)
+		metadataCleanUpRules.all.forEach((rule) => {
+			metadata = metadata.replace(rule.pattern, rule.replacement);
+		});
+
+		metadata = formatter.wrapTextInComment(`|metadata|\n${metadata}\n|metadata|`)
     }
     
     return metadata;
