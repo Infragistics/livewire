@@ -10,12 +10,13 @@
 		"ios": ["ios"],
 		"jquery": ["jquery"],
 		"sl": ["sl"],
+		"win-universal": ["win-universal"],
 		"win-forms": ["win-forms"],
 		"win-phone": ["win-phone"],
 		"wpf": ["wpf"],
 		"wpf-ta": ["wpf"],
 		"xamarin": ["xamarin"],
-		"xaml": ["sl", "wpf", "xamarin", "win-phone"],
+		"xaml": ["sl", "wpf", "xamarin", "win-phone","win-universal"],
 		"xaml-xf-ex": ["sl", "wpf"]
 	}
 }
