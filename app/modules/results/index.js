@@ -14,6 +14,7 @@ var
     messenger = require(path.resolve(__dirname, '../messenger')),
     renderer = require(path.resolve(__dirname, './asciidoc.js')).get(),
     formats = require(path.resolve(__dirname, '../formats')),
+    dialogs = require(path.resolve(__dirname, '../dialogs')),
 
     source = '',
     shell = require('shell'),
@@ -155,18 +156,27 @@ messenger.subscribe.file('rerender', function (data, envelope) {
     });
 });
 
-var openExternalLinksInBrowser = function (e) {
+var handleAnchorClick = function (e) {
     var href;
     var element = e.target;
 
     if (element.nodeName === 'A') {
         href = element.getAttribute('href');
-        shell.openExternal(href);
+
+        if(/http/.test(href)) {
+            shell.openExternal(href);
+        } else {
+            dialogs.messageBox({
+                message: `Navigating to document links is not supported in the HTML preview.`
+            });
+        }
+
         e.preventDefault();
+        return false;
     }
 };
 
-document.addEventListener('click', openExternalLinksInBrowser, false);
+document.addEventListener('click', handleAnchorClick, false);
 
 var setHeight = function (offSetValue) {
     $resultsPane.css('height', $window.height() - offSetValue + 'px');
