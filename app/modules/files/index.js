@@ -22,9 +22,23 @@ var getIndex = function(info){
 	});
 };
 
+var addFileIfNotInList = (fileInfo) => {
+	var isInList = false;
+
+	files.forEach((file) => {
+		if(file.id === fileInfo.id) {
+			isInList = true;
+		}
+	});
+
+	if(!isInList) {
+		files.push(fileInfo);
+	}
+};
+
 var handlers = {
-	opened: function(data){
-		files.push(data);
+	opened: function(data) {
+		addFileIfNotInList(data);
         _selectedIndex = files.length - 1;
 		messenger.publish.file('contentChanged', data);
 	},
@@ -55,9 +69,24 @@ var handlers = {
 			}
 		}
 	},
+
+	pathChanged: (fileInfo) => { 
+		var updateIndex = null;
+		files.forEach((file, index) => {
+			if(file.id === fileInfo.id) {
+				updateIndex = index;
+			}
+		});
+
+		if(updateIndex){
+			files[updateIndex] = fileInfo;
+		}
+	},
 	
 	fileSelected: function(fileInfo){
 		var selectedFileInfo;
+
+		addFileIfNotInList(fileInfo);
 		
 		_selectedIndex = getIndex(fileInfo);
 		selectedFileInfo = files[_selectedIndex];
@@ -137,6 +166,10 @@ const metadataCleanUpRules = {
 	]
 };
 
+module.getCurrentFileInfo = () => {
+	return files[_selectedIndex];
+};
+
 module.getCurrentMetadataString = (formatter) => {
     var metadata = '';
     
@@ -173,5 +206,6 @@ messenger.subscribe.file('opened', handlers.opened);
 messenger.subscribe.file('closed', handlers.closed);
 messenger.subscribe.file('selected', handlers.fileSelected);
 messenger.subscribe.file('new', handlers.fileSelected);
+messenger.subscribe.file('pathChanged', handlers.pathChanged);
 messenger.subscribe.file('beforeSelected', handlers.beforeFileSelected);
 messenger.subscribe.metadata('metadataChanged', handlers.metadataChanged);

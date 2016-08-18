@@ -185,8 +185,10 @@ var menuHandlers = {
             filePath = newFilePath;
             basePath = path.dirname(filePath);
 
-            fileInfo = getFileInfo(filePath);
-
+            fileInfo = files.getCurrentFileInfo();
+            fileInfo.fileName = path.basename(filePath);
+            fileInfo.basePath = path.dirname(filePath);
+            fileInfo.isFileAlreadyOpen = false;
             fileInfo.isSaveAs = true;
 
             messenger.publish.file('pathChanged', fileInfo);
