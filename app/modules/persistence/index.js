@@ -220,7 +220,7 @@ var menuHandlers = {
         html = html.replace(/…​/g, '...');
         html = html.replace(/’/g, "'");
 
-        html = `<!DOCTYPE html>
+        html = `${BOM}<!DOCTYPE html>
 <html>
     <body>
     ${html}
