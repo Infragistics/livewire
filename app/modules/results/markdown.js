@@ -6,7 +6,7 @@ var basePath = '';
 var path = require('path');
 var messenger = require(path.resolve(__dirname, '../messenger'));
 
-messenger.subscribe.file('pathChanged', function (data, envelope) {
+messenger.subscribe.file('pathChanged', function (data, envelope) { 
   basePath = data.basePath;
 });
 
@@ -40,6 +40,7 @@ var _renderer = function(content, callback){
   callback({ html: html });
 };
 
-module.get = function () {
+module.get = function (initialBasePath) {
+  basePath = initialBasePath;
   return _renderer;
 };

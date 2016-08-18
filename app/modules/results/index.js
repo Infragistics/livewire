@@ -19,10 +19,15 @@ var
     source = '',
     shell = require('shell'),
     formatter = null,
+    basePath = '',
     subscriptions = [],
 
     _fileInfo,
     _buildFlags = [];
+
+messenger.subscribe.file('pathChanged', function (data, envelope) { debugger;
+  basePath = data.basePath;
+});
 
 var detectRenderer = function (fileInfo) {
     var rendererPath, currentFormatter;
@@ -32,7 +37,7 @@ var detectRenderer = function (fileInfo) {
     if (formatter === null || currentFormatter.name !== formatter.name) {
         formatter = currentFormatter;
         rendererPath = path.resolve(__dirname, './' + formatter.name.toLowerCase());
-        renderer = require(rendererPath).get();
+        renderer = require(rendererPath).get(basePath);
 
         messenger.publish.file('formatChanged', formatter);
     }
