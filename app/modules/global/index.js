@@ -27,3 +27,4 @@ var handlers = {
 messenger.subscribe.file('selected', handlers.fileSelected);
 messenger.subscribe.file('opened', handlers.fileOpened);
 messenger.subscribe.file('allFilesClosed', handlers.fileAllFilesClosed);
+messenger.subscribe.file('titleChanged', handlers.fileSelected);

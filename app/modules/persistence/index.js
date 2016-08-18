@@ -191,6 +191,7 @@ var menuHandlers = {
             fileInfo.isFileAlreadyOpen = false;
             fileInfo.isSaveAs = true;
 
+            messenger.publish.file('titleChanged', fileInfo);
             messenger.publish.file('pathChanged', fileInfo);
             messenger.publish.file('rerender');
         }).catch((error) => {
