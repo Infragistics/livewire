@@ -14,7 +14,9 @@ var
     $doneBtn,   
     formatterModule;
 
-var createLink = (filePaths) => {
+const clone = (obj) => JSON.parse(JSON.stringify(obj));
+
+var createLink = (filePaths) => { 
     var filePath, format, side;
     if (!filePaths || !filePaths.length) {
         console.log('No file paths selected');
@@ -25,11 +27,12 @@ var createLink = (filePaths) => {
             filePath = path.basename(filePaths[0]);
         }
         
-        // transform file name:
-        filePath = filePath.replace(new RegExp('\\.(' + formatterModule.formatter.extensions.join('|') + ')$'), '.html');
-        filePath = fileNameCleaner.clean(filePath);
+        if(!/^http/.test(filePath)){
+            filePath = filePath.replace(new RegExp('\\.(' + formatterModule.formatter.extensions.join('|') + ')$'), '.html');
+            filePath = fileNameCleaner.clean(filePath);
+        }
 
-        format = $.extend({}, formatterModule.formatter.shortcuts.link);
+        format = clone(formatterModule.formatter.shortcuts.link);
 
         side = /\{0\}/.test(format.left) ? 'left' : 'right';
 
@@ -62,7 +65,7 @@ module.init = (formatterMod, dialogModule) => {
         });
     });
 
-    $browseBtn.one('click', () => {
+    $browseBtn.click(() => {
         var options = {
             title: 'Select A File',
             properties: ['openFile'],
