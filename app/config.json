@@ -1,6 +1,8 @@
 {
 	"urls": {
-		"repository" : "https://github.com/infragistics/livewire"
+		"repository" : "https://github.com/infragistics/livewire",
+		"installers" : "https://github.com/infragistics/livewire/wiki/installers",
+		"version" : "http://download.infragistics.com/users/livewire/version.json"
 	},
 	"defaultFormat": "asciidoc",
 	"buildFlagsToProductsMap": {

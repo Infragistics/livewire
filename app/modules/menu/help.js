@@ -3,6 +3,7 @@ var messenger = require(path.resolve(__dirname, '../messenger'));
 var shell = require('shell');
 var config = require(path.resolve(__dirname, '../config')).get();
 var dialogs = require('../dialogs');
+const packageJsonReader = require(path.resolve(__dirname, '../config/packageJsonReader.js'));
 
 var handlers = {
   issues: function () {
@@ -25,9 +26,8 @@ GitHub:    http://github.com/infragistics/livewire`
     };
 
     if(!version) {
-      fs.readFile(path.resolve(__dirname, '../../../package.json'), 'utf8', (err, data) => {
-        var info = JSON.parse(data);
-        version = info.version;
+      packageJsonReader.get().then((config) => {
+        version = config.version;
         showAboutDialog(version);
       });
     } else {

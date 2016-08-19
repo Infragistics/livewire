@@ -25,7 +25,7 @@ var
     _fileInfo,
     _buildFlags = [];
 
-messenger.subscribe.file('pathChanged', function (data, envelope) { debugger;
+messenger.subscribe.file('pathChanged', function (data, envelope) {
   basePath = data.basePath;
 });
 

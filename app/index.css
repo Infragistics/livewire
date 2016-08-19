@@ -303,3 +303,12 @@ button[data-role="build-flag"].selected {
 #lw-explorer .fileName:hover {
   background-color: #eee;
 }
+#new-version-container {
+  position: absolute;
+  top: -1px;
+  margin-left: 35%;
+  width: 350px;
+  padding: 10px;
+  background-color: #fbfbfb;
+  border: solid 1px #eee;
+}
