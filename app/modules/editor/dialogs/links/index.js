@@ -74,7 +74,7 @@ module.init = (formatterMod, dialogModule) => {
         nodeDialog.showOpenDialog(options, createLink);
     });
     
-    $doneBtn.one('click', () => {
+    $doneBtn.click(() => {
         createLink($linkInput.val());
     });
 };
