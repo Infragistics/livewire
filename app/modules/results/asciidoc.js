@@ -27,7 +27,7 @@ var handlers = {
         
         $img = $(this);
         src = $img.attr('src');
-        $img.attr('src', basePath + '\\' + src);
+        $img.attr('src', (basePath + '\\' + src).replace(/\//g, '\\'));
       });
 
       // remove AsciiDoc table of contents label
@@ -39,6 +39,9 @@ var handlers = {
   },
   buildFlags: function(e){
     _buildFlags = e;
+  },
+  changeBasePath: (data) => {
+    basePath = data.basePath;
   }
 };
 
@@ -53,10 +56,8 @@ var getWorker = function(){
 
 var worker = getWorker();
 
-messenger.subscribe.file('pathChanged', function (data, envelope) {
-  basePath = data.basePath;
-});
-
+messenger.subscribe.file('basePathChanged', handlers.changeBasePath);
+messenger.subscribe.file('pathChanged', handlers.changeBasePath);
 messenger.subscribe.format('buildFlags', handlers.buildFlags);
 
 var renderer = function(content, callback){

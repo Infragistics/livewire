@@ -103,6 +103,7 @@ var handlers = {
       fileInfo = getFileInfoFromTab($tab);
       selectedPath = fileInfo.path;
       messenger.publish.file('selected', fileInfo);
+      messenger.publish.file('basePathChanged', fileInfo);
       messenger.publish.format('buildFlags', []);
     }
     

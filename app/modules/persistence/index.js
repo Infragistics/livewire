@@ -104,7 +104,7 @@ var menuHandlers = {
             fileInfo.size = response.size;
 
             formatter = formats.getByFileExtension(fileInfo.ext);
-debugger;
+
             messenger.publish.file('pathChanged', fileInfo);
 
             if (!fileInfo.isFileAlreadyOpen) {
