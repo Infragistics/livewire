@@ -16,6 +16,7 @@
   "dependencies": {
     "asciidoctor.js": "^1.5.2",
     "marked": "^0.3.4",
-    "node-uuid": "^1.4.3"
+    "node-uuid": "^1.4.3",
+    "xml2js": "^0.4.17"
   }
 }

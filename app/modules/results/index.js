@@ -15,15 +15,30 @@ var
     renderer = require(path.resolve(__dirname, './asciidoc.js')).get(),
     formats = require(path.resolve(__dirname, '../formats')),
     dialogs = require(path.resolve(__dirname, '../dialogs')),
+    renderTransformer = require(path.resolve(__dirname, './renderTransformer')),
 
     source = '',
     shell = require('shell'),
     formatter = null,
     basePath = '',
     subscriptions = [],
+    html = '',
 
     _fileInfo,
     _buildFlags = [];
+
+const productConfigurationReader = require(path.resolve(__dirname, '../config/productConfigurationReader.js'));
+var _productConfiguration = null;
+
+// *** todo: lazy load when user opens variables UI ***
+if(!_productConfiguration) {
+    productConfigurationReader.getConfiguration(path.resolve(__dirname, '../../DocsConfig.xml'), '15.6').then((configuration) => {
+        debugger;
+        configuration.selectedProduct = 'wpf';
+        _productConfiguration = configuration;
+    });
+}
+// ****************************************************
 
 messenger.subscribe.file('pathChanged', function (data, envelope) {
   basePath = data.basePath;
@@ -80,9 +95,13 @@ var handlers = {
                         if(!$renderingLabel.is(':visible')){
                             $renderingLabel.fadeIn('fast');
                         }
+                        source = renderTransformer.beforeRender(source, _productConfiguration);
                         
                         renderer(source, function (e) {
-                            $result.html(e.html);
+
+                            html = renderTransformer.afterRender(e.html);
+
+                            $result.html(html);
                             
                             if($renderingLabel.is(':visible')){
                                 $renderingLabel.fadeOut('fast');

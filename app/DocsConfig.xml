@@ -1,0 +1,633 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Configuration >
+    <!-- ====================================================================== -->
+    <!-- the Products section contains definitions of products used for generating final product tables -->
+    <Products>
+		<!-- the "all" product is special definition used for generating TOC files for all products in TableWire -->
+        <Product Name="all"              IsObsolete="false" BuildFlags=""   />
+        <Product Name="ios"              IsObsolete="false" BuildFlags="ios"   />
+        <Product Name="asp-net"          IsObsolete="false" BuildFlags="aspnet"   />
+        <!--TODO: enable if build flags for CLR2 are still needed/used-->
+<!-- 	<Product Name="asp-net-clr2"  BuildFlags="aspnet-clr2"  />-->
+        <Product Name="android"       	 IsObsolete="false" BuildFlags="android" />
+        <Product Name="jquery"        	 IsObsolete="false" BuildFlags="jquery"   />
+        <Product Name="xamarin"       	 IsObsolete="false" BuildFlags="xaml,xamarin"  />
+        <Product Name="wpf"           	 IsObsolete="false" BuildFlags="xaml,wpf"   />
+<!-- 	<Product Name="wpf-ta"			 IsObsolete="false" BuildFlags="wpf"   /> -->
+        <Product Name="win-forms"		 IsObsolete="false" BuildFlags="win-forms"   />
+<!--	<Product Name="win-forms-ta-rft" IsObsolete="false" BuildFlags="win-forms"   />-->
+<!--	<Product Name="win-forms-ta-hp"	 IsObsolete="false" BuildFlags="win-forms"   />-->
+        <Product Name="win-universal"	 IsObsolete="false" BuildFlags="xaml,win-universal" />
+        <!-- For 16.1products only  -->
+        <Product Name="sl"               IsObsolete="true"  BuildFlags="xaml,sl" />
+        <Product Name="win-phone"        IsObsolete="true"  BuildFlags="xaml,win-phone" />
+        <Product Name="win-rt"           IsObsolete="true"  BuildFlags="xaml,win-rt" />
+        <Product Name="reportplus"       IsObsolete="false"  BuildFlags="" />
+        <!-- TODO: enable if build flags for CLR2 are still needed/used?-->
+<!--	<Product Name="win-forms-clr2"  IsObsolete="false"	BuildFlags="win-forms-clr2" />-->
+    </Products>
+    <!-- ====================================================================== -->
+    <!-- the BuildFlags section contains definitions of build flags used for:
+	   - filtering nodes in TableWire,
+	   - build flagging nodes in TableWire,
+	   - build flagging topic content in LiveWire -->
+    <BuildFlags>
+        <!-- note that IsObsolete attribute is used to hiding obsolete build flags in TableWire
+		Also, obsolete flags will not be used in generating production TOC files in TableWire -->
+        <BuildFlag Color="#FFF8B0ED" Id="xamarin"        IsObsolete="false" Purpose="(XAML for xamarin platform)"   />
+        <BuildFlag Color="#FFF33DD8" Id="xaml"           IsObsolete="false" Purpose="(XAML for sl + wpf + win-phone + win-rt + xamarin + win-universal)"  />
+        <BuildFlag Color="#FF0BBC0B" Id="xaml-xf-ex"     IsObsolete="true"  Purpose="(XAML for sl + wpf + win-phone + win-rt)"  />
+        <BuildFlag Color="#FF9CF79C" Id="sl"             IsObsolete="true"  Purpose="(CS+VB+XAML for sl platform)"  />
+        <BuildFlag Color="#FF71F2EA" Id="wpf"            IsObsolete="false" Purpose="(CS+VB+XAML for wpf platform)"  />
+        <BuildFlag Color="#FF07A59C" Id="win-universal"  IsObsolete="false" Purpose="(CS+VB+XAML for win-universal platform)"   />
+        <BuildFlag Color="#FFF3D044" Id="win-phone"      IsObsolete="true"  Purpose="(CS+VB+XAML for win-phone platform)"  />
+        <BuildFlag Color="#FFA38C2F" Id="win-rt"         IsObsolete="true"  Purpose="(CS+VB+XAML for win-rt platform)"  />
+        <BuildFlag Color="#FF9CB8E9" Id="win-forms"      IsObsolete="false" Purpose="(CS+VB for win-forms platform CLR3+)"  />
+        <BuildFlag Color="#FF5883CE" Id="win-forms-clr2" IsObsolete="false" Purpose="(CS+VB for win-forms platform CLR2)"  />
+        <BuildFlag Color="#FFFCA54B" Id="jquery"         IsObsolete="false" Purpose="(JAVA  for jquery platform)" />
+        <BuildFlag Color="#FFF13503" Id="android-ex"     IsObsolete="true"  Purpose="(CS+VB for sl + wpf + win-phone + win-rt + xamarin + win-forms)" />
+        <BuildFlag Color="#FFFC714B" Id="android"        IsObsolete="false" Purpose="(JAVA  for android platform)" />
+        <BuildFlag Color="#FFFAC828" Id="aspnet"         IsObsolete="false" Purpose="(JAVA  for aspnet platform)" />
+        <BuildFlag Color="#FFC3A00A" Id="aspnet-clr2"    IsObsolete="false" Purpose="(JAVA  for aspnet platform)" />
+        <BuildFlag Color="#FFC3C1C1" Id="ios"            IsObsolete="false" Purpose="(Obj-C for iOS platform)" />
+        <BuildFlag Color="#FF44433F" Id="docx-booklet"   IsObsolete="true"  Purpose=" " />
+        <BuildFlag Color="#FF44433F" Id="docx-online"    IsObsolete="true"  Purpose=" " />
+    </BuildFlags>
+    <!-- ====================================================================== -->
+    <!-- the Variable section contains definitions of variables used in titles and content of topics (EN/JP locals)   -->
+    <Variables >
+        <!-- NOTE that "all" string indicates all products and it can be overridden by 
+             a variable with the same name but different value for Products -->
+ 
+		
+		<!-- NOTE that ProductVersion is current branch version -->
+        <Variable Name="ProductVersion"     Products="all" Value="16.2"/>
+        <Variable Name="ProductName"        Products="all" Value="Infragistics {PlatformName}"/>
+        <!-- Note some variables have values built from other variables  -->
+        <Variable Name="ProductNameVersion" Products="all" Value="{ProductName} 20{ProductVersion}"/>
+		
+<!--	<Variable Name="PlatformName" Products="wpf-ta"     	  Value="WPF Test Automation for HP"/>-->
+        <Variable Name="PlatformName" Products="wpf"	       	  Value="WPF"/>
+        <Variable Name="PlatformName" Products="win-forms"        Value="Windows Forms"/>
+<!--	<Variable Name="PlatformName" Products="win-forms-ta-rft" Value="Windows Forms"/>-->
+<!--	<Variable Name="PlatformName" Products="win-forms-ta-hp"  Value="Windows Forms"/> -->
+        <Variable Name="PlatformName" Products="ios"              Value="NucliOS"/>
+        <Variable Name="PlatformName" Products="win-phone"        Value="Windows Phone"/>
+        <Variable Name="PlatformName" Products="win-rt"           Value="WinRT"/>
+        <Variable Name="PlatformName" Products="asp.net"          Value="ASP.NET"/>
+        <Variable Name="PlatformName" Products="jquery"           Value="JQuery"/>
+        <Variable Name="PlatformName" Products="xamarin"          Value="Xamarin.Forms"/>
+        <Variable Name="PlatformName" Products="android"          Value="Android"/>
+        <Variable Name="PlatformName" Products="win-universal"    Value="UWP"/>   
+            
+        <Variable Name="PlatformIDE"  Products="all"       Value="Visual Studio 2013-2015"/>
+        <Variable Name="PlatformIDE"  Products="android"   Value="Android Studio v1.3.2"/>
+        <Variable Name="PlatformIDE"  Products="ios"       Value="Xcode "/>
+
+        <Variable Name="SamplesURL"   Products="wpf"       Value="http://www.infragistics.com/samples/wpf/"/>
+        <Variable Name="SamplesURL"   Products="sl"        Value="http://www.infragistics.com/samples/silverlight/"/>
+        <Variable Name="SamplesURL"   Products="win-forms" Value="http://www.infragistics.com/samples/windows-forms/"/>
+
+        <Variable Name="InstallPath"        Products="all" Value="C:\Program Files (x86)\Infragistics\20{ProductVersion}\{PlatformName}"/>
+        <Variable Name="InstallPathVista"   Products="all" Value="C:\Users\Public\Documents\Infragistics\{PlatformName}"/>
+        <Variable Name="InstallPathXP"      Products="all" Value="C:\Documents and Settings\All Users\Documents\Infragistics\{PlatformName}"/>
+ 		<!-- ===================================================================================== -->
+        <!-- NOTE the rest of variables are used to define API Links -->
+		<!-- ===================================================================================== -->
+		
+        <Variable Name="ApiProp"      Products="all"       Value="~"/>
+        <Variable Name="ApiProp"      Products="jquery"   Value="."/>
+        <Variable Name="ApiProp"      Products="android"   Value="~set"/>
+        <Variable Name="ApiPropGet"   Products="android"   Value="~get"/>
+        <Variable Name="ApiPropAdd"   Products="android"   Value="~add"/>
+        <!-- Note some variables have blank values for default/unassigned product  -->
+        <Variable Name="ApiVersion"	  Products="all"	   Value=""/>
+        <!-- Note some variables override values of default product with values for specific product(s)  -->
+        <Variable Name="ApiVersion"	  Products="wpf,win-forms"  Value=".v{ProductVersion}"/>
+        <Variable Name="ApiVersion"	  Products="win-universal"  Value=".v{ProductVersion}"/>
+        <Variable Name="ApiVersion"	  Products="asp.net"  		Value=".v{ProductVersion}"/>
+        <Variable Name="ApiVersion"	  Products="jquery"  		Value="#options:"/>
+        <Variable Name="ApiPlatform"  Products="wpf"            Value="InfragisticsWPF4."/>
+        <Variable Name="ApiPlatform"  Products="win-forms"      Value="Infragistics4."/>
+        <Variable Name="ApiPlatform"  Products="asp.net"  		Value="Infragistics4."/> 
+        <Variable Name="ApiPlatform"  Products="xamarin"        Value="InfragisticsXF."/>
+        <Variable Name="ApiPlatform"  Products="android"        Value="Infragistics."/> 
+        <Variable Name="ApiPlatform"  Products="win-universal"  Value="InfragisticsUWP."/> 
+        <Variable Name="ApiPlatform"  Products="jquery"  		Value="ui."/> 
+		<!-- =========== Geographic Map ================================================================================================================= -->
+<!-- too bad we cannot share API links between jquery and rest platforms because names of API object are different: axes vs Axis
+                 http://www.igniteui.com/help/api/2016.1/ui.igDataChart#options:axes.tickStrokeThickness 
+http://help.infragistics.com/doc/WPF/2016.1/CLR4.0/?page=InfragisticsWPF4.Controls.Charts.XamDataChart.v16.1~Infragistics.Controls.Charts.Axis~TickStrokeThickness.html
+-->
+        <Variable Name="GeoMapLink"          Products="all" Value="{ApiPlatform}{GeoMapAssembly}{ApiVersion}{GeoMapNamespace}"/>
+        <Variable Name="GeoMapLinkBase"      Products="all" Value="{ApiPlatform}{GeoMapAssemblyBase}{ApiVersion}{GeoMapNamespaceBase}"/>
+        <Variable Name="GeoMapAssembly"      Products="wpf,win-universal" Value="Controls.Maps.XamGeographicMap"/>
+        <Variable Name="GeoMapAssemblyBase"	 Products="wpf,win-universal" Value="Controls.Maps.XamDataChart"/>
+        <Variable Name="GeoMapNamespace"     Products="wpf,win-universal" Value="~Infragistics.Controls.Maps"/>
+        <Variable Name="GeoMapNamespaceBase" Products="wpf,win-universal" Value="~Infragistics.Controls"/>
+        <Variable Name="GeoMapName"          Products="wpf,win-universal" Value="XamGeographicMap"/>
+        <Variable Name="GeoMapBase"          Products="wpf,win-universal" Value="SeriesViewer"/>
+        <Variable Name="GeoMapAssembly"      Products="xamarin" Value="Controls.Maps"/>
+		<Variable Name="GeoMapAssemblyBase"	 Products="xamarin" Value="Controls.Charts"/>
+        <Variable Name="GeoMapNamespace"     Products="xamarin" Value="~Infragistics.XF.Controls"/>
+        <Variable Name="GeoMapNamespaceBase" Products="xamarin" Value="~Infragistics.XF"/>
+        <Variable Name="GeoMapName"          Products="xamarin" Value="XFGeographicMap"/>
+        <Variable Name="GeoMapBase"          Products="xamarin" Value="SeriesViewer"/>
+        <Variable Name="GeoMapAssembly"      Products="win-forms" Value="Win.DataVisualization.UltraGeographicMap"/>
+        <Variable Name="GeoMapAssemblyBase"	 Products="win-forms" Value="Win.DataVisualization.UltraDataChart"/>
+        <Variable Name="GeoMapNamespace"     Products="win-forms" Value="~Infragistics.Win.DataVisualization"/>
+        <Variable Name="GeoMapNamespaceBase" Products="win-forms" Value="~Infragistics.Win.DataVisualization"/>
+        <Variable Name="GeoMapName"          Products="win-forms" Value="UltraGeographicMap"/>
+        <Variable Name="GeoMapBase"          Products="win-forms" Value="SeriesViewer"/>
+        <Variable Name="GeoMapAssembly"      Products="android" Value="GeographicMap"/>
+        <Variable Name="GeoMapAssemblyBase"	 Products="android" Value="DataChart"/>
+        <Variable Name="GeoMapNamespace"     Products="android" Value="~com.infragistics.controls"/>
+        <Variable Name="GeoMapNamespaceBase" Products="android" Value="~com.infragistics.controls"/>
+        <Variable Name="GeoMapName"          Products="android" Value="GeographicMapView"/>
+        <Variable Name="GeoMapBase"          Products="android" Value="SeriesViewerBaseView"/>
+        <Variable Name="GeoMapAssemblyBase"  Products="jquery"  Value="igDataChart"/> 
+        <Variable Name="GeoMapAssembly"      Products="jquery"  Value="igGeographicMap"/>
+        <Variable Name="GeoMapName"      	 Products="jquery"  Value="igGeographicMap"/>
+        <Variable Name="GeoMapBase"      	 Products="jquery"  Value="igDataChart"/>
+        <Variable Name="GeoMapName"      	 Products="ios"  Value="IGGeographicMapView"/>
+        <!-- =========== Data Chart ================================================================================================================= -->
+        <Variable Name="DataChartLink"          Products="all" Value="{ApiPlatform}{DataChartAssembly}{ApiVersion}{DataChartNamespace}"/>
+        <Variable Name="DataChartLinkBase"      Products="all" Value="{ApiPlatform}{DataChartAssemblyBase}{ApiVersion}{DataChartNamespaceBase}"/>
+        <Variable Name="DataChartAssembly"      Products="wpf,win-universal" Value="Controls.Charts.XamDataChart"/>
+        <Variable Name="DataChartAssemblyBase"	Products="wpf,win-universal" Value="Controls.Charts.XamDataChart"/>
+        <Variable Name="DataChartNamespace"     Products="wpf,win-universal" Value="~Infragistics.Controls.Charts"/>
+        <Variable Name="DataChartNamespaceBase" Products="wpf,win-universal" Value="~Infragistics.Controls"/>
+        <Variable Name="DataChartName"          Products="wpf,win-universal" Value="XamDataChart"/>
+        <Variable Name="DataChartBase"          Products="wpf,win-universal" Value="SeriesViewer"/>
+        <Variable Name="DataChartAssembly"      Products="xamarin" Value="Controls.Charts"/>
+		<Variable Name="DataChartAssemblyBase"	Products="xamarin" Value="Controls.Charts"/>
+        <Variable Name="DataChartNamespace"     Products="xamarin" Value="~Infragistics.XF.Controls"/>
+        <Variable Name="DataChartNamespaceBase" Products="xamarin" Value="~Infragistics.XF"/>
+        <Variable Name="DataChartName"          Products="xamarin" Value="XFDataChart"/>
+        <Variable Name="DataChartBase"          Products="xamarin" Value="SeriesViewer"/>
+        <Variable Name="DataChartAssembly"      Products="win-forms" Value="Win.DataVisualization.UltraDataChart"/>
+        <Variable Name="DataChartAssemblyBase"	Products="win-forms" Value="Win.DataVisualization.UltraDataChart"/>
+        <Variable Name="DataChartNamespace"     Products="win-forms" Value="~Infragistics.Win.DataVisualization"/>
+        <Variable Name="DataChartNamespaceBase" Products="win-forms" Value="~Infragistics.Win.DataVisualization"/>
+        <Variable Name="DataChartName"          Products="win-forms" Value="UltraDataChart"/>
+        <Variable Name="DataChartBase"          Products="win-forms" Value="SeriesViewer"/>
+        <Variable Name="DataChartAssembly"      Products="android" Value="DataChart"/>
+        <Variable Name="DataChartAssemblyBase"	Products="android" Value="DataChart"/>
+        <Variable Name="DataChartNamespace"     Products="android" Value="~com.infragistics.controls"/>
+        <Variable Name="DataChartNamespaceBase" Products="android" Value="~com.infragistics.controls"/>
+        <Variable Name="DataChartName"          Products="android" Value="DataChartView"/>
+        <Variable Name="DataChartBase"          Products="android" Value="SeriesViewerBaseView"/>
+        <Variable Name="DataChartAssemblyBase"  Products="jquery"  Value="igDataChart"/> 
+        <Variable Name="DataChartAssembly"      Products="jquery"  Value="igDataChart"/>
+        <Variable Name="DataChartName"      	Products="jquery"  Value="igDataChart"/>
+        <Variable Name="DataChartBase"      	Products="jquery"  Value="igDataChart"/>
+        <Variable Name="DataChartName"      	Products="ios"     Value="IGDataChartView"/>
+		<!-- =========== Pie Chart ================================================================================================================= -->
+        <Variable Name="PieChartLink"          	Products="all" Value="{ApiPlatform}{PieChartAssembly}{ApiVersion}{PieChartNamespace}"/>
+        <Variable Name="PieChartLinkBase"      	Products="all" Value="{ApiPlatform}{PieChartAssemblyBase}{ApiVersion}{PieChartNamespaceBase}"/>
+        <Variable Name="PieChartAssembly"      	Products="wpf,win-universal" Value="Controls.Charts.XamDataChart"/>
+        <Variable Name="PieChartAssemblyBase"	Products="wpf,win-universal" Value="Controls.Charts.XamDataChart"/>
+        <Variable Name="PieChartNamespace"     	Products="wpf,win-universal" Value="~Infragistics.Controls.Charts"/>
+        <Variable Name="PieChartNamespaceBase" 	Products="wpf,win-universal" Value="~Infragistics.Controls.Charts"/>
+        <Variable Name="PieChartName"          	Products="wpf,win-universal" Value="XamPieChart"/>
+        <Variable Name="PieChartBase"          	Products="wpf,win-universal" Value="PieChartBase"/>
+        <Variable Name="PieChartAssembly"      	Products="xamarin" Value="Controls.Charts"/>
+        <Variable Name="PieChartAssemblyBase"	Products="xamarin" Value="Controls.Charts"/>
+        <Variable Name="PieChartNamespace"     	Products="xamarin" Value="~Infragistics.XF.Controls"/>
+        <Variable Name="PieChartNamespaceBase" 	Products="xamarin" Value="~Infragistics.XF"/>
+        <Variable Name="PieChartName"          	Products="xamarin" Value="XFPieChart"/>
+        <Variable Name="PieChartBase"          	Products="xamarin" Value="PieChartBase"/>
+        <Variable Name="PieChartAssembly"      	Products="win-forms" Value="Win.DataVisualization.UltraDataChart"/>
+        <Variable Name="PieChartAssemblyBase"	Products="win-forms" Value="Win.DataVisualization.UltraDataChart"/>
+        <Variable Name="PieChartNamespace"     	Products="win-forms" Value="~Infragistics.Win.DataVisualization"/>
+        <Variable Name="PieChartNamespaceBase" 	Products="win-forms" Value="~Infragistics.Win.DataVisualization"/>
+        <Variable Name="PieChartName"          	Products="win-forms" Value="UltraPieChart"/>
+        <Variable Name="PieChartBase"          	Products="win-forms" Value="PieChartBase"/>
+        <Variable Name="PieChartAssembly"      	Products="android" Value="DataChart"/>
+        <Variable Name="PieChartAssemblyBase"	Products="android" Value="DataChart"/>
+        <Variable Name="PieChartNamespace"     	Products="android" Value="~com.infragistics.controls"/>
+        <Variable Name="PieChartNamespaceBase" 	Products="android" Value="~com.infragistics.controls"/>
+        <Variable Name="PieChartName"          	Products="android" Value="PieChartView"/>
+        <Variable Name="PieChartBase"          	Products="android" Value="PieChartBaseView"/>
+        <Variable Name="PieChartAssemblyBase"   Products="jquery"  Value="igPieChart"/> 
+        <Variable Name="PieChartAssembly"       Products="jquery"  Value="igPieChart"/>
+        <Variable Name="PieChartName"      	    Products="jquery"  Value="igPieChart"/>
+        <Variable Name="PieChartBase"      	    Products="jquery"  Value="igPieChart"/>
+        <Variable Name="PieChartName"      	    Products="ios"  Value="IGPieChartView"/>
+        <!-- =========== Funnel Chart ================================================================================================================= -->
+        <Variable Name="FunnelChartLink"            Products="all" Value="{ApiPlatform}{FunnelChartAssembly}{ApiVersion}{FunnelChartNamespace}"/>
+        <Variable Name="FunnelChartLinkBase"        Products="all" Value="{ApiPlatform}{FunnelChartAssemblyBase}{ApiVersion}{FunnelChartNamespaceBase}"/>
+        <Variable Name="FunnelChartAssembly"        Products="wpf,win-universal" Value="Controls.Charts.XamDataChart"/>
+        <Variable Name="FunnelChartAssemblyBase"	Products="wpf,win-universal" Value="Controls.Charts.XamDataChart"/>
+        <Variable Name="FunnelChartNamespace"     	Products="wpf,win-universal" Value="~Infragistics.Controls.Charts"/>
+        <Variable Name="FunnelChartNamespaceBase" 	Products="wpf,win-universal" Value="~Infragistics.Controls.Charts"/>
+        <Variable Name="FunnelChartName"          	Products="wpf,win-universal" Value="XamFunnelChart"/>
+        <Variable Name="FunnelChartBase"          	Products="wpf,win-universal" Value="XamFunnelChart"/>
+		<Variable Name="FunnelChartAssembly"      	Products="xamarin" Value="Controls.Charts"/>
+        <Variable Name="FunnelChartAssemblyBase"	Products="xamarin" Value="Controls.Charts"/>
+        <Variable Name="FunnelChartNamespace"     	Products="xamarin" Value="~Infragistics.XF.Controls"/>
+        <Variable Name="FunnelChartNamespaceBase" 	Products="xamarin" Value="~Infragistics.XF"/>
+        <Variable Name="FunnelChartName"          	Products="xamarin" Value="XFFunnelChart"/>
+        <Variable Name="FunnelChartBase"          	Products="xamarin" Value="ViewBase"/>
+		<Variable Name="FunnelChartAssembly"      	Products="win-forms" Value="Win.DataVisualization.UltraDataChart"/>
+        <Variable Name="FunnelChartAssemblyBase"	Products="win-forms" Value="Win.DataVisualization.UltraDataChart"/>
+        <Variable Name="FunnelChartNamespace"     	Products="win-forms" Value="~Infragistics.Win.DataVisualization"/>
+        <Variable Name="FunnelChartNamespaceBase" 	Products="win-forms" Value="~Infragistics.Win.DataVisualization"/>
+        <Variable Name="FunnelChartName"          	Products="win-forms" Value="UltraFunnelChart"/>
+        <Variable Name="FunnelChartBase"          	Products="win-forms" Value="UltraFunnelChart"/>
+        <Variable Name="FunnelChartAssembly"      	Products="android" Value="DataChart"/>
+        <Variable Name="FunnelChartAssemblyBase"	Products="android" Value="DataChart"/>
+        <Variable Name="FunnelChartNamespace"     	Products="android" Value="~com.infragistics.controls"/>
+        <Variable Name="FunnelChartNamespaceBase" 	Products="android" Value="~com.infragistics.controls"/>
+        <Variable Name="FunnelChartName"          	Products="android" Value="FunnelChartView"/>
+        <Variable Name="FunnelChartBase"          	Products="android" Value="FunnelChartView"/>
+        <Variable Name="FunnelChartAssemblyBase"    Products="jquery"  Value="igFunnelChart"/> 
+        <Variable Name="FunnelChartAssembly"        Products="jquery"  Value="igFunnelChart"/>
+        <Variable Name="FunnelChartName"      	    Products="jquery"  Value="igFunnelChart"/>
+        <Variable Name="FunnelChartBase"      	    Products="jquery"  Value="igBaseChart"/>
+        <Variable Name="FunnelChartName"      	    Products="ios"  Value="IGFunnelChartView"/>
+		<!-- =========== Doughnut Chart ================================================================================================================= -->
+        <Variable Name="DoughnutChartLink"          Products="all" Value="{ApiPlatform}{DoughnutChartAssembly}{ApiVersion}{DoughnutChartNamespace}"/>
+        <Variable Name="DoughnutChartLinkBase"      Products="all" Value="{ApiPlatform}{DoughnutChartAssemblyBase}{ApiVersion}{DoughnutChartNamespaceBase}"/>
+        <Variable Name="DoughnutChartAssembly"      Products="wpf,win-universal" Value="Controls.Charts.XamDataChart"/>
+        <Variable Name="DoughnutChartAssemblyBase"	Products="wpf,win-universal" Value="Controls.Charts.XamDataChart"/>
+        <Variable Name="DoughnutChartNamespace"     Products="wpf,win-universal" Value="~Infragistics.Controls.Charts"/>
+        <Variable Name="DoughnutChartNamespaceBase" Products="wpf,win-universal" Value="~Infragistics.Controls.Charts"/>
+        <Variable Name="DoughnutChartName"          Products="wpf,win-universal" Value="XamDoughnutChart"/>
+        <Variable Name="DoughnutChartBase"          Products="wpf,win-universal" Value="XamDoughnutChart"/>
+        <Variable Name="DoughnutChartAssembly"      Products="xamarin" Value="Controls.Charts"/>
+        <Variable Name="DoughnutChartNamespace"     Products="xamarin" Value="~Infragistics.XF.Controls"/>
+        <Variable Name="DoughnutChartNamespaceBase" Products="xamarin" Value="~Infragistics.XF"/>
+        <Variable Name="DoughnutChartName"          Products="xamarin" Value="XFDoughnutChart"/>
+        <Variable Name="DoughnutChartBase"          Products="xamarin" Value="ViewBase"/>
+        <Variable Name="DoughnutChartAssembly"      Products="win-forms" Value="Win.DataVisualization.UltraDataChart"/>
+        <Variable Name="DoughnutChartNamespace"     Products="win-forms" Value="~Infragistics.Win.DataVisualization"/>
+        <Variable Name="DoughnutChartNamespaceBase" Products="win-forms" Value="~Infragistics.Win.DataVisualization"/>
+        <Variable Name="DoughnutChartName"          Products="win-forms" Value="UltraDoughnutChart"/>
+        <Variable Name="DoughnutChartBase"          Products="win-forms" Value="SeriesViewer"/>
+        <Variable Name="DoughnutChartAssembly"      Products="android" Value="DataChart"/>
+        <Variable Name="DoughnutChartAssemblyBase"	Products="android" Value="DataChart"/>
+        <Variable Name="DoughnutChartNamespace"     Products="android" Value="~com.infragistics.controls"/>
+        <Variable Name="DoughnutChartNamespaceBase" Products="android" Value="~com.infragistics.controls"/>
+        <Variable Name="DoughnutChartName"          Products="android" Value="DoughnutChartView"/>
+        <Variable Name="DoughnutChartBase"          Products="android" Value="View"/>
+        <Variable Name="DoughnutChartAssemblyBase"  Products="jquery"  Value="igDoughnutChart"/> 
+        <Variable Name="DoughnutChartAssembly"      Products="jquery"  Value="igDoughnutChart"/>
+        <Variable Name="DoughnutChartName"      	Products="jquery"  Value="igDoughnutChart"/>
+        <Variable Name="DoughnutChartBase"      	Products="jquery"  Value="igBaseChart"/>
+        <Variable Name="DoughnutChartName"      	Products="ios"  Value="IGDoughnutChartView"/>
+        <!-- =========== Surface Chart ================================================================================================================= -->
+        <Variable Name="SurfaceChartLink"           Products="all" Value="{ApiPlatform}{SurfaceChartAssembly}{ApiVersion}{SurfaceChartNamespace}"/>
+        <Variable Name="SurfaceChartLinkBase"       Products="all" Value="{ApiPlatform}{SurfaceChartAssemblyBase}{ApiVersion}{SurfaceChartNamespaceBase}"/>
+        <Variable Name="SurfaceChartAssembly"       Products="wpf,win-universal" Value="Controls.Charts.XamSurfaceChart3D"/>
+        <Variable Name="SurfaceChartAssemblyBase"   Products="wpf,win-universal" Value="Controls.Charts.XamSurfaceChart3D"/>
+        <Variable Name="SurfaceChartNamespace"      Products="wpf,win-universal" Value="~Infragistics.Controls.Charts"/>
+        <Variable Name="SurfaceChartNamespaceBase"  Products="wpf,win-universal" Value="~Infragistics.Controls.Charts"/>
+        <Variable Name="SurfaceChartName"           Products="wpf,win-universal" Value="XamScatterSurface3D"/>
+        <Variable Name="SurfaceChartBase"           Products="wpf,win-universal" Value="XamChart3D"/>
+        <Variable Name="SurfaceChartName"      	    Products="jquery"  Value="igSurfaceChart"/>
+        <Variable Name="SurfaceChartBase"      	    Products="jquery"  Value="igSurfaceChart"/>
+        <Variable Name="SurfaceChartName"      	    Products="ios"  Value="IGSurfaceChartView"/>
+        <!-- =========== Surface Chart ================================================================================================================= -->
+        <Variable Name="SparklineLink"              Products="all" Value="{ApiPlatform}{SparklineAssembly}{ApiVersion}{SparklineNamespace}"/>
+        <Variable Name="SparklineLinkBase"          Products="all" Value="{ApiPlatform}{SparklineAssemblyBase}{ApiVersion}{SparklineNamespaceBase}"/>
+        <Variable Name="SparklineAssembly"          Products="wpf,win-universal" Value="Controls.Charts.XamSparkline"/>
+        <Variable Name="SparklineAssemblyBase"      Products="wpf,win-universal" Value="Controls.Charts.XamSparkline"/>
+        <Variable Name="SparklineNamespace"         Products="wpf,win-universal" Value="~Infragistics.Controls.Charts"/>
+        <Variable Name="SparklineNamespaceBase"     Products="wpf,win-universal" Value="~Infragistics.Controls.Charts"/>
+        <Variable Name="SparklineName"              Products="wpf,win-universal" Value="XamSparkline"/>
+        <Variable Name="SparklineBase"              Products="wpf,win-universal" Value="XamSparkline"/>
+        <Variable Name="SparklineName"      	    Products="jquery"  Value="igSparkline"/>
+        <Variable Name="SparklineBase"      	    Products="jquery"  Value="igSparkline"/>
+        <Variable Name="SparklineName"      	    Products="ios"  Value="IGSparklineView"/>
+        <!-- =========== Overview Plus Detail Pane ================================================================================================================= -->
+        <Variable Name="OpdLink"                Products="wpf,win-universal" Value="{ApiPlatform}{OpdAssembly}{ApiVersion}{OpdNamespace}"/>
+        <Variable Name="OpdAssembly"            Products="wpf,win-universal" Value="DataVisualization"/>
+        <Variable Name="OpdNamespace"           Products="wpf,win-universal" Value="~Infragistics.Controls"/>
+        <Variable Name="OpdName"                Products="wpf,win-universal" Value="XamOverviewPlusDetailPane"/>
+        <!-- =========== Dock ================================================================================================================= -->
+        <Variable Name="DockLink"               Products="wpf,win-universal" Value="{ApiPlatform}{DockAssembly}{ApiVersion}{DockNamespace}"/>
+        <Variable Name="DockAssembly"           Products="wpf,win-universal" Value="DataVisualization"/>
+        <Variable Name="DockNamespace"          Products="wpf,win-universal" Value="~Infragistics.Controls"/>
+        <Variable Name="DockName"               Products="wpf,win-universal" Value="XamDock"/>
+        <!-- =========== Zoombar ================================================================================================================= -->
+        <Variable Name="ZoombarLink"            Products="wpf,win-universal" Value="{ApiPlatform}{ZoombarAssembly}{ApiVersion}{ZoombarNamespace}"/>
+        <Variable Name="ZoombarAssembly"        Products="wpf,win-universal" Value="DataVisualization"/>
+        <Variable Name="ZoombarNamespace"       Products="wpf,win-universal" Value="~Infragistics.Controls"/>
+        <Variable Name="ZoombarName"            Products="wpf,win-universal" Value="XamZoombar"/>
+        <Variable Name="ZoombarName"      	    Products="jquery"            Value="igZoombar"/>
+        <Variable Name="ZoombarName"      	    Products="ios"            Value="IGZoombarView"/>
+        <!-- =========== DataViz ================================================================================================================= -->
+        <Variable Name="DataVizLink"            Products="wpf,win-universal" Value="{ApiPlatform}{DataVizAssembly}{ApiVersion}{DataVizNamespace}"/>
+        <Variable Name="DataVizAssembly"        Products="wpf,win-universal" Value="DataVisualization"/>
+        <Variable Name="DataVizNamespace"       Products="wpf,win-universal" Value="~Infragistics.Controls"/>
+		<!-- =========== Legend for most Chart Series ================================================================================================================= -->
+        <Variable Name="LegendLink"          	Products="all" Value="{ApiPlatform}{LegendAssembly}{ApiVersion}{LegendNamespace}"/>
+        <Variable Name="LegendLinkBase"      	Products="all" Value="{ApiPlatform}{LegendAssemblyBase}{ApiVersion}{LegendNamespaceBase}"/>
+        <Variable Name="LegendAssembly"      	Products="wpf,win-universal" Value="Controls.Charts.XamDataChart"/>
+        <Variable Name="LegendAssemblyBase"		Products="wpf,win-universal" Value="Controls.Charts.XamDataChart"/>
+        <Variable Name="LegendNamespace"     	Products="wpf,win-universal" Value="~Infragistics.Controls.Charts"/>
+        <Variable Name="LegendNamespaceBase" 	Products="wpf,win-universal" Value="~Infragistics.Controls.Charts"/>
+        <Variable Name="LegendName"          	Products="wpf,win-universal" Value="XamLegend"/>
+        <Variable Name="LegendBase"          	Products="wpf,win-universal" Value="LegendBase"/>
+        <Variable Name="LegendAssembly"      	Products="xamarin" Value="Controls.Charts"/>
+        <Variable Name="LegendAssemblyBase"		Products="xamarin" Value="Controls.Charts"/>
+        <Variable Name="LegendNamespace"     	Products="xamarin" Value="~Infragistics.XF.Controls"/>
+        <Variable Name="LegendNamespaceBase" 	Products="xamarin" Value="~Infragistics.XF.Controls"/>
+        <Variable Name="LegendName"          	Products="xamarin" Value="XFLegend"/>
+        <Variable Name="LegendBase"          	Products="xamarin" Value="LegendBase"/>
+        <Variable Name="LegendAssembly"      	Products="win-forms" Value="Win.DataVisualization.UltraDataChart"/>
+        <Variable Name="LegendAssemblyBase"		Products="win-forms" Value="Win.DataVisualization.UltraDataChart"/>
+        <Variable Name="LegendNamespace"     	Products="win-forms" Value="~Infragistics.Win.DataVisualization"/>
+        <Variable Name="LegendNamespaceBase" 	Products="win-forms" Value="~Infragistics.Win.DataVisualization"/>
+        <Variable Name="LegendName"          	Products="win-forms" Value="UltraLegend"/>
+        <Variable Name="LegendBase"          	Products="win-forms" Value="LegendBase"/>
+        <Variable Name="LegendAssembly"      	Products="android" Value="DataChart"/>
+        <Variable Name="LegendAssemblyBase"		Products="android" Value="DataChart"/>
+        <Variable Name="LegendNamespace"     	Products="android" Value="~com.infragistics.controls"/>
+        <Variable Name="LegendNamespaceBase" 	Products="android" Value="~com.infragistics.controls"/>
+        <Variable Name="LegendName"          	Products="android" Value="LegendView"/>
+        <Variable Name="LegendBase"          	Products="android" Value="LegendBaseView"/>
+        <Variable Name="LegendName"      	    Products="jquery"  Value="igChartLegend"/>
+        <Variable Name="LegendBase"      	    Products="jquery"  Value="igChartLegend"/>
+        <Variable Name="LegendName"      	    Products="ios"  Value="IGChartLegendView"/>
+		<!-- =========== Item Legend for most Chart Series ================================================================================================================= -->
+        <Variable Name="ItemLegendLink"          	Products="all" Value="{ApiPlatform}{ItemLegendAssembly}{ApiVersion}{ItemLegendNamespace}"/>
+        <Variable Name="ItemLegendLinkBase"      	Products="all" Value="{ApiPlatform}{ItemLegendAssemblyBase}{ApiVersion}{ItemLegendNamespaceBase}"/>
+        <Variable Name="ItemLegendAssembly"      	Products="wpf,win-universal" Value="Controls.Charts.XamDataChart"/>
+        <Variable Name="ItemLegendAssemblyBase"		Products="wpf,win-universal" Value="Controls.Charts.XamDataChart"/>
+        <Variable Name="ItemLegendNamespace"     	Products="wpf,win-universal" Value="~Infragistics.Controls.Charts"/>
+        <Variable Name="ItemLegendNamespaceBase" 	Products="wpf,win-universal" Value="~Infragistics.Controls.Charts"/>
+        <Variable Name="ItemLegendName"          	Products="wpf,win-universal" Value="XamItemLegend"/>
+        <Variable Name="ItemLegendBase"          	Products="wpf,win-universal" Value="LegendBase"/>
+        <Variable Name="ItemLegendAssembly"      	Products="xamarin" Value="Controls.Charts"/>
+        <Variable Name="ItemLegendAssemblyBase"		Products="xamarin" Value="Controls.Charts"/>
+        <Variable Name="ItemLegendNamespace"     	Products="xamarin" Value="~Infragistics.XF.Controls"/>
+        <Variable Name="ItemLegendNamespaceBase" 	Products="xamarin" Value="~Infragistics.XF.Controls"/>
+        <Variable Name="ItemLegendName"          	Products="xamarin" Value="XFItemLegend"/>
+        <Variable Name="ItemLegendBase"          	Products="xamarin" Value="LegendBase"/>
+        <Variable Name="ItemLegendAssembly"      	Products="win-forms" Value="Win.DataVisualization.UltraDataChart"/>
+        <Variable Name="ItemLegendAssemblyBase"		Products="win-forms" Value="Win.DataVisualization.UltraDataChart"/>
+        <Variable Name="ItemLegendNamespace"     	Products="win-forms" Value="~Infragistics.Win.DataVisualization"/>
+        <Variable Name="ItemLegendNamespaceBase" 	Products="win-forms" Value="~Infragistics.Win.DataVisualization"/>
+        <Variable Name="ItemLegendName"          	Products="win-forms" Value="UltraItemLegend"/>
+        <Variable Name="ItemLegendBase"          	Products="win-forms" Value="LegendBase"/>
+        <Variable Name="ItemLegendAssembly"      	Products="android" Value="DataChart"/>
+        <Variable Name="ItemLegendAssemblyBase"		Products="android" Value="DataChart"/>
+        <Variable Name="ItemLegendNamespace"     	Products="android" Value="~com.infragistics.controls"/>
+        <Variable Name="ItemLegendNamespaceBase" 	Products="android" Value="~com.infragistics.controls"/>
+        <Variable Name="ItemLegendName"          	Products="android" Value="ItemLegendView"/>
+        <Variable Name="ItemLegendBase"          	Products="android" Value="LegendBaseView"/>
+        <Variable Name="ItemLegendName"      	    Products="jquery"  Value="igItemLegend"/>
+        <Variable Name="ItemLegendBase"      	    Products="jquery"  Value="igItemLegend"/>
+        <Variable Name="ItemLegendName"      	    Products="ios"  Value="IGItemLegendView"/>
+		<!-- =========== Scale Legend for Bubble Series ================================================================================================================= -->
+        <Variable Name="ScaleLegendLink"          	Products="all" Value="{ApiPlatform}{ScaleLegendAssembly}{ApiVersion}{ScaleLegendNamespace}"/>
+        <Variable Name="ScaleLegendLinkBase"      	Products="all" Value="{ApiPlatform}{ScaleLegendAssemblyBase}{ApiVersion}{ScaleLegendNamespaceBase}"/>
+        <Variable Name="ScaleLegendAssembly"      	Products="wpf,win-universal" Value="Controls.Charts.XamDataChart"/>
+        <Variable Name="ScaleLegendAssemblyBase"	Products="wpf,win-universal" Value="Controls.Charts.XamDataChart"/>
+        <Variable Name="ScaleLegendNamespace"     	Products="wpf,win-universal" Value="~Infragistics.Controls.Charts"/>
+        <Variable Name="ScaleLegendNamespaceBase" 	Products="wpf,win-universal" Value="~Infragistics.Controls.Charts"/>
+        <Variable Name="ScaleLegendName"          	Products="wpf,win-universal" Value="XamScaleLegend"/>
+        <Variable Name="ScaleLegendBase"          	Products="wpf,win-universal" Value="LegendBase"/>
+        <Variable Name="ScaleLegendAssembly"      	Products="xamarin" Value="Controls.Charts"/>
+        <Variable Name="ScaleLegendAssemblyBase"	Products="xamarin" Value="Controls.Charts"/>
+        <Variable Name="ScaleLegendNamespace"     	Products="xamarin" Value="~Infragistics.XF.Controls"/>
+        <Variable Name="ScaleLegendNamespaceBase" 	Products="xamarin" Value="~Infragistics.XF.Controls"/>
+        <Variable Name="ScaleLegendName"          	Products="xamarin" Value="XFScaleLegend"/>
+        <Variable Name="ScaleLegendBase"          	Products="xamarin" Value="LegendBase"/>
+        <Variable Name="ScaleLegendAssembly"      	Products="win-forms" Value="Win.DataVisualization.UltraDataChart"/>
+        <Variable Name="ScaleLegendAssemblyBase"	Products="win-forms" Value="Win.DataVisualization.UltraDataChart"/>
+        <Variable Name="ScaleLegendNamespace"     	Products="win-forms" Value="~Infragistics.Win.DataVisualization"/>
+        <Variable Name="ScaleLegendNamespaceBase" 	Products="win-forms" Value="~Infragistics.Win.DataVisualization"/>
+        <Variable Name="ScaleLegendName"          	Products="win-forms" Value="UltraScaleLegend"/>
+        <Variable Name="ScaleLegendBase"          	Products="win-forms" Value="LegendBase"/>
+        <Variable Name="ScaleLegendAssembly"      	Products="android" Value="DataChart"/>
+        <Variable Name="ScaleLegendAssemblyBase"	Products="android" Value="DataChart"/>
+        <Variable Name="ScaleLegendNamespace"     	Products="android" Value="~com.infragistics.controls"/>
+        <Variable Name="ScaleLegendNamespaceBase" 	Products="android" Value="~com.infragistics.controls"/>
+        <Variable Name="ScaleLegendName"          	Products="android" Value="ScaleLegendView"/>
+        <Variable Name="ScaleLegendBase"          	Products="android" Value="LegendBaseView"/>
+        <Variable Name="ScaleLegendName"      	    Products="jquery"  Value="igScaleLegend"/>
+        <Variable Name="ScaleLegendBase"      	    Products="jquery"  Value="igScaleLegend"/>
+        <Variable Name="ScaleLegendName"      	    Products="ios"  Value="IGScaleLegendView"/>
+		<!-- =========== Bullet Graph ================================================================================================================= -->
+        <Variable Name="BulletGraphLink"          	Products="all" Value="{ApiPlatform}{BulletGraphAssembly}{ApiVersion}{BulletGraphNamespace}"/>
+        <Variable Name="BulletGraphLinkBase"      	Products="all" Value="{ApiPlatform}{BulletGraphAssemblyBase}{ApiVersion}{BulletGraphNamespaceBase}"/>
+        <Variable Name="BulletGraphAssembly"      	Products="wpf,win-universal" Value="Controls.Gauges"/>
+        <Variable Name="BulletGraphAssemblyBase"	Products="wpf,win-universal" Value="Controls.Gauges"/>
+        <Variable Name="BulletGraphNamespace"     	Products="wpf,win-universal" Value="~Infragistics.Controls.Gauges"/>
+        <Variable Name="BulletGraphNamespaceBase" 	Products="wpf,win-universal" Value="~Infragistics.Controls.Gauges"/>
+        <Variable Name="BulletGraphName"          	Products="wpf,win-universal" Value="XamBulletGraph"/>
+        <Variable Name="BulletGraphBase"          	Products="wpf,win-universal" Value="XamBulletGraph"/>
+        <Variable Name="BulletGraphRange"          	Products="wpf,win-universal" Value="XamLinearGraphRange"/>
+        <Variable Name="BulletGraphAssembly"      	Products="xamarin" Value="Controls.Gauges"/>
+        <Variable Name="BulletGraphAssemblyBase"	Products="xamarin" Value="Controls.Gauges"/>
+        <Variable Name="BulletGraphNamespace"     	Products="xamarin" Value="~Infragistics.XF.Controls"/>
+        <Variable Name="BulletGraphNamespaceBase" 	Products="xamarin" Value="~Infragistics.XF.Controls"/>
+        <Variable Name="BulletGraphName"          	Products="xamarin" Value="XFBulletGraph"/>
+        <Variable Name="BulletGraphBase"          	Products="xamarin" Value="ViewBase"/>
+        <Variable Name="BulletGraphRange"          	Products="xamarin" Value="LinearGraphRange"/>
+        <Variable Name="BulletGraphAssembly"      	Products="win-forms" Value="Win.DataVisualization.Gauge"/>
+        <Variable Name="BulletGraphAssemblyBase"	Products="win-forms" Value="Win.DataVisualization.Shared"/>
+        <Variable Name="BulletGraphNamespace"     	Products="win-forms" Value="~Infragistics.Win.DataVisualization"/>
+        <Variable Name="BulletGraphNamespaceBase" 	Products="win-forms" Value="~Infragistics.Win.DataVisualization"/>
+        <Variable Name="BulletGraphName"          	Products="win-forms" Value="UltraBulletGraph"/>
+        <Variable Name="BulletGraphBase"          	Products="win-forms" Value="DVBaseControl"/>
+        <Variable Name="BulletGraphRange"          	Products="win-forms" Value="LinearGraphRange"/>
+        <Variable Name="BulletGraphAssembly"      	Products="android" Value="Gauge"/>
+        <Variable Name="BulletGraphAssemblyBase"	Products="android" Value="Gauge"/>
+        <Variable Name="BulletGraphNamespace"     	Products="android" Value="~com.infragistics.controls"/>
+        <Variable Name="BulletGraphNamespaceBase" 	Products="android" Value="~com.infragistics.controls"/>
+        <Variable Name="BulletGraphName"          	Products="android" Value="BulletGraphView"/>
+        <Variable Name="BulletGraphBase"          	Products="android" Value="BulletGraphView"/>
+        <Variable Name="BulletGraphRange"          	Products="android" Value="LinearGraphRange"/>   <!--not a mistake-->
+        <Variable Name="BulletGraphName"      	    Products="jquery"  Value="igBulletGraph"/>
+        <Variable Name="BulletGraphBase"      	    Products="jquery"  Value="igBulletGraph"/>
+        <Variable Name="BulletGraphRange"          	Products="jquery"  Value="ranges"/>
+        <Variable Name="BulletGraphBase"      	    Products="ios"  Value="IGBulletGraphView"/>
+		<!-- =========== Linear Gauge ================================================================================================================= -->
+        <Variable Name="LinearGuageLink"          	Products="all" Value="{ApiPlatform}{LinearGuageAssembly}{ApiVersion}{LinearGuageNamespace}"/>
+        <Variable Name="LinearGuageLinkBase"      	Products="all" Value="{ApiPlatform}{LinearGuageAssemblyBase}{ApiVersion}{LinearGuageNamespaceBase}"/>
+        <Variable Name="LinearGuageAssembly"      	Products="wpf,win-universal" Value="Controls.Gauges"/>
+        <Variable Name="LinearGuageAssemblyBase"	Products="wpf,win-universal" Value="Controls.Gauges"/>
+        <Variable Name="LinearGuageNamespace"     	Products="wpf,win-universal" Value="~Infragistics.Controls.Gauges"/>
+        <Variable Name="LinearGuageNamespaceBase" 	Products="wpf,win-universal" Value="~Infragistics.Controls.Gauges"/>
+        <Variable Name="LinearGuageName"          	Products="wpf,win-universal" Value="XamLinearGuage"/>
+        <Variable Name="LinearGuageBase"          	Products="wpf,win-universal" Value="XamLinearGuage"/>
+        <Variable Name="LinearGuageRange"          	Products="wpf,win-universal" Value="XamLinearGraphRange"/>
+        <Variable Name="LinearGuageAssembly"      	Products="xamarin" Value="Controls.Gauges"/>
+        <Variable Name="LinearGuageAssemblyBase"	Products="xamarin" Value="Controls.Gauges"/>
+        <Variable Name="LinearGuageNamespace"     	Products="xamarin" Value="~Infragistics.XF.Controls"/>
+        <Variable Name="LinearGuageNamespaceBase" 	Products="xamarin" Value="~Infragistics.XF.Controls"/>
+        <Variable Name="LinearGuageName"          	Products="xamarin" Value="XFLinearGuage"/>
+        <Variable Name="LinearGuageBase"          	Products="xamarin" Value="ViewBase"/>
+        <Variable Name="LinearGuageRange"          	Products="xamarin" Value="LinearGraphRange"/>
+        <Variable Name="LinearGuageAssembly"      	Products="win-forms" Value="Win.DataVisualization.Gauge"/>
+        <Variable Name="LinearGuageAssemblyBase"	Products="win-forms" Value="Win.DataVisualization.Shared"/>
+        <Variable Name="LinearGuageNamespace"     	Products="win-forms" Value="~Infragistics.Win.DataVisualization"/>
+        <Variable Name="LinearGuageNamespaceBase" 	Products="win-forms" Value="~Infragistics.Win.DataVisualization"/>
+        <Variable Name="LinearGuageName"          	Products="win-forms" Value="UltraLinearGuage"/>
+        <Variable Name="LinearGuageBase"          	Products="win-forms" Value="DVBaseControl"/>
+        <Variable Name="LinearGuageRange"          	Products="win-forms" Value="LinearGraphRange"/>
+        <Variable Name="LinearGuageAssembly"      	Products="android" Value="Gauge"/>
+        <Variable Name="LinearGuageAssemblyBase"	Products="android" Value="Gauge"/>
+        <Variable Name="LinearGuageNamespace"     	Products="android" Value="~com.infragistics.controls"/>
+        <Variable Name="LinearGuageNamespaceBase" 	Products="android" Value="~com.infragistics.controls"/>
+        <Variable Name="LinearGuageName"          	Products="android" Value="LinearGuageView"/>
+        <Variable Name="LinearGuageBase"          	Products="android" Value="LinearGuageView"/>
+        <Variable Name="LinearGuageRange"          	Products="android" Value="LinearGraphRange"/>  
+        <Variable Name="LinearGuageName"      	    Products="jquery"  Value="igLinearGuage"/>
+        <Variable Name="LinearGuageBase"      	    Products="jquery"  Value="igLinearGuage"/>
+        <Variable Name="LinearGuageRange"          	Products="jquery"  Value="ranges"/>
+        <Variable Name="LinearGuageName"      	    Products="ios"  Value="IGLinearGuageView"/>
+		<!-- =========== Radial Gauge ================================================================================================================= -->
+        <Variable Name="RadialGuageLink"          	Products="all" Value="{ApiPlatform}{RadialGuageAssembly}{ApiVersion}{RadialGuageNamespace}"/>
+        <Variable Name="RadialGuageLinkBase"      	Products="all" Value="{ApiPlatform}{RadialGuageAssemblyBase}{ApiVersion}{RadialGuageNamespaceBase}"/>
+        <Variable Name="RadialGuageAssembly"      	Products="wpf,win-universal" Value="Controls.Gauges"/>
+        <Variable Name="RadialGuageAssemblyBase"	Products="wpf,win-universal" Value="Controls.Gauges"/>
+        <Variable Name="RadialGuageNamespace"     	Products="wpf,win-universal" Value="~Infragistics.Controls.Gauges"/>
+        <Variable Name="RadialGuageNamespaceBase" 	Products="wpf,win-universal" Value="~Infragistics.Controls.Gauges"/>
+        <Variable Name="RadialGuageName"          	Products="wpf,win-universal" Value="XamRadialGuage"/>
+        <Variable Name="RadialGuageBase"          	Products="wpf,win-universal" Value="XamRadialGuage"/>
+        <Variable Name="RadialGuageRange"          	Products="wpf,win-universal" Value="XamRadialGaugeRange"/>
+        <Variable Name="RadialGuageAssembly"      	Products="xamarin" Value="Controls.Gauges"/>
+        <Variable Name="RadialGuageAssemblyBase"	Products="xamarin" Value="Controls.Gauges"/>
+        <Variable Name="RadialGuageNamespace"     	Products="xamarin" Value="~Infragistics.XF.Controls"/>
+        <Variable Name="RadialGuageNamespaceBase" 	Products="xamarin" Value="~Infragistics.XF.Controls"/>
+        <Variable Name="RadialGuageName"          	Products="xamarin" Value="XFRadialGuage"/>
+        <Variable Name="RadialGuageBase"          	Products="xamarin" Value="ViewBase"/>
+        <Variable Name="RadialGuageRange"          	Products="xamarin" Value="RadialGaugeRange"/>
+        <Variable Name="RadialGuageAssembly"      	Products="win-forms" Value="Win.DataVisualization.Gauge"/>
+        <Variable Name="RadialGuageAssemblyBase"	Products="win-forms" Value="Win.DataVisualization.Shared"/>
+        <Variable Name="RadialGuageNamespace"     	Products="win-forms" Value="~Infragistics.Win.DataVisualization"/>
+        <Variable Name="RadialGuageNamespaceBase" 	Products="win-forms" Value="~Infragistics.Win.DataVisualization"/>
+        <Variable Name="RadialGuageName"          	Products="win-forms" Value="UltraRadialGuage"/>
+        <Variable Name="RadialGuageBase"          	Products="win-forms" Value="DVBaseControl"/>
+        <Variable Name="RadialGuageRange"          	Products="win-forms" Value="RadialGaugeRange"/>
+        <Variable Name="RadialGuageAssembly"      	Products="android" Value="Gauge"/>
+        <Variable Name="RadialGuageAssemblyBase"	Products="android" Value="Gauge"/>
+        <Variable Name="RadialGuageNamespace"     	Products="android" Value="~com.infragistics.controls"/>
+        <Variable Name="RadialGuageNamespaceBase" 	Products="android" Value="~com.infragistics.controls"/>
+        <Variable Name="RadialGuageName"          	Products="android" Value="RadialGuageView"/>
+        <Variable Name="RadialGuageBase"          	Products="android" Value="RadialGuageView"/>
+        <Variable Name="RadialGuageRange"          	Products="android" Value="RadialGaugeRange"/>   
+        <Variable Name="RadialGuageName"      	    Products="jquery"  Value="igRadialGuage"/>
+        <Variable Name="RadialGuageBase"      	    Products="jquery"  Value="igRadialGuage"/>
+        <Variable Name="RadialGuageRange"          	Products="jquery"  Value="ranges"/>
+        <Variable Name="RadialGuageName"      	    Products="ios"  Value="IGRadialGuageView"/>
+		<!-- =========== Barcode 128 ================================================================================================================= -->
+        <Variable Name="Barcode128Link"          	Products="all" Value="{ApiPlatform}{Barcode128Assembly}{ApiVersion}{Barcode128Namespace}"/>
+        <Variable Name="Barcode128LinkBase"      	Products="all" Value="{ApiPlatform}{Barcode128AssemblyBase}{ApiVersion}{Barcode128NamespaceBase}"/>
+        <Variable Name="Barcode128Assembly"      	Products="wpf,win-universal" Value="Controls.Barcodes"/>
+        <Variable Name="Barcode128AssemblyBase"		Products="wpf,win-universal" Value="Controls.Barcodes"/>
+        <Variable Name="Barcode128Namespace"     	Products="wpf,win-universal" Value="~Infragistics.Controls.Barcodes"/>
+        <Variable Name="Barcode128NamespaceBase" 	Products="wpf,win-universal" Value="~Infragistics.Controls.Barcodes"/>
+        <Variable Name="Barcode128Name"          	Products="wpf,win-universal" Value="XamCode128Barcode"/>
+        <Variable Name="Barcode128Base"          	Products="wpf,win-universal" Value="XamBarcode"/>
+        <Variable Name="Barcode128Assembly"      	Products="xamarin" Value="Controls.Barcodes"/>
+		<Variable Name="Barcode128AssemblyBase"		Products="xamarin" Value="Controls.Barcodes"/>
+        <Variable Name="Barcode128Namespace"     	Products="xamarin" Value="~Infragistics.XF.Controls"/>
+        <Variable Name="Barcode128NamespaceBase" 	Products="xamarin" Value="~Infragistics.XF.Controls"/>
+        <Variable Name="Barcode128Name"          	Products="xamarin" Value="XFBarcode128"/>
+        <Variable Name="Barcode128Base"          	Products="xamarin" Value="Barcode"/>
+        <Variable Name="Barcode128Assembly"      	Products="win-forms" Value="Win.DataVisualization.UltraBarcode"/>
+        <Variable Name="Barcode128AssemblyBase"		Products="win-forms" Value="Win.DataVisualization.UltraBarcode"/>
+        <Variable Name="Barcode128Namespace"     	Products="win-forms" Value="~Infragistics.Win.DataVisualization"/>
+        <Variable Name="Barcode128NamespaceBase" 	Products="win-forms" Value="~Infragistics.Win.DataVisualization"/>
+        <Variable Name="Barcode128Name"          	Products="win-forms" Value="UltraCode128Barcode"/>
+        <Variable Name="Barcode128Base"          	Products="win-forms" Value="UltraBarcode"/>
+        <Variable Name="Barcode128Assembly"      	Products="android" Value="Barcode"/>
+        <Variable Name="Barcode128AssemblyBase"		Products="android" Value="Barcode"/>
+        <Variable Name="Barcode128Namespace"     	Products="android" Value="~com.infragistics.controls"/>
+        <Variable Name="Barcode128NamespaceBase" 	Products="android" Value="~com.infragistics.controls"/>
+        <Variable Name="Barcode128Name"          	Products="android" Value="Code128BarcodeView"/>
+        <Variable Name="Barcode128Base"          	Products="android" Value="BarcodeView"/>
+        <Variable Name="Barcode128Name"          	Products="ios" Value="IGBarcodeView"/>
+		<!-- =========== Barcode QR ================================================================================================================= -->
+        <Variable Name="BarcodeQRLink"          	Products="all" Value="{ApiPlatform}{BarcodeQRAssembly}{ApiVersion}{BarcodeQRNamespace}"/>
+        <Variable Name="BarcodeQRLinkBase"      	Products="all" Value="{ApiPlatform}{BarcodeQRAssemblyBase}{ApiVersion}{BarcodeQRNamespaceBase}"/>
+        <Variable Name="BarcodeQRAssembly"      	Products="wpf,win-universal" Value="Controls.Barcodes"/>
+        <Variable Name="BarcodeQRAssemblyBase"		Products="wpf,win-universal" Value="Controls.Barcodes"/>
+        <Variable Name="BarcodeQRNamespace"     	Products="wpf,win-universal" Value="~Infragistics.Controls.Barcodes"/>
+        <Variable Name="BarcodeQRNamespaceBase" 	Products="wpf,win-universal" Value="~Infragistics.Controls.Barcodes"/>
+        <Variable Name="BarcodeQRName"          	Products="wpf,win-universal" Value="XamQRCodeBarcode"/>
+        <Variable Name="BarcodeQRBase"          	Products="wpf,win-universal" Value="XamBarcode"/>
+        <Variable Name="BarcodeQRAssembly"      	Products="xamarin" Value="Controls.Barcodes"/>
+		<Variable Name="BarcodeQRAssemblyBase"		Products="xamarin" Value="Controls.Barcodes"/>
+        <Variable Name="BarcodeQRNamespace"     	Products="xamarin" Value="~Infragistics.XF.Controls"/>
+        <Variable Name="BarcodeQRNamespaceBase" 	Products="xamarin" Value="~Infragistics.XF.Controls"/>
+        <Variable Name="BarcodeQRName"          	Products="xamarin" Value="QRCodeBarcode"/>
+        <Variable Name="BarcodeQRBase"          	Products="xamarin" Value="Barcode"/>
+        <Variable Name="BarcodeQRAssembly"      	Products="win-forms" Value="Win.DataVisualization.UltraBarcode"/>
+        <Variable Name="BarcodeQRAssemblyBase"		Products="win-forms" Value="Win.DataVisualization.UltraBarcode"/>
+        <Variable Name="BarcodeQRNamespace"     	Products="win-forms" Value="~Infragistics.Win.DataVisualization"/>
+        <Variable Name="BarcodeQRNamespaceBase" 	Products="win-forms" Value="~Infragistics.Win.DataVisualization"/>
+        <Variable Name="BarcodeQRName"          	Products="win-forms" Value="UltraQRCodeBarcode"/>
+        <Variable Name="BarcodeQRBase"          	Products="win-forms" Value="UltraBarcode"/>
+        <Variable Name="BarcodeQRAssembly"      	Products="android" Value="Barcode"/>
+        <Variable Name="BarcodeQRAssemblyBase"		Products="android" Value="Barcode"/>
+        <Variable Name="BarcodeQRNamespace"     	Products="android" Value="~com.infragistics.controls"/>
+        <Variable Name="BarcodeQRNamespaceBase" 	Products="android" Value="~com.infragistics.controls"/>
+        <Variable Name="BarcodeQRName"          	Products="android" Value="QRCodeBarcodeView"/>
+        <Variable Name="BarcodeQRBase"          	Products="android" Value="BarcodeView"/>
+        <Variable Name="BarcodeQRName"          	Products="ios" Value="IGBarcodeView"/>
+		<!-- =========== Data Grid ================================================================================================================= -->
+        <Variable Name="DataGridLink"          	Products="all" Value="{ApiPlatform}{DataGridAssembly}{ApiVersion}{DataGridNamespace}"/>
+        <Variable Name="DataGridLinkBase"      	Products="all" Value="{ApiPlatform}{DataGridAssemblyBase}{ApiVersion}{DataGridNamespaceBase}"/>
+        <Variable Name="DataGridAssembly"      	Products="wpf,win-universal" Value="Controls.Grids.XamDataGrid"/>
+        <Variable Name="DataGridAssemblyBase"	Products="wpf,win-universal" Value="Controls.Grids.XamDataGrid"/>
+        <Variable Name="DataGridNamespace"     	Products="wpf,win-universal" Value="~Infragistics.Controls"/>
+        <Variable Name="DataGridNamespaceBase" 	Products="wpf,win-universal" Value="~Infragistics.Controls"/>
+        <Variable Name="DataGridName"          	Products="wpf,win-universal" Value="XamDataGrid"/>
+        <Variable Name="DataGridBase"          	Products="wpf,win-universal" Value="Control"/>
+        <Variable Name="DataGridAssembly"      	Products="xamarin" Value="Controls.Grids"/>
+		<Variable Name="DataGridAssemblyBase"	Products="xamarin" Value="Controls.Grids"/>
+        <Variable Name="DataGridNamespace"     	Products="xamarin" Value="~Infragistics.XF.Controls"/>
+        <Variable Name="DataGridNamespaceBase" 	Products="xamarin" Value="~Infragistics.XF.Controls"/>
+        <Variable Name="DataGridName"          	Products="xamarin" Value="XFDataGrid"/>
+        <Variable Name="DataGridBase"          	Products="xamarin" Value="ViewBase"/>
+        <Variable Name="DataGridAssembly"      	Products="win-forms" Value="Win.DataVisualization.UltraBarcode"/>
+        <Variable Name="DataGridAssemblyBase"	Products="win-forms" Value="Win.DataVisualization.UltraBarcode"/>
+        <Variable Name="DataGridNamespace"     	Products="win-forms" Value="~Infragistics.Win.DataVisualization"/>
+        <Variable Name="DataGridNamespaceBase" 	Products="win-forms" Value="~Infragistics.Win.DataVisualization"/>
+        <Variable Name="DataGridName"          	Products="win-forms" Value="UltraDataGrid"/>
+        <Variable Name="DataGridBase"          	Products="win-forms" Value="UltraBarcode"/>
+        <Variable Name="DataGridAssembly"      	Products="android" Value="DataGrid"/>
+        <Variable Name="DataGridAssemblyBase"	Products="android" Value="DataGrid"/>
+        <Variable Name="DataGridNamespace"     	Products="android" Value="~com.infragistics.controls"/>
+        <Variable Name="DataGridNamespaceBase" 	Products="android" Value="~com.infragistics.controls"/>
+        <Variable Name="DataGridName"          	Products="android" Value="DataGridView"/>
+        <Variable Name="DataGridBase"          	Products="android" Value="DataGridView"/>
+        <Variable Name="DataGridName"      	    Products="jquery"  Value="igDataGrid"/>
+        <Variable Name="DataGridBase"      	    Products="jquery"  Value="igDataGrid"/>
+        <Variable Name="DataGridName"          	Products="ios" Value="IGDataGridView"/>
+		<!-- =========== Spreadsheet ================================================================================================================= -->
+        <Variable Name="SpreadsheetLink"          	Products="all" Value="{ApiPlatform}{SpreadsheetAssembly}{ApiVersion}{SpreadsheetNamespace}"/>
+        <Variable Name="SpreadsheetLinkBase"      	Products="all" Value="{ApiPlatform}{SpreadsheetAssemblyBase}{ApiVersion}{SpreadsheetNamespaceBase}"/>
+        <Variable Name="SpreadsheetAssembly"      	Products="wpf,win-universal" Value="Controls.Grids.XamSpreadsheet"/>
+        <Variable Name="SpreadsheetAssemblyBase"	Products="wpf,win-universal" Value="PresentationFramework"/>
+        <Variable Name="SpreadsheetNamespace"     	Products="wpf,win-universal" Value="~Infragistics.Controls.Grids"/>
+        <Variable Name="SpreadsheetNamespaceBase" 	Products="wpf,win-universal" Value="~Infragistics.Controls.Grids"/>
+        <Variable Name="SpreadsheetName"          	Products="wpf,win-universal" Value="XamSpreadsheet"/>
+        <Variable Name="SpreadsheetBase"          	Products="wpf,win-universal" Value="XamSpreadsheet"/>
+        <Variable Name="SpreadsheetAssembly"      	Products="xamarin" Value="Controls.Grids"/>
+		<Variable Name="SpreadsheetAssemblyBase"	Products="xamarin" Value="Controls.Grids"/>
+        <Variable Name="SpreadsheetNamespace"     	Products="xamarin" Value="~Infragistics.XF.Controls"/>
+        <Variable Name="SpreadsheetNamespaceBase" 	Products="xamarin" Value="~Infragistics.XF.Controls"/>
+        <Variable Name="SpreadsheetName"          	Products="xamarin" Value="XFSpreadsheet"/>
+        <Variable Name="SpreadsheetBase"          	Products="xamarin" Value="XFSpreadsheet"/>
+        <Variable Name="SpreadsheetAssembly"      	Products="win-forms" Value="Win.UltraWinSpreadsheet"/>
+        <Variable Name="SpreadsheetAssemblyBase"	Products="win-forms" Value="Win"/>
+        <Variable Name="SpreadsheetNamespace"     	Products="win-forms" Value="~Infragistics.Win.UltraWinSpreadsheet"/>
+        <Variable Name="SpreadsheetNamespaceBase" 	Products="win-forms" Value="~Infragistics.Win"/>
+        <Variable Name="SpreadsheetName"          	Products="win-forms" Value="UltraSpreadsheet"/>
+        <Variable Name="SpreadsheetBase"          	Products="win-forms" Value="UltraControlBase"/>
+        <Variable Name="SpreadsheetAssembly"      	Products="android" Value="Spreadsheet"/>
+        <Variable Name="SpreadsheetAssemblyBase"	Products="android" Value="Spreadsheet"/>
+        <Variable Name="SpreadsheetNamespace"     	Products="android" Value="~com.infragistics.controls"/>
+        <Variable Name="SpreadsheetNamespaceBase" 	Products="android" Value="~com.infragistics.controls"/>
+        <Variable Name="SpreadsheetName"          	Products="android" Value="SpreadsheetView"/>
+        <Variable Name="SpreadsheetBase"          	Products="android" Value="SeriesViewerBaseView"/>  
+    </Variables>
+</Configuration>
