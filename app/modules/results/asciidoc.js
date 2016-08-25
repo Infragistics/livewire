@@ -58,7 +58,7 @@ var worker = getWorker();
 
 messenger.subscribe.file('basePathChanged', handlers.changeBasePath);
 messenger.subscribe.file('pathChanged', handlers.changeBasePath);
-messenger.subscribe.format('buildFlags', handlers.buildFlags);
+messenger.subscribe.metadata('productBuildFlagsChanged', handlers.buildFlags);
 
 var renderer = function(content, callback){
   if(content.length > 0){
