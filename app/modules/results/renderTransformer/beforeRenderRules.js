@@ -1,25 +1,56 @@
 module = module.exports;
 
+const path = require('path');
+const messenger = require(path.resolve(__dirname, '../../messenger'));
+
 module.productConfiguration = null;
 
 const rules = [
     {
+        description: 'add build flags',
+        apply: (source) => {
+            var buildFlags = [], flags = '';
+
+            if (module.productConfiguration &&
+                module.productConfiguration.products &&
+                module.productConfiguration.selectedProduct) {
+                buildFlags = module.productConfiguration.products[module.productConfiguration.selectedProduct].buildFlags;
+                messenger.publish.metadata('productBuildFlagsChanged', buildFlags);
+            } else {
+                messenger.publish.metadata('productBuildFlagsChanged', []);
+            }
+
+            if (buildFlags.length > 0) {
+                flags = `:${buildFlags.join(':\n:')}:\n\n`;
+            }
+
+            return flags + source;
+        }
+    },
+    {
         description: 'replace build variables',
         apply: (source) => {
-            var matches = source.match(/{(.*?)}/g);
+            var matches;
 
-            matches = Array.from(new Set(matches));
+            if (module.productConfiguration &&
+                module.productConfiguration.variables &&
+                module.productConfiguration.selectedProduct) {
+                matches = source.match(/{(.*?)}/g);
 
-            if(matches) {
-                matches.forEach((match) => {
-                    var key = match.replace(/\{|\}/g, '');
-                    var value = module.productConfiguration.variables[module.productConfiguration.selectedProduct][key]; 
-                    if(value) {
-                        var regex = new RegExp(match, 'g');
-                        source = source.replace(regex, value);
-                    }
-                });
+                matches = Array.from(new Set(matches));
+
+                if (matches) {
+                    matches.forEach((match) => {
+                        var key = match.replace(/\{|\}/g, '');
+                        var value = module.productConfiguration.variables[module.productConfiguration.selectedProduct][key];
+                        if (value) {
+                            var regex = new RegExp(match, 'g');
+                            source = source.replace(regex, value);
+                        }
+                    });
+                }
             }
+
             return source;
         }
     }

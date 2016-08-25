@@ -1,13 +1,17 @@
 module = module.exports;
 
-const fs = require('fs');
 const path = require('path');
+const messenger = require(path.resolve(__dirname, '../messenger'));
+const dialogs = require(path.resolve(__dirname, '../dialogs'));
+const fs = require('fs');
 const xml2js = require('xml2js');
 const parser = new xml2js.Parser({
     explicitArray: false
 });
 
-const configFilePath = path.resolve('../../../DocsConfig.xml');
+const configFilePath = path.resolve(__dirname, '../../data/docsConfig/');
+
+var _configuration = null;
 
 module.getXml = (path) => {
     if(!path) {
@@ -150,16 +154,58 @@ module.getConfigFromDefinition = (definition, productVersion) => {
     return returnValue;
 };
 
-module.getConfiguration = (configFilePath, productVersion) => {
-    return new Promise((success, fail) => {
-        var xml = module.getXml(configFilePath);
-        module.read(xml).then((obj, error) => {
-            if(error) {
-                fail(error);
+var handlers = {
+    getVersionNumbers: () => {
+        var directoryPath = path.resolve(__dirname, '../../data/docsConfig');
+        fs.readdir(directoryPath, (error, files) => {
+            if(error){
+                dialogs.messageBox({
+                    message: `Error trying to read version numbers from: ${directoryPath}`,
+                    detial: JSON.stringify(error)
+                });
             } else {
-                var config = module.getConfigFromDefinition(obj, productVersion);
-                success(config);
+                var versionNumbers = [];
+
+                files.forEach((fileName) => {
+                    if(/.xml/i.test(fileName)){
+                        versionNumbers.push(fileName.replace('.xml', '').replace('-', '.'));
+                    }
+                });
+
+                messenger.publish.metadata('productVersionNumbersChanged', versionNumbers);
             }
         });
-    });
+    },
+    getConfiguration: (args) => {
+
+        if(args.hasValue){
+            if(_configuration){
+                messenger.publish.metadata('productConfigurationChanged', _configuration);
+                messenger.publish.metadata('productListChanged', _configuration.products);
+            } else {
+                var configurationFilePath = path.join(configFilePath, args.value.replace('.', '-') + '.xml');
+                var xml = module.getXml(configurationFilePath);
+                module.read(xml).then((obj, error) => {
+                    if(error) {
+                        dialogs.messageBox({
+                            message: `Error trying to read configuration information from: ${configurationFilePath}`,
+                            detial: JSON.stringify(error)
+                        });
+                    } else {
+                        _configuration = module.getConfigFromDefinition(obj, args.value);
+                        messenger.publish.metadata('productConfigurationChanged', _configuration);
+                        messenger.publish.metadata('productListChanged', _configuration.products);
+                    }
+                });
+            }
+        } else {
+            _configuration = null;
+            messenger.publish.metadata('productConfigurationChanged', {});
+            messenger.publish.metadata('productListChanged', []);
+        }
+
+    }
 };
+
+messenger.subscribe.metadata('getProductVersionNumbers', handlers.getVersionNumbers);
+messenger.subscribe.metadata('productVersionSelectionChanged', handlers.getConfiguration)

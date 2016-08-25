@@ -16,6 +16,7 @@ var
     formats = require(path.resolve(__dirname, '../formats')),
     dialogs = require(path.resolve(__dirname, '../dialogs')),
     renderTransformer = require(path.resolve(__dirname, './renderTransformer')),
+    contentInspector = require(path.resolve(__dirname, './contentInspector')),
 
     source = '',
     shell = require('shell'),
@@ -25,20 +26,9 @@ var
     html = '',
 
     _fileInfo,
-    _buildFlags = [];
+    _selectedProduct = null;
 
-const productConfigurationReader = require(path.resolve(__dirname, '../config/productConfigurationReader.js'));
 var _productConfiguration = null;
-
-// *** todo: lazy load when user opens variables UI ***
-if(!_productConfiguration) {
-    productConfigurationReader.getConfiguration(path.resolve(__dirname, '../../DocsConfig.xml'), '15.6').then((configuration) => {
-        debugger;
-        configuration.selectedProduct = 'wpf';
-        _productConfiguration = configuration;
-    });
-}
-// ****************************************************
 
 messenger.subscribe.file('pathChanged', function (data, envelope) {
   basePath = data.basePath;
@@ -60,7 +50,6 @@ var detectRenderer = function (fileInfo) {
 
 var handlers = {
     fileNew: (fileInfo) => {
-        _buildFlags = [];
         handlers.opened(fileInfo);
     },
     opened: function(fileInfo){
@@ -86,20 +75,23 @@ var handlers = {
                         detectRenderer(_fileInfo);
                         source = _fileInfo.contents;
 
-                        _buildFlags.forEach(function (buildFlag) {
-                            flags += ':' + buildFlag + ':\n'
-                        });
-
-                        source = flags + source;
+                        contentInspector.inspect(source, _fileInfo);
                         
                         if(!$renderingLabel.is(':visible')){
                             $renderingLabel.fadeIn('fast');
                         }
-                        source = renderTransformer.beforeRender(source, _productConfiguration);
+                        
+                        if(_productConfiguration && _productConfiguration.selectedProduct){
+                            source = renderTransformer.beforeRender(source, _productConfiguration);
+                        }
                         
                         renderer(source, function (e) {
 
-                            html = renderTransformer.afterRender(e.html);
+                            html = e.html;
+
+                            if(_productConfiguration && _productConfiguration.selectedProduct) {
+                                html = renderTransformer.afterRender(html, _productConfiguration);
+                            }
 
                             $result.html(html);
                             
@@ -111,10 +103,6 @@ var handlers = {
                 }
             }
         }
-    },
-    buildFlags: function (buildFlags) {
-        _buildFlags = buildFlags;
-        handlers.contentChanged(_fileInfo);
     },
     showResults: function() {
         subscribe();
@@ -140,11 +128,22 @@ var handlers = {
     },
     fileSelected: function(){
         refreshSubscriptions();
-        _buildFlags = [];
     },
     allFilesClosed: function () {
         $result.html('');
         $renderingLabel.fadeOut('fast');
+    },
+    productConfigurationChanged: (config) => {
+        _productConfiguration = config;
+        if(_selectedProduct){
+            _productConfiguration.selectedProduct = _selectedProduct;
+            handlers.contentChanged(_fileInfo);
+        }
+    },
+    selectedProductChanged: (productName) => {
+        _selectedProduct = productName;
+        _productConfiguration.selectedProduct = productName;
+        handlers.contentChanged(_fileInfo);
     }
 };
 
@@ -155,7 +154,8 @@ var subscribe = function () {
     subscriptions.push(messenger.subscribe.file('contentChanged', handlers.contentChanged));
     subscriptions.push(messenger.subscribe.file('sourceChange', handlers.sourceChanged));
     subscriptions.push(messenger.subscribe.file('allFilesClosed', handlers.allFilesClosed));
-    subscriptions.push(messenger.subscribe.format('buildFlags', handlers.buildFlags));
+    subscriptions.push(messenger.subscribe.metadata('productConfigurationChanged', handlers.productConfigurationChanged));
+    subscriptions.push(messenger.subscribe.metadata('selectedProductChanged', handlers.selectedProductChanged));
 };
 
 var unsubscribe = function () {

@@ -1,43 +1,100 @@
-var _ = require('lodash');
-var path = require('path');
-var messenger = require(path.resolve(__dirname, '../messenger'));
+const path = require('path');
+const messenger = require(path.resolve(__dirname, '../messenger'));
 
-const config = require(path.resolve(__dirname, '../config')).get();
-const buildFlagsUtil = require(path.resolve(__dirname, '../buildFlags'));
+var $versionsSelect = $('#versions-select');
+var $productsSelect = $('#products-select');
+var $flagsContainer = $('#flags-container');
 
-var $buildFlagsContainer = $('#build-flags-container');
-var _buildFlags;
+var _selectedVersion;
+var _selectedProduct;
 
 var handlers = {
   
-  buildFlagList: function(buildFlags){
-    $buildFlagsContainer.html('');
-
-    buildFlags = buildFlagsUtil.replaceIndividualFlagsWithProductFlags(buildFlags);
-    
-    buildFlags.forEach(function(flag){
-      $buildFlagsContainer.append('<button data-role="build-flag" data-value="' + flag + '" ' + 
-                                  'class="btn btn-default btn-xs">' + flag + '</button>');
+  productVersionNumbersChanged: (versionNumbers) => {
+    var html = [];
+    html.push('<option>[ Version ]</option>');
+    versionNumbers = versionNumbers.reverse();
+    versionNumbers.forEach((version) => {
+      html.push(`<option value="${version}">${version}</option>`);
     });
+    $versionsSelect.html(html.join('\n'));
   },
-  allFilesClosed: function(){
-    $buildFlagsContainer.html('');
+  productListChanged: (productsObj) => {
+    var html = [], products;
+
+    products = Object.keys(productsObj);
+
+    if(products.length > 0){
+      html.push('<option>[ Product ]</option>');
+
+      products.forEach((product) => {
+        html.push(`<option value="${product}">${product}</option>`);
+      });
+      $productsSelect.html(html.join('\n'));
+
+      if(_selectedProduct) {
+        $productsSelect.val(_selectedProduct);
+      }
+    } else {
+      $productsSelect.fadeOut('fast');
+    }
+
+  },
+  allFilesClosed: () => {
+    $productsSelect.fadeOut('fast');
+    $versionsSelect.fadeOut('fast');
   }
 };
 
-messenger.subscribe.metadata('buildFlags', handlers.buildFlagList);
+messenger.subscribe.metadata('productVersionNumbersChanged', handlers.productVersionNumbersChanged);
+messenger.subscribe.metadata('productListChanged', handlers.productListChanged);
 messenger.subscribe.file('allFilesClosed', handlers.allFilesClosed);
 
-$buildFlagsContainer.on('click', 'button[data-role="build-flag"]', function(e){
-  var $button, buildFlag, flags;
+messenger.subscribe.metadata('productBuildFlagsChanged', (buildFlags) => {
+  $flagsContainer.html(`<span class="flag">${buildFlags.join('</span><span class="flag">')}</span>`);
+});
+
+messenger.subscribe.metadata('isInfragisticsDocumentationFile', () => {
+
+  if(!$versionsSelect.is(':visible')){
+    $versionsSelect.fadeIn('fast');
+  }
+
+  if($productsSelect[0].selectedIndex > 0 && !$productsSelect.is(':visible')){
+    $productsSelect.fadeIn('fast');
+    $flagsContainer.fadeIn('fast');
+  }
+});
+
+messenger.subscribe.metadata('isNotInfragisticsDocumentationFile', () => {
+  if($versionsSelect.is(':visible')) {
+    $versionsSelect.fadeOut('fast');
+  }
+
+  if($productsSelect.is(':visible')) {
+    $productsSelect.fadeOut('fast');
+  }
+
+  if($flagsContainer.is(':visible')) {
+    $flagsContainer.fadeOut('fast');
+  }
+});
+
+$versionsSelect.change((e) => {
+  _selectedVersion = $versionsSelect.val();
   
-  $button = $(this);
-  buildFlag = $button.data('value');
-  
-  $('[data-role="build-flag"]').removeClass('selected');
-  $button.addClass('selected');
-  
-  flags = buildFlagsUtil.getAllFromProductFlags([buildFlag]);
-  
-  messenger.publish.format('buildFlags', flags);
+  var args = {
+    hasValue: $versionsSelect[0].selectedIndex > 0,
+    value: _selectedVersion
+  };
+  messenger.publish.metadata('productVersionSelectionChanged', args);
+
+  if(args.hasValue) {
+    $productsSelect.fadeIn('fast');
+  }
+});
+
+$productsSelect.change((e) => {
+  _selectedProduct = $productsSelect.val();
+  messenger.publish.metadata('selectedProductChanged', _selectedProduct);
 });

@@ -3,6 +3,7 @@
 const packageJsonReader = require('./modules/config/packageJsonReader.js');
 const config = require('./modules/config').get();
 const messenger = require('./modules/messenger');
+const path = require('path');
 
 window.appSettings = {
     _editorWidth: '49%',
@@ -43,6 +44,8 @@ require.main.require('./modules/footer');
 require.main.require('./modules/help');
 require.main.require('./modules/global');
 
+require.main.require('./modules/config/productConfigurationReader.js');
+
 
 var getNumberValue = (version) => {
     var reverseString = (s) => s.split('').reverse().join('');
@@ -58,6 +61,8 @@ $(function(){
     var publishedVersion, localVersion;
 
 	$('body').fadeIn('50');
+
+    messenger.publish.metadata('getProductVersionNumbers');
 
     $.get(config.urls.version).then((json) => { 
         publishedVersion = getNumberValue(json.version);
