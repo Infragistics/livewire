@@ -52,7 +52,12 @@ messenger.subscribe.metadata('productListChanged', handlers.productListChanged);
 messenger.subscribe.file('allFilesClosed', handlers.allFilesClosed);
 
 messenger.subscribe.metadata('productBuildFlagsChanged', (buildFlags) => {
+
   $flagsContainer.html(`<span class="flag">${buildFlags.join('</span><span class="flag">')}</span>`);
+
+  if(!$flagsContainer.is(':visible')){
+    $flagsContainer.fadeIn('fast');
+  }
 });
 
 messenger.subscribe.metadata('isInfragisticsDocumentationFile', () => {
