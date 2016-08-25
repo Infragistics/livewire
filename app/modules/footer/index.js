@@ -43,6 +43,7 @@ var handlers = {
   allFilesClosed: () => {
     $productsSelect.fadeOut('fast');
     $versionsSelect.fadeOut('fast');
+    $flagsContainer.html('');
   }
 };
 
