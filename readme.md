@@ -18,7 +18,7 @@ A simple web content editor built with [Electron](electron.atom.io).
 For more information make sure to read the [wiki](https://github.com/craigshoemaker/livewire/wiki).
 
 		  
-## Windows Installer		
+## Installers
  
  [You can download the installers here](https://github.com/Infragistics/livewire/wiki/installers).
 
