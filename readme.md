@@ -20,7 +20,7 @@ For more information make sure to read the [wiki](https://github.com/craigshoema
 		  
 ## Windows Installer		
  
- [You can download the v1.1.002 Windows 64-bit installer here](http://download.infragistics.com/users/livewire/Livewire-1.1.002-win-64.msi).
+ [You can download the installers here](https://github.com/Infragistics/livewire/wiki/installers).
 
 ## Running the App from Source
 
