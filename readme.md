@@ -24,7 +24,7 @@ For more information make sure to read the [wiki](https://github.com/craigshoema
 
 ## Running the App from Source
 
-First, make sure you have [Node.js](https://nodejs.org/) and [Git](https://git-scm.com/downloads) installed on your machine.
+First, make sure you have [Node.js v4.5.0](https://nodejs.org/) and [Git](https://git-scm.com/downloads) installed on your machine.
 
 Then open a command prompt and install Bower (if you don't already have it installed) by executing this command:
 
