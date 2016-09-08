@@ -34,7 +34,7 @@ Next, in that administrative prompt, install Gulp:
 
     $ npm install --g gulp
 
-After Bower and Gulp are installed, in Windows Explorer, open the directory in which you want to download Livewire.  Right-click and choose `Git Bash Here`.  Clone the repository by using this command:
+After Bower and Gulp are installed, in Windows Explorer, open the directory in which you want to download Livewire.  Right-click and choose `Git Bash Here`.  If you don't have Git Bash, open Git Shell or any Git-enabled command prompt.  Clone the repository by using this command:
 
     $ git clone https://github.com/infragistics/livewire.git
 	
