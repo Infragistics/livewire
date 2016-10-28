@@ -1,99 +1,70 @@
+/*jslint node: true */
+/*jshint esversion: 6 */
+
 module = module.exports;
 
-var PICK_EXPRESSION = /pick:\[(.*?)"]/g;
+const patterns = {
+    pickMacros: /pick:\[(.*?)"]/g,
+    buildFlags: /\[(.*?)=/,
+    innerAsciiDoc: /="(.+)"]/
+};
 
-var getMacroMatches = (src) => {
-    var matches = src.match(PICK_EXPRESSION);
-    if(matches && matches.length > 0){
+var getPickMacros = (src) => {
+    var matches = src.match(patterns.pickMacros);
+    if (matches && matches.length > 0) {
         return matches;
-    } 
+    }
     return [];
 };
 
-var removeLeftoverPicks = (src) => {
-    return src.replace(PICK_EXPRESSION, '');
-};
-
-var getMatch = (matches) => {
-    var match = '';
-    if(matches && matches.length > 0){
-        match = matches[1];
+var getMacroFlags = (src) => {
+    var result = patterns.buildFlags.exec(src);
+    if (result && result.length >= 2) {
+        return result[1].split(',');
     }
-    return match;
+    return [];
 };
 
-var getParts = (match) => {
-    if(match){
-        return match.split(';');
+var getInnerAsciiDoc = (src) => {
+    var result = patterns.innerAsciiDoc.exec(src);
+    if (result && result.length >= 2) {
+        return result[1];
     }
     return '';
 };
 
-var cleanMatch = (src) => {
-    src = src.replace(/\"/g, '');
-    src = src.replace('pick:[', '');
-    if(src[src.length -1] === ']'){
-        src = src.substr(0, src.length - 1);
+var macroUsesGivenBuildFlags = (src, buildFlags) => {
+    var flags = getMacroFlags(src), returnValue = false;
+    for (var i = 0; i < flags.length; i++) {
+        if (buildFlags.indexOf(flags[i]) > -1) {
+            returnValue = true;
+            break;
+        }
     }
-    return src;
+    return returnValue;
 };
 
-var createMatchParts = (src) => {
-    if(src){
-        return src.split(';');
-    }
-    return [];
-};
-
-var getFlagList = (src) => {
-    var matches = src.match(/(.+)=/);
-    var list = [];
-    if (matches && matches.length >= 2) {
-        list = matches[1].split(','); // todo: change back to ;
-    }
-    return list;
-};
-
-var getContent = (src) => {
-    var matches = src.match(/=(.+)/);
-    var content = '';
-    if (matches && matches.length >= 2) {
-        content = matches[1];
-    }
-    return content;
+var removeNonMatchingMacros = (src) => {
+    return src.replace(patterns.pickMacros, '');
 };
 
 module.process = (asciidoc, buildFlags) => {
-    if (typeof buildFlags !== 'undefined' && buildFlags !== null) {
-        var matches, match, parts;
 
-        matches = getMacroMatches(asciidoc);
-        match = getMatch(matches);
-        parts = getParts(match);
+    if (typeof buildFlags !== 'undefined' &&
+               buildFlags !== null &&
+               buildFlags.length > 0) {
 
-        matches.forEach((match) => {
-            var text = cleanMatch(match);
-            var parts = createMatchParts(text);
-            parts.forEach((part) => {
-                var replaceValue = '';
-                var flagsList = getFlagList(part);
-                var content = getContent(part);
-                for (var i = 0; i < flagsList.length; i++) {
-                    var flag = flagsList[i];
-                    if (buildFlags.indexOf(flag) >= 0) {
-                        replaceValue = content;
-                        break;
-                    }
-                }
-                
-                if(replaceValue.length > 0){
-                    asciidoc = asciidoc.replace(match, replaceValue);
-                }
-            });
+        var pickMacros = getPickMacros(asciidoc);
+
+        pickMacros.forEach((macro) => {
+            if (macroUsesGivenBuildFlags(macro, buildFlags)) {
+                var innerAsciiDoc = getInnerAsciiDoc(macro);
+                asciidoc = asciidoc.replace(macro, innerAsciiDoc);
+            }
         });
     }
-    
-    asciidoc = removeLeftoverPicks(asciidoc);
-    
+
+    asciidoc = removeNonMatchingMacros(asciidoc);
+
     return asciidoc;
 };

@@ -10,13 +10,14 @@ var inspectionRules = [
     {
         description: 'detect Infragistics help documentation topic',
         apply: () => { 
-            var hasBuildFlags = false, hasMetadata = false, hasBuildVariables = false;
+            var hasBuildFlags = false, hasMetadata = false, hasBuildVariables = false, hasPickMacro = false;
 
             hasMetadata = _fileInfo.metadata;
             hasBuildVariables = /{.*?}/.test(_source);
             hasBuildFlags = /ifdef::.*\[/.test(_source);
+            hasPickMacro = /pick:\[(.*?)"]/.test(_source);
             
-            if(hasMetadata || hasBuildVariables || hasBuildFlags) {
+            if(hasMetadata || hasBuildVariables || hasBuildFlags || hasPickMacro) {
                 messenger.publish.metadata('isInfragisticsDocumentationFile');
             } else {
                 messenger.publish.metadata('isNotInfragisticsDocumentationFile');
