@@ -176,13 +176,17 @@
 .admonitionblock {
   margin: 20px 0 20px 0;
 }
+
 .admonitionblock .icon .title {
   display: none;
 }
+
 .admonitionblock .content {
-  border-left: 8px solid #eee;
-  padding-left: 10px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  background-color: #ffc;
 }
+
 .admonitionblock .content .title {
   font-weight: bold;
 }
@@ -329,3 +333,9 @@ button[data-role="build-flag"].selected {
   background-color: #fbfbfb;
   border: solid 1px #eee;
 }
+
+.bold { font-weight: bold; }
+.red { color: #900; }
+.green { color: #060; }
+.blue { color: #039; }
+.yellow-background { background-color: #ff9; }
