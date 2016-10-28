@@ -1,4 +1,7 @@
+/*jslint node: true */
+/*jshint esversion: 6 */
 /* global ace */
+
 module = module.exports;
 
 var
@@ -18,6 +21,8 @@ var
     formatter = null,
     $result = $('#result'),
     BOM = '\ufeff';
+
+const saveAsHtmlBeforeSaveRules = require('./saveAsHtml-before-save-rules.js');
 
 messenger.subscribe.file('pathChanged', (data, envelope) => {
     if (data.isNewFile) {
@@ -210,22 +215,9 @@ var menuHandlers = {
                 { name: 'HTML', extensions: ['html'] }
             ]
         };
-      
-        // special characters in regex are craaaaazy
-        exp = new RegExp('src="' + basePath.replace(/\\/g, '\\\\') + '\\\\', 'gi');
-
+        
         html = $result.html();
-        html = html.replace(exp, 'src="');
-
-        html = html.replace(/…​/g, '...');
-        html = html.replace(/’/g, "'");
-
-        html = `${BOM}<!DOCTYPE html>
-<html>
-    <body>
-    ${html}
-    </body>
-</html>`;
+        html = saveAsHtmlBeforeSaveRules.apply(html, { 'basePath': basePath }, $);
 
         dialogs.saveFile(html, options, 'html').catch((err) => {
             // todo: handle error
