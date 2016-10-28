@@ -11,13 +11,16 @@ require(path.resolve(__dirname, './context.js'));
 var handlers = {
     
   // File 
-  newMarkdownFile: function () { messenger.publish.menu('new', { format: 'markdown' }) },
-  newAsciiDocFile: function () { messenger.publish.menu('new', { format: 'asciidoc' }) },
+  newMarkdownFile: function () { messenger.publish.menu('new', { format: 'markdown' }); },
+  newAsciiDocFile: function () { messenger.publish.menu('new', { format: 'asciidoc' }); },
   open: function () { messenger.publish.menu('open'); },
   save: function () { messenger.publish.menu('save'); },
   saveAs: function () { messenger.publish.menu('saveAs'); },
   saveAsHtml: function () { messenger.publish.menu('saveAsHtml'); },
   quit: function () { messenger.publish.menu('quit'); },
+
+  // Format
+  toggleLineNumbers: function() { messenger.publish.menu('toggleLineNumbers'); },
     
   // View
   reload: function () { messenger.publish.menu('reload'); },
@@ -49,6 +52,12 @@ var template = [
       { label: 'Save As HTML', accelerator: 'CmdOrCtrl+Shift+H', click: handlers.saveAsHtml },
       { type: 'separator' },
       { label: 'Quit', accelerator: 'CmdOrCtrl+Q', click: handlers.quit },
+    ]
+  },
+  {
+    label: 'Format',
+    submenu: [
+      { label: 'Line Numbers', click: handlers.toggleLineNumbers },
     ]
   },
   {

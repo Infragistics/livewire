@@ -96,6 +96,10 @@ module.load = function (mode) {
             activateEditor();
         },
 
+        toggleLineNumbers: function() {
+            editor.setOption('showGutter', !editor.getOption('showGutter'));
+        },
+
         fileNew: function () {
             editor.scrollToLine(0);
         },
@@ -170,6 +174,7 @@ module.load = function (mode) {
     editor.on('change', _.throttle(handlers.contentChangedInternal, 1000));
     editor.focus();
 
+    messenger.subscribe.menu('toggleLineNumbers', handlers.toggleLineNumbers);
     messenger.subscribe.menu('new', handlers.menuNew);
     messenger.subscribe.file('contentChanged', handlers.contentChangedExternal);
     messenger.subscribe.file('new', handlers.fileNew);
