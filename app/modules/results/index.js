@@ -180,28 +180,6 @@ messenger.subscribe.file('rerender', function (data, envelope) {
     });
 });
 
-var handleAnchorClick = function (e) {
-    var href;
-    var element = e.target;
-
-    if (element.nodeName === 'A') {
-        href = element.getAttribute('href');
-
-        if(/^http/.test(href)) {
-            shell.openExternal(href);
-        } else {
-            dialogs.messageBox({
-                message: `Navigating to document links is not supported in the HTML preview.`
-            });
-        }
-
-        e.preventDefault();
-        return false;
-    }
-};
-
-document.addEventListener('click', handleAnchorClick, false);
-
 var setHeight = function (offSetValue) {
     $resultsPane.css('height', $window.height() - offSetValue + 'px');
     $window.on('resize', function (e) {
@@ -221,6 +199,20 @@ $(function () {
         .css('width', appSettings.resultsWidth());
         
     $resultsButton.one('click', handlers.hideResults);
+
+    $result.on('click', 'a', (e) => {
+        var href = $(e.currentTarget).attr('href');
+        if(/^http/.test(href)) {
+            shell.openExternal(href);
+        } else {
+            dialogs.messageBox({
+                message: `Navigating to document links is not supported in the HTML preview.`
+            });
+        }
+
+        e.preventDefault();
+        return false;
+    });
 
     setHeight(appSettings.editingContainerOffset());
 });
