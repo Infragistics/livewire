@@ -187,7 +187,7 @@ var handleAnchorClick = function (e) {
     if (element.nodeName === 'A') {
         href = element.getAttribute('href');
 
-        if(/http/.test(href)) {
+        if(/^http/.test(href)) {
             shell.openExternal(href);
         } else {
             dialogs.messageBox({
