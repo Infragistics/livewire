@@ -1,7 +1,7 @@
-var gulp = require('gulp'); 
-var less = require('gulp-less');
-var path = require('path');
-var shell = require('shelljs')
+const gulp = require('gulp'); 
+const less = require('gulp-less');
+const path = require('path');
+const shell = require('shelljs');
 
 gulp.task('less', function () {
   return gulp.src('./app/index.less')

@@ -2,9 +2,10 @@
   
 module = module.exports;
 
+const { clipboard } = require('electron');
+
 var path = require('path');
 var messenger = require(path.resolve(__dirname, '../messenger'));
-var clipboard = require('clipboard');
 var editor = null;
 var key = 'editor.copied.text'
 

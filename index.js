@@ -1,13 +1,16 @@
 /// <reference path="typings/node/node.d.ts"/>
+/*jslint node: true */
+/*jshint esversion: 6 */
 
-var app = require('app');
-var BrowserWindow = require('browser-window');
-var globalShortcut = require('global-shortcut');
+const { app, BrowserWindow, globalShortcut } = require('electron');
 
-var mainWindow;
+require('./main-process/application-menus');
+require('./main-process/context-menus');
 
-var shouldQuit = app.makeSingleInstance(function(commandLine, workingDirectory) {
-  // Someone tried to run a second instance, we should focus our window.
+let mainWindow;
+
+const shouldQuit = app.makeSingleInstance((commandLine, workingDirectory) => {
+  // Someone tried to run a second instance, we should focus our window. 
   if (mainWindow) {
     if (mainWindow.isMinimized()) mainWindow.restore();
     mainWindow.focus();
@@ -48,8 +51,8 @@ app.on('ready', function () {
   });
 });
 
-app.on('window-all-closed', function () {
-  if (process.platform.toLowerCase() != 'darwin') {
+app.on('window-all-closed', () => {
+  if (process.platform.toLowerCase() !== 'darwin') {
     app.quit();
   }
 });

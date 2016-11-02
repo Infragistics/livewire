@@ -1,84 +1,53 @@
-var remote = require('remote');
-var Menu = remote.require('menu');
-var path = require('path');
-var messenger = require(path.resolve(__dirname, '../messenger'));
+/*jslint node: true */
+/*jshint esversion: 6 */
 
-require(path.resolve(__dirname, './file.js'));
-require(path.resolve(__dirname, './view.js'));
-require(path.resolve(__dirname, './help.js'));
-require(path.resolve(__dirname, './context.js'));
+const path = require('path');
+const messenger = require(path.resolve(__dirname, '../messenger'));
+const ipc = require('electron').ipcRenderer;
 
-var handlers = {
+require('./file.js');
+require('./view.js');
+require('./help.js');
+require('./context.js');
+
+ipc.send('application-menu-init');
+
+let handlers = {
     
   // File 
-  newMarkdownFile: function () { messenger.publish.menu('new', { format: 'markdown' }); },
-  newAsciiDocFile: function () { messenger.publish.menu('new', { format: 'asciidoc' }); },
-  open: function () { messenger.publish.menu('open'); },
-  save: function () { messenger.publish.menu('save'); },
-  saveAs: function () { messenger.publish.menu('saveAs'); },
-  saveAsHtml: function () { messenger.publish.menu('saveAsHtml'); },
-  quit: function () { messenger.publish.menu('quit'); },
+  newMarkdownFile: () =>  messenger.publish.menu('new', { format: 'markdown' }),
+  newAsciiDocFile: () =>  messenger.publish.menu('new', { format: 'asciidoc' }),
+  open: () =>  messenger.publish.menu('open'),
+  save: () =>  messenger.publish.menu('save'),
+  saveAs: () =>  messenger.publish.menu('saveAs'),
+  saveAsHtml: () =>  messenger.publish.menu('saveAsHtml'),
+  quit: () =>  messenger.publish.menu('quit'),
 
   // Format
-  toggleLineNumbers: function() { messenger.publish.menu('toggleLineNumbers'); },
+  toggleLineNumbers: () => messenger.publish.menu('toggleLineNumbers'),
     
   // View
-  reload: function () { messenger.publish.menu('reload'); },
-  devTools: function () { messenger.publish.menu('devToolsToggle'); },
-  fullScreen: function () { messenger.publish.menu('fullScreenToggle'); },
-  autoHideMenu: function () { messenger.publish.menu('autoHideMenu'); },
+  reload: () =>  messenger.publish.menu('reload'),
+  devTools: () =>  messenger.publish.menu('devToolsToggle'),
+  fullScreen: () =>  messenger.publish.menu('fullScreenToggle'),
+  autoHideMenu: () =>  messenger.publish.menu('autoHideMenu'),
     
   // Help
-  issues: function () { messenger.publish.menu('issues'); },
-  about: function () { messenger.publish.menu('about'); }
-}
+  issues: () =>  messenger.publish.menu('issues'),
+  about: () =>  messenger.publish.menu('about')
+};
 
-var template = [
-  {
-    label: 'File',
-    submenu: [
-      {
-        label: 'New',
-        submenu: [
-          { label: 'AsciiDoc', accelerator: 'CmdOrCtrl+N', click: handlers.newAsciiDocFile },
-          { label: 'Markdown', accelerator: 'CmdOrCtrl+Shift+N', click: handlers.newMarkdownFile },
-        ]
-      },
-      { type: 'separator' },
-      { label: 'Open', accelerator: 'CmdOrCtrl+O', click: handlers.open },
-      { type: 'separator' },
-      { label: 'Save', accelerator: 'CmdOrCtrl+S', click: handlers.save },
-      { label: 'Save As', accelerator: 'CmdOrCtrl+Shift+S', click: handlers.saveAs },
-      { label: 'Save As HTML', accelerator: 'CmdOrCtrl+Shift+H', click: handlers.saveAsHtml },
-      { type: 'separator' },
-      { label: 'Quit', accelerator: 'CmdOrCtrl+Q', click: handlers.quit },
-    ]
-  },
-  {
-    label: 'Format',
-    submenu: [
-      { label: 'Line Numbers', click: handlers.toggleLineNumbers },
-    ]
-  },
-  {
-    label: 'View',
-    submenu: [
-      { label: 'Reload', accelerator: 'CmdOrCtrl+R', click: handlers.reload },
-      { label: 'Toggle DevTools', accelerator: 'CmdOrCtrl+Shift+T', click: handlers.devTools },
-      { label: 'Toggle Full Screen', accelerator: 'CmdOrCtrl+Shift+F', click: handlers.fullScreen },
-      { label: 'Toggle Auto Hide Menu', accelerator: 'CmdOrCtrl+Shift+M', click: handlers.autoHideMenu }
-    ]
-  },
-  {
-    label: 'Help',
-    submenu: [
-      { label: 'Issues', click: handlers.issues },
-      { type: 'separator' },
-      { label: 'About', click: handlers.about }
-    ]
-  }
-];
-
-var menu = Menu.buildFromTemplate(template);
-
-Menu.setApplicationMenu(menu);
+ipc.on('application-menu-file-new-asciidoc', handlers.newAsciiDocFile);
+ipc.on('application-menu-file-new-markdown', handlers.newMarkdownFile);
+ipc.on('application-menu-file-open', handlers.open);
+ipc.on('application-menu-file-save', handlers.save);
+ipc.on('application-menu-file-save-as', handlers.saveAs);
+ipc.on('application-menu-file-save-as-html', handlers.saveAsHtml);
+ipc.on('application-menu-file-quit', handlers.quit);
+ipc.on('application-menu-format-toggle-line-numbers', handlers.toggleLineNumbers);
+ipc.on('application-menu-view-reload', handlers.reload);
+ipc.on('application-menu-view-dev-tools', handlers.devTools);
+ipc.on('application-menu-view-full-screen', handlers.fullScreen);
+ipc.on('application-menu-view-auto-hide', handlers.autoHideMenu);
+ipc.on('application-menu-help-issues', handlers.issues);
+ipc.on('application-menu-help-about', handlers.about);

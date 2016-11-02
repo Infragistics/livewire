@@ -1,20 +1,20 @@
-var path = require('path');
-var messenger = require(path.resolve(__dirname, '../messenger'));
-var shell = require('shell');
-var config = require(path.resolve(__dirname, '../config')).get();
-var dialogs = require('../dialogs');
+const path = require('path');
+const messenger = require(path.resolve(__dirname, '../messenger'));
+const { shell } = require('electron');
+const config = require(path.resolve(__dirname, '../config')).get();
+const dialogs = require('../dialogs');
 const packageJsonReader = require(path.resolve(__dirname, '../config/packageJsonReader.js'));
 
-var handlers = {
+let handlers = {
   issues: function () {
     shell.openExternal(config.urls.repository + '/issues');
   },
   about: function () {
 
-    var version = null;
+    let version = null;
     const fs = require('fs');
 
-    var showAboutDialog = (version) => {
+    let showAboutDialog = (version) => {
       dialogs.messageBox({
         title: 'About',
         message: `Livewire

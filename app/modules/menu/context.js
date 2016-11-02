@@ -1,40 +1,25 @@
-var remote = require('remote');
-var Menu = remote.require('menu');
-var MenuItem = remote.require('menu-item');
+/*jslint node: true */
+/*jshint esversion: 6 */
 
-var path = require('path');
-var messenger = require(path.resolve(__dirname, '../messenger'));
+const ipc = require('electron').ipcRenderer;
+const path = require('path');
+const messenger = require(path.resolve(__dirname, '../messenger'));
 
-var handlers = {
+const handlers = {
 	cut: function () { messenger.publish.contextMenu('cut'); },
 	copy: function () { messenger.publish.contextMenu('copy'); },
 	paste: function () { messenger.publish.contextMenu('paste'); }
 };
 
-var editorMenu = new Menu();
-
-editorMenu.append(new MenuItem({
-	label: 'Cut',
-	accelerator: 'CmdOrCtrl+Z',
-	click: handlers.cut
-}));
-
-editorMenu.append(new MenuItem({
-	label: 'Copy',
-	accelerator: 'CmdOrCtrl+C',
-	click: handlers.copy
-}));
-
-editorMenu.append(new MenuItem({
-	label: 'Paste',
-	accelerator: 'CmdOrCtrl+V',
-	click: handlers.paste
-}));
+ipc.on('editor-context-menu-cut', handlers.cut);
+ipc.on('editor-context-menu-copy', handlers.copy);
+ipc.on('editor-context-menu-paste', handlers.paste);
 
 window.addEventListener('contextmenu', function (e) {
 	e.preventDefault();
 
 	if (e.srcElement.className === 'ace_text-input') {
-		editorMenu.popup(remote.getCurrentWindow());
+		ipc.send('show-editor-context-menu');
 	}
+	
 }, false);

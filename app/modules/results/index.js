@@ -1,5 +1,7 @@
 /* global appSettings */
 
+const { shell } = require('electron');
+
 var
     $result,
     $resultContainer,
@@ -19,7 +21,6 @@ var
     contentInspector = require(path.resolve(__dirname, './contentInspector')),
 
     source = '',
-    shell = require('shell'),
     formatter = null,
     basePath = '',
     subscriptions = [],

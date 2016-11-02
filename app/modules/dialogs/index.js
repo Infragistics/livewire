@@ -1,3 +1,6 @@
+/*jslint node: true */
+/*jshint esversion: 6 */
+
 /*
  *
  * A lightweight wrapper around the native dialog API
@@ -9,8 +12,8 @@ module = module.exports;
 var _ = require('lodash');
 var fs = require('fs');
 
-var remote = require('remote');
-var dialog = remote.require('dialog');
+var { remote } = require('electron');
+var dialog = remote.dialog;
 
 module.openFile = function (options) {
     return new Promise((resolve, reject) => {

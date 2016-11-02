@@ -1,8 +1,7 @@
-var path = require('path');
-var remote = require('remote');
-var app = remote.require('app');
-var messenger = require(path.resolve(__dirname, '../messenger'));
-var browserWindow;
+const path = require('path');
+const { remote } = require('electron');
+const app = remote.app;
+const messenger = require(path.resolve(__dirname, '../messenger'));
 
 var handlers = {
 
@@ -19,23 +18,6 @@ var handlers = {
 
   devToolsToggle: function () {
     remote.getCurrentWindow().toggleDevTools();
-  },
-
-  fullScreenToggle: function () {
-    var browserWindow = remote.getCurrentWindow();
-    browserWindow.setFullScreen(!browserWindow.isFullScreen());
-  },
-
-  autoHideMenu: function () {
-    browserWindow = remote.getCurrentWindow();
-    var isMenuBarAutoHide = browserWindow.isMenuBarAutoHide();;
-
-    if (isMenuBarAutoHide) {
-      browserWindow.setAutoHideMenuBar(false);
-      browserWindow.setMenuBarVisibility(true);
-    } else {
-      browserWindow.setAutoHideMenuBar(true);
-    }
   }
 };
 

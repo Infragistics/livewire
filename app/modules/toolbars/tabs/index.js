@@ -3,12 +3,13 @@
 /// <reference path="../../../../typings/jquery/jquery.d.ts"/>
 
 module = module.exports;
+  
+const { shell } = require('electron');
 
 var 
   path = require('path'),
   messenger = require(path.resolve(__dirname, '../../messenger')),
   _ = require('lodash'),
-  shell = require('shell'),
   
   editor = null,
   selectedPath = '',

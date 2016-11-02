@@ -1,10 +1,11 @@
 module = module.exports;
 
+var { remote } = require('electron');
+
 const 
     path = require('path'),
     messenger = require(path.resolve(__dirname, '../../../messenger')),
-    remote = require('remote'),
-    nodeDialog = remote.require('dialog'),
+    nodeDialog = remote.dialog,
     fileNameCleaner =  require('../../fileNameCleaner.js');
     
 var 
