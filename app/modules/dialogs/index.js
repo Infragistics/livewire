@@ -117,13 +117,14 @@ module.saveFile = function (content, options, defaultExtension) {
 
 module.messageBox = function (options) {
 	return new Promise((resolve, reject) => {
+
         var dialogOptions = {
             type: 'info',
             buttons: ['OK']
         };
 
         if (!_.isUndefined(options)) {
-            dialogOptions = _.defaults(dialogOptions, options);
+            dialogOptions = _.defaults(options, dialogOptions);
         }
 
         var callback = function (buttonIndex) {
