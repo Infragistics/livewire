@@ -113,6 +113,7 @@ module.load = function (mode) {
                     
                     if(!suspendPublishSourceChange){
                         messenger.publish.file('sourceChange', currentFile);
+                        messenger.publish.file('sourceDirty', currentFile.id);
                     }
                 }
             }

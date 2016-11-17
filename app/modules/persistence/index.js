@@ -137,7 +137,6 @@ var menuHandlers = {
 
     save: (data, envelope) => {
         var fileContent, editor;
-
         editor = ace.edit('editor');
         fileContent = editor.getValue();
 
@@ -153,6 +152,8 @@ var menuHandlers = {
                 fs.writeFile(filePath, fileContent, { encoding: 'utf8' }, (err) => {
                     console.log(err);
                 });
+
+                messenger.publish.file('isClean', filePath);
             } else {
                 menuHandlers.saveAs(data, envelope);
             }

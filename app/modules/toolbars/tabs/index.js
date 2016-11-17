@@ -1,6 +1,6 @@
 /* global ace */
-/// <reference path="../../../../typings/node/node.d.ts"/>
-/// <reference path="../../../../typings/jquery/jquery.d.ts"/>
+/*jslint node: true */
+/*jshint esversion: 6 */
 
 module = module.exports;
   
@@ -76,7 +76,7 @@ var getFileInfoFromTab = function($tab){
     fileName: fileName,
     basePath: basePath,
     ext: ext
-  }
+  };
   
   return fileInfo;
 };
@@ -192,6 +192,18 @@ var handlers = {
       } else {
         $explorer.fadeOut('fast');          
       }
+  },
+
+  dirty: (id) => {
+    let $label = $(`#${id} .lw-name`);
+    $label.text(`${$label.text()} *`);
+  },
+
+  clean: (id) => {
+    if(!/\\/.test(id)) {
+      let $label = $(`#${id} .lw-name`);
+      $label.text($label.text().replace(' *', ''));
+    }
   }
 };
 
@@ -214,3 +226,5 @@ $window.click((e) => {
 });
 
 messenger.subscribe.file('pathChanged', handlers.pathChanged);
+messenger.subscribe.file('isDirty', handlers.dirty);
+messenger.subscribe.file('isClean', handlers.clean);

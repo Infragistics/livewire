@@ -1,58 +1,50 @@
+/*jslint node: true */
+/*jshint esversion: 6 */
+
 module = module.exports;
 
-var 
-	files = [],
-	 
+var  
 	path = require('path'),
 	messenger = require(path.resolve(__dirname, '../messenger')),
-	_ = require('lodash'),
-    _selectedIndex = 0;
-	
-var getIndex = function(info){
-	return _.findIndex(files, function(file){
-		var result = false;
-		
-		if((!_.isUndefined(file.path)) && file.path.length > 0){
-			result = file.path.toLowerCase() === info.path.toLowerCase();
-		} else {
-			result = file.id === info.id;
-		}
-		
-		return result;
-	});
-};
+
+	files = {},
+	_selectedID = '';
 
 var addFileIfNotInList = (fileInfo) => {
-	var isInList = false;
+	if(!files[fileInfo.id]) {
+		files[fileInfo.id] = fileInfo;
+	}
+};
 
-	files.forEach((file) => {
-		if(file.id === fileInfo.id) {
-			isInList = true;
+const hasUnsavedChanges = () => {
+	let returnValue = false;
+
+	Object.keys(files).every((key) => {
+		if(files[key].isDirty) {
+			returnValue = true;
+			return true;
 		}
+		return false;
 	});
 
-	if(!isInList) {
-		files.push(fileInfo);
-	}
+	return returnValue;
 };
 
 var handlers = {
 	opened: function(data) {
 		addFileIfNotInList(data);
-        _selectedIndex = files.length - 1;
+		_selectedID = data.id;
 		messenger.publish.file('contentChanged', data);
 	},
 	
 	closed: function(info){
+		delete files[info.id];
 		
-		var indexOfFileToRemove = getIndex(info);
+		let fileInfo = {};
+		let keys = Object.keys(files);
 		
-		files.splice(indexOfFileToRemove, 1);
-		
-		var fileInfo = {};
-		
-		if(files.length > 0){
-			fileInfo = files[files.length -1];	
+		if(keys.length > 0) {
+			fileInfo = files[keys[keys.length - 1]]; // gets last opened file	
 		} else {
 			fileInfo.isBlank = true;
 		}
@@ -61,53 +53,67 @@ var handlers = {
 	},
 	
 	beforeFileSelected: function(cursorInfo){
-		
-		for(var i=0; i < files.length; i++){
-			if(files[i].path === cursorInfo.path){
-				files[i].cursorPosition = cursorInfo.position;
-				break;
+		Object.keys(files).every((key) => {
+			if(files[key].path === cursorInfo.path) {
+				files[key].cursorPosition = cursorInfo.position;
+				return true;
 			}
-		}
+
+			return false;
+		});
 	},
 
 	pathChanged: (fileInfo) => { 
-		var updateIndex = null;
-		files.forEach((file, index) => {
-			if(file.id === fileInfo.id) {
-				updateIndex = index;
-			}
-		});
-
-		if(updateIndex){
-			files[updateIndex] = fileInfo;
-		}
+		files[fileInfo.id] = fileInfo;
 	},
 	
 	fileSelected: function(fileInfo){
 		var selectedFileInfo;
 
 		addFileIfNotInList(fileInfo);
+
+		_selectedID = fileInfo.id;
 		
-		_selectedIndex = getIndex(fileInfo);
-		selectedFileInfo = files[_selectedIndex];
+		selectedFileInfo = files[fileInfo.id];
 		
 		messenger.publish.file('contentChanged', selectedFileInfo);
 	},
     
     metadataChanged: (metadata) => {
-        files[_selectedIndex].metadata = metadata;
-    }
+        files[_selectedID].metadata = metadata;
+    },
+
+	dirty: (id) => {
+		if(!files[id].isDirty) {
+			files[id].isDirty = true;
+			messenger.publish.file('isDirty', id);
+		}
+	},
+
+	clean: (filePath) => {
+		if(/\\/.test(filePath)) {
+			Object.keys(files).every((key) => {
+				if(files[key].path.toLowerCase() === filePath.toLowerCase()) {
+					files[key].isDirty = false;
+					messenger.publish.file('isClean', files[key].id);
+					return true;
+				}
+				return false;
+			});
+		}
+	}
 };
 
 module.isFileOpen = function(filePath){
 	var result = false;
-	
-	for(var i=0; i < files.length; i++){
-		if(files[i].path.toLowerCase() === filePath.toLowerCase()){
+
+	Object.keys(files).every((key) => {
+		if(files[key].path.toLowerCase() === filePath) {
 			result = true;
-			break;
+			return true;
 		}
-	}
+		return false;
+	});
 	
 	return result;
 };
@@ -167,15 +173,15 @@ const metadataCleanUpRules = {
 };
 
 module.getCurrentFileInfo = () => {
-	return files[_selectedIndex];
+	return files[_selectedID];
 };
 
 module.getCurrentMetadataString = (formatter) => {
     var metadata = '';
     
-    if(files[_selectedIndex].metadata){
+    if(files[_selectedID].metadata){
 
-		metadata = JSON.stringify(files[_selectedIndex].metadata, null, 4);
+		metadata = JSON.stringify(files[_selectedID].metadata, null, 4);
 
 		const firstIndentPattern = /(\s+)\"/;
 		var indentSpaceMatch = metadata.match(firstIndentPattern);
@@ -208,4 +214,26 @@ messenger.subscribe.file('selected', handlers.fileSelected);
 messenger.subscribe.file('new', handlers.fileSelected);
 messenger.subscribe.file('pathChanged', handlers.pathChanged);
 messenger.subscribe.file('beforeSelected', handlers.beforeFileSelected);
+messenger.subscribe.file('sourceDirty', handlers.dirty);
+messenger.subscribe.file('isClean', handlers.clean);
 messenger.subscribe.metadata('metadataChanged', handlers.metadataChanged);
+
+window.onbeforeunload = (e) => {
+	if(hasUnsavedChanges()) {
+		let path = require('path');
+		let dialogs = require(path.resolve(__dirname, '../dialogs'));
+		dialogs.messageBox({
+			type: 'question',
+			buttons: ['Yes', 'No'],
+			title: 'Confirm',
+			message: 'You have unsaved work. Are you sure you want to quit?'
+		}).then((shouldRemainOpen) => {
+			if(!shouldRemainOpen) {
+				window.onbeforeunload = () => {};
+				window.close();
+			}
+		});
+		e.returnValue = false;
+	}
+};
+
