@@ -3,12 +3,13 @@
 
 module = module.exports;
 
-var  
+const 
 	path = require('path'),
 	messenger = require(path.resolve(__dirname, '../messenger')),
+	dialogs = require(path.resolve(__dirname, '../dialogs')),
+	files = {};
 
-	files = {},
-	_selectedID = '';
+let _selectedID = '';
 
 var addFileIfNotInList = (fileInfo) => {
 	if(!files[fileInfo.id]) {
@@ -19,12 +20,10 @@ var addFileIfNotInList = (fileInfo) => {
 const hasUnsavedChanges = () => {
 	let returnValue = false;
 
-	Object.keys(files).every((key) => {
+	Object.keys(files).forEach((key) => {
 		if(files[key].isDirty) {
 			returnValue = true;
-			return true;
 		}
-		return false;
 	});
 
 	return returnValue;
@@ -53,13 +52,10 @@ var handlers = {
 	},
 	
 	beforeFileSelected: function(cursorInfo){
-		Object.keys(files).every((key) => {
+		Object.keys(files).forEach((key) => {
 			if(files[key].path === cursorInfo.path) {
 				files[key].cursorPosition = cursorInfo.position;
-				return true;
 			}
-
-			return false;
 		});
 	},
 
@@ -90,15 +86,13 @@ var handlers = {
 		}
 	},
 
-	clean: (filePath) => {
-		if(/\\/.test(filePath)) {
-			Object.keys(files).every((key) => {
-				if(files[key].path.toLowerCase() === filePath.toLowerCase()) {
+	clean: (args) => {
+		if(args.type === 'path') {
+			Object.keys(files).forEach((key) => {
+				if(files[key].path.toLowerCase() === args.value.toLowerCase()) {
 					files[key].isDirty = false;
-					messenger.publish.file('isClean', files[key].id);
-					return true;
+					messenger.publish.file('isClean', { type: 'id', value: files[key].id });
 				}
-				return false;
 			});
 		}
 	}
@@ -107,12 +101,10 @@ var handlers = {
 module.isFileOpen = function(filePath){
 	var result = false;
 
-	Object.keys(files).every((key) => {
+	Object.keys(files).forEach((key) => {
 		if(files[key].path.toLowerCase() === filePath) {
 			result = true;
-			return true;
 		}
-		return false;
 	});
 	
 	return result;
@@ -220,8 +212,6 @@ messenger.subscribe.metadata('metadataChanged', handlers.metadataChanged);
 
 window.onbeforeunload = (e) => {
 	if(hasUnsavedChanges()) {
-		let path = require('path');
-		let dialogs = require(path.resolve(__dirname, '../dialogs'));
 		dialogs.messageBox({
 			type: 'question',
 			buttons: ['Yes', 'No'],

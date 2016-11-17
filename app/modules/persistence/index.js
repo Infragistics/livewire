@@ -153,7 +153,7 @@ var menuHandlers = {
                     console.log(err);
                 });
 
-                messenger.publish.file('isClean', filePath);
+                messenger.publish.file('isClean', { type: 'path', value: filePath });
             } else {
                 menuHandlers.saveAs(data, envelope);
             }

@@ -199,9 +199,9 @@ var handlers = {
     $label.text(`${$label.text()} *`);
   },
 
-  clean: (id) => {
-    if(!/\\/.test(id)) {
-      let $label = $(`#${id} .lw-name`);
+  clean: (args) => {
+    if(args.type === 'id') {
+      let $label = $(`#${args.value} .lw-name`);
       $label.text($label.text().replace(' *', ''));
     }
   }
