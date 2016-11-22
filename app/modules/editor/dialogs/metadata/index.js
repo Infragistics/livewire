@@ -1,7 +1,9 @@
+/*jslint node: true */
+/*jshint esversion: 6 */
+
 module = module.exports;
 
 const
-    _ = require('lodash'),
     path = require('path'),
     data = require(path.resolve(__dirname, '../../../../data')),
     messenger = require(path.resolve(__dirname, '../../../messenger'));
@@ -139,7 +141,7 @@ module.init = (formatterModule, dialogModule) => {
         $controlNameBox.val('');
         
         $dialog.modal('hide');
-    })
+    });
 };
 
 var handlers = {

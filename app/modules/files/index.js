@@ -66,6 +66,8 @@ var handlers = {
     
     metadataChanged: (metadata) => {
         files[_selectedID].metadata = metadata;
+		files[_selectedID].isDirty = true;
+		messenger.publish.file('isDirty', _selectedID);
     },
 
 	dirty: (id) => {
