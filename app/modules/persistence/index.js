@@ -175,8 +175,10 @@ var menuHandlers = {
             messenger.publish.file('titleChanged', fileInfo);
             messenger.publish.file('pathChanged', fileInfo);
             messenger.publish.file('rerender');
-            messenger.publish.file('isClean', { type: 'path', value: filePath });
             messenger.publish.file('saveAsComplete', { id: files.getCurrentID(), path: filePath });
+
+            // publishing isClean must come after publishing saveAsComplete
+            messenger.publish.file('isClean', { type: 'path', value: filePath });
         }).catch((error) => {
             debugger;
             console.log(error);
