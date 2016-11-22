@@ -77,21 +77,19 @@ var handlers = {
 		}
 	},
 
-	clean: (args) => {
-		if(args.type === 'path') {
-			Object.keys(files).forEach((key) => {
-				if(files[key].path.toLowerCase() === args.value.toLowerCase()) {
-					files[key].isDirty = false;
-					messenger.publish.file('isClean', { type: 'id', value: files[key].id });
-				}
-			});
-		}
+	cleanByFilePath: (filePath) => {
+		Object.keys(files).forEach((key) => {
+			if(files[key].path.toLowerCase() === filePath.toLowerCase()) {
+				files[key].isDirty = false;
+				messenger.publish.file('isCleanById', files[key].id);
+			}
+		});
 	},
 
 	newId: (args) => {
 		let isPathEmpty = !args.path || args.path.length === 0;
 		if(!files[args.id] && isPathEmpty) {
-			files[args.id] = module.getFileInfo();
+			files[args.id] = module.getFileInfo(args.formatter);
 		}
 	},
 
@@ -119,8 +117,7 @@ module.isFileOpen = function(filePath){
 	return result;
 };
 
-// todo: move hardcoded adoc to config
-module.getFileInfo = (filePath, formatter = { defaultExtension: 'adoc' }) => {
+module.getFileInfo = (filePath, formatter) => {
     var returnValue;
 
     if (!filePath) {
@@ -191,7 +188,7 @@ messenger.subscribe.file('new', handlers.fileSelected);
 messenger.subscribe.file('pathChanged', handlers.pathChanged);
 messenger.subscribe.file('beforeSelected', handlers.beforeFileSelected);
 messenger.subscribe.file('sourceDirty', handlers.dirty);
-messenger.subscribe.file('isClean', handlers.clean);
+messenger.subscribe.file('isCleanByFilePath', handlers.cleanByFilePath);
 messenger.subscribe.file('newId', handlers.newId);
 messenger.subscribe.file('saveAsComplete', handlers.saveAsComplete);
 messenger.subscribe.metadata('metadataChanged', handlers.metadataChanged);

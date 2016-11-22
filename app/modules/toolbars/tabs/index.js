@@ -3,40 +3,40 @@
 /*jshint esversion: 6 */
 
 module = module.exports;
-  
+
 const { shell } = require('electron');
 
-var 
+var
   path = require('path'),
   messenger = require(path.resolve(__dirname, '../../messenger')),
   files = require(path.resolve(__dirname, '../../files')),
   dialogs = require(path.resolve(__dirname, '../../dialogs')),
   _ = require('lodash'),
-  
+
   editor = null,
   selectedPath = '',
-  _files = [], 
+  _files = [],
 
   $explorer = $('#lw-explorer'),
   $tabsContainer = $('#lw-tabs'),
   $explorerButton = $('#lw-explorer-button'),
   $window = $(window),
-  
+
   template = '<div class="lw-tab active" title="PATH"><span class="lw-name">NAME</span> <button class="lw-close" title="close" data-path="PATH"><i class="fa fa-times-circle-o"></i></button></div>';
-  
-var removeActiveClass = function(){
+
+var removeActiveClass = function () {
   $('.lw-tab').removeClass('active');
 };
 
-var clearSelection = function(){
-  window.getSelection().empty();  
+var clearSelection = function () {
+  window.getSelection().empty();
 };
 
-var escapePath = function(path){
+var escapePath = function (path) {
   return path.replace(/\\/g, '_');
 };
 
-var bindTab = function($tab, fileInfo){
+var bindTab = function ($tab, fileInfo) {
   $tab.attr('title', fileInfo.path);
   $tab.attr('data-escaped-path', escapePath(fileInfo.path));
   $tab.attr('id', fileInfo.id);
@@ -46,32 +46,32 @@ var bindTab = function($tab, fileInfo){
 };
 
 var bindExplorer = () => {
-    $explorer.html('');
-    var markup = '';
-    _files.forEach((file) => {
-        markup = `<div class="fileName" data-escaped-path="${escapePath(file.path)}">${file.fileName}</div>`;
-        $explorer.append(markup);
-    });
+  $explorer.html('');
+  var markup = '';
+  _files.forEach((file) => {
+    markup = `<div class="fileName" data-escaped-path="${escapePath(file.path)}">${file.fileName}</div>`;
+    $explorer.append(markup);
+  });
 };
 
-var getFileInfoFromTab = function($tab){
-  
-  var 
-    fileName = '', 
-    filePath = '', 
-    ext = '', 
+var getFileInfoFromTab = function ($tab) {
+
+  var
+    fileName = '',
+    filePath = '',
+    ext = '',
     basePath = '';
-  
+
   fileName = $tab.find('span.lw-name').text();
   filePath = $tab.attr('title');
-  
-  if(filePath.length === 0){
+
+  if (filePath.length === 0) {
     ext = path.extname(fileName);
   } else {
     basePath = path.dirname(filePath);
     ext = path.extname(filePath);
   }
-  
+
   var fileInfo = {
     path: filePath,
     id: $tab.attr('id'),
@@ -79,49 +79,49 @@ var getFileInfoFromTab = function($tab){
     basePath: basePath,
     ext: ext
   };
-  
+
   return fileInfo;
 };
 
 var handlers = {
-  
-  switchDocuments: function(e){
+
+  switchDocuments: function (e) {
     var $tab, fileInfo, isTabSelected, cursorInfo;
-    
+
     editor = ace.edit('editor');
-    
+
     cursorInfo = {
       position: editor.selection.getCursor(),
       path: selectedPath
     };
-    
+
     messenger.publish.file('beforeSelected', cursorInfo);
-    
+
     $tab = $(this);
     isTabSelected = $tab.hasClass('active');
-    
-    if(!isTabSelected){
+
+    if (!isTabSelected) {
       removeActiveClass();
-      $tab.addClass('active');   
+      $tab.addClass('active');
       fileInfo = getFileInfoFromTab($tab);
       selectedPath = fileInfo.path;
       messenger.publish.file('selected', fileInfo);
       messenger.publish.file('basePathChanged', fileInfo);
     }
-    
+
   },
-  
-  openFileInExplorerOrFinder: function(e){
-    var filePath; 
-    
+
+  openFileInExplorerOrFinder: function (e) {
+    var filePath;
+
     clearSelection();
     filePath = $(this).attr('title');
-    
-    if(filePath.length > 0){
+
+    if (filePath.length > 0) {
       shell.showItemInFolder(filePath);
     }
   },
-  
+
   closeTab: function (e) {
     var $btn, $tab, isTabSelected, fileInfo, openTabCount;
 
@@ -146,6 +146,12 @@ var handlers = {
         }, 5);
       }
 
+      openTabCount = $tabsContainer.find('.lw-tab').length;
+
+      if (openTabCount === 0) {
+        messenger.publish.file('allFilesClosed', fileInfo);
+      }
+
       messenger.publish.file('closed', fileInfo);
     };
 
@@ -164,65 +170,60 @@ var handlers = {
       closeTab($tab, fileInfo);
     }
 
-    openTabCount = $tabsContainer.find('.lw-tab').length;
-
-    if (openTabCount === 0) {
-      messenger.publish.file('allFilesClosed', fileInfo);
-    }
-
     e.stopPropagation();
   },
-  
+
   pathChanged: function (fileInfo, envelope) {
     var $tab, useActiveTab;
-    
+
     if (!_.isUndefined(fileInfo.path)) {
-      
+
       selectedPath = fileInfo.path;
       useActiveTab = fileInfo.isSaveAs;
-      
-      if(fileInfo.isFileAlreadyOpen){
+
+      if (fileInfo.isFileAlreadyOpen) {
         $tab = $tabsContainer.find('div[data-escaped-path="' + escapePath(fileInfo.path) + '"]');
-        $tab.trigger('click');      
-      } else if(useActiveTab){
+        $tab.trigger('click');
+      } else if (useActiveTab) {
         $tab = $tabsContainer.find('.active');
         bindTab($tab, fileInfo);
       } else {
         removeActiveClass();
         $tab = $(template);
         bindTab($tab, fileInfo);
-        $tabsContainer.append($tab); 
+        $tabsContainer.append($tab);
       }
     }
   },
-  
+
   selectFile: (e) => {
-      var $file = $(e.target);
-      var path = $file.data('escaped-path');
-      $tab = $tabsContainer.find(`div[data-escaped-path="${path}"]`);
-      $tab.trigger('click');
-      $explorer.fadeToggle('fast');   
+    var $file = $(e.target);
+    var path = $file.data('escaped-path');
+    $tab = $tabsContainer.find(`div[data-escaped-path="${path}"]`);
+    $tab.trigger('click');
+    $explorer.fadeToggle('fast');
   },
-  
+
   toggleExplorer: () => {
-      if(!$explorer.is(':visible') && _files.length > 0){
-        bindExplorer();
-        $explorer.fadeIn('fast');
-      } else {
-        $explorer.fadeOut('fast');          
-      }
+    if (!$explorer.is(':visible') && _files.length > 0) {
+      bindExplorer();
+      $explorer.fadeIn('fast');
+    } else {
+      $explorer.fadeOut('fast');
+    }
   },
 
   dirty: (id) => {
     let $label = $(`#${id} .lw-name`);
-    $label.text(`${$label.text()} *`);
+    let label = $label.text();
+    if (!/ \*/.test(label)) {
+      $label.text(`${label} *`);
+    }
   },
 
-  clean: (args) => {
-    if(args.type === 'id') {
-      let $label = $(`#${args.value} .lw-name`);
-      $label.text($label.text().replace(' *', ''));
-    }
+  cleanById: (id) => {
+    let $label = $(`#${id} .lw-name`);
+    $label.text($label.text().replace(' *', ''));
   }
 };
 
@@ -234,16 +235,16 @@ $explorerButton.click(handlers.toggleExplorer);
 $explorer.on('click', '.fileName', handlers.selectFile)
 
 $window.click((e) => {
-    setTimeout(function() {
-        if($explorer.is(':visible')){
-            let $target = $(e.target);
-            if(!$target.hasClass('explorerButton')){
-                $explorer.fadeOut('fast');
-            }
-        }
-    }, 250);
+  setTimeout(function () {
+    if ($explorer.is(':visible')) {
+      let $target = $(e.target);
+      if (!$target.hasClass('explorerButton')) {
+        $explorer.fadeOut('fast');
+      }
+    }
+  }, 250);
 });
 
 messenger.subscribe.file('pathChanged', handlers.pathChanged);
 messenger.subscribe.file('isDirty', handlers.dirty);
-messenger.subscribe.file('isClean', handlers.clean);
+messenger.subscribe.file('isCleanById', handlers.cleanById);

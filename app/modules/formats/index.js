@@ -1,3 +1,6 @@
+/*jslint node: true */
+/*jshint esversion: 6 */
+
 module = module.exports;
 
 var fs = require('fs');
@@ -7,10 +10,7 @@ var formats = [];
 var config = require(path.resolve(__dirname, '../config')).get();
 
 module.get = function (name) {
-	//var fullPath = path.resolve(__dirname, './' + name + '.json');
-	//var format = fs.readFileSync(fullPath, { encoding: 'utf8' });
-	//return JSON.parse(format);
-    var format = require('./' + name) 
+    var format = require('./' + name);
     return format;
 };
 
@@ -32,12 +32,11 @@ module.getByFileExtension = function (ext) {
 			}
 		});
 	}
-	if (returnValue == null) {
+	if (returnValue === null) {
 		throw new Error('Format not found. ext: ' + ext);
 	}
 	return returnValue;
 };
-
 
 module.getAll = function () {
 	if (formats.length === 0) {

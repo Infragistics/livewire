@@ -14,7 +14,6 @@ var
     formats = require(path.resolve(__dirname, '../formats')),
     files = require(path.resolve(__dirname, '../files')),
 
-    editor,
     filePath = '',
     basePath = '',
     formatter = null,
@@ -43,7 +42,7 @@ var menuHandlers = {
 
         fileInfo = files.getFileInfo(null, formatter);
 
-        messenger.publish.file('newId', { id: fileInfo.id, path: fileInfo.path });
+        messenger.publish.file('newId', { id: fileInfo.id, path: fileInfo.path, formatter: formatter });
         messenger.publish.file('pathChanged', fileInfo);
 
         fileInfo.contents = formatter.defaultContent;
@@ -128,7 +127,7 @@ var menuHandlers = {
                     console.log(err);
                 });
 
-                messenger.publish.file('isClean', { type: 'path', value: filePath });
+                messenger.publish.file('isCleanByFilePath', filePath);
             } else {
                 menuHandlers.saveAs(data, envelope);
             }
@@ -177,8 +176,8 @@ var menuHandlers = {
             messenger.publish.file('rerender');
             messenger.publish.file('saveAsComplete', { id: files.getCurrentID(), path: filePath });
 
-            // publishing isClean must come after publishing saveAsComplete
-            messenger.publish.file('isClean', { type: 'path', value: filePath });
+            // publishing isCleanByFilePath must come after publishing saveAsComplete
+            messenger.publish.file('isCleanByFilePath', filePath);
         }).catch((error) => {
             debugger;
             console.log(error);
