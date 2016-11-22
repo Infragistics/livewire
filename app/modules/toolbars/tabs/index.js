@@ -9,6 +9,8 @@ const { shell } = require('electron');
 var 
   path = require('path'),
   messenger = require(path.resolve(__dirname, '../../messenger')),
+  files = require(path.resolve(__dirname, '../../files')),
+  dialogs = require(path.resolve(__dirname, '../../dialogs')),
   _ = require('lodash'),
   
   editor = null,
@@ -120,38 +122,55 @@ var handlers = {
     }
   },
   
-  closeTab: function(e){
+  closeTab: function (e) {
     var $btn, $tab, isTabSelected, fileInfo, openTabCount;
-    
-    e.stopPropagation();
-    
+
     $btn = $(this);
-    $tab = $btn.parents('.lw-tab');
-    
-    isTabSelected = $tab.hasClass('active');
-    
-    fileInfo = getFileInfoFromTab($tab);
-    
-    _files = _.remove(_files, (file) => {
-        return file.fileName != fileInfo.fileName;
-    });
-    
     $btn.blur();
-    $tab.remove();
-    
-    if(isTabSelected){
-      setTimeout(function() {
-        $('.lw-tab').last().trigger('click');
-      }, 5);
+    $tab = $btn.parents('.lw-tab');
+
+    isTabSelected = $tab.hasClass('active');
+
+    fileInfo = getFileInfoFromTab($tab);
+
+    let closeTab = ($tab, fileInfo) => {
+      _files = _.remove(_files, (file) => {
+        return file.fileName !== fileInfo.fileName;
+      });
+
+      $tab.remove();
+
+      if (isTabSelected) {
+        setTimeout(function () {
+          $('.lw-tab').last().trigger('click');
+        }, 5);
+      }
+
+      messenger.publish.file('closed', fileInfo);
+    };
+
+    if (files.isFileDirty(fileInfo.id)) {
+      dialogs.messageBox({
+        type: 'question',
+        buttons: ['Yes', 'No'],
+        title: 'Confirm',
+        message: 'This file has unsaved changes. Are you sure you want to close this tab?'
+      }).then((shouldRemainOpen) => {
+        if (!shouldRemainOpen) {
+          closeTab($tab, fileInfo);
+        }
+      });
+    } else {
+      closeTab($tab, fileInfo);
     }
-    
-    messenger.publish.file('closed', fileInfo);
-    
+
     openTabCount = $tabsContainer.find('.lw-tab').length;
-    
-    if(openTabCount === 0){
+
+    if (openTabCount === 0) {
       messenger.publish.file('allFilesClosed', fileInfo);
     }
+
+    e.stopPropagation();
   },
   
   pathChanged: function (fileInfo, envelope) {
@@ -217,7 +236,7 @@ $explorer.on('click', '.fileName', handlers.selectFile)
 $window.click((e) => {
     setTimeout(function() {
         if($explorer.is(':visible')){
-            $target = $(e.target);
+            let $target = $(e.target);
             if(!$target.hasClass('explorerButton')){
                 $explorer.fadeOut('fast');
             }

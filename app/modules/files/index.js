@@ -6,7 +6,8 @@ module = module.exports;
 const 
 	path = require('path'),
 	messenger = require(path.resolve(__dirname, '../messenger')),
-	dialogs = require(path.resolve(__dirname, '../dialogs')),
+	metadataCleanUpRules = require('./metadata-cleanup-rules.js'),
+	uuid = require('node-uuid'),
 	files = {};
 
 let _selectedID = '';
@@ -15,18 +16,6 @@ var addFileIfNotInList = (fileInfo) => {
 	if(!files[fileInfo.id]) {
 		files[fileInfo.id] = fileInfo;
 	}
-};
-
-const hasUnsavedChanges = () => {
-	let returnValue = false;
-
-	Object.keys(files).forEach((key) => {
-		if(files[key].isDirty) {
-			returnValue = true;
-		}
-	});
-
-	return returnValue;
 };
 
 var handlers = {
@@ -95,6 +84,24 @@ var handlers = {
 				}
 			});
 		}
+	},
+
+	newId: (args) => {
+		let isPathEmpty = !args.path || args.path.length === 0;
+		if(!files[args.id] && isPathEmpty) {
+			files[args.id] = module.getFileInfo();
+		}
+	},
+
+	saveAsComplete: (args) => {
+		Object.keys(files).forEach((key) => {
+			if(files[key].id === args.id) {
+				files[key].path = args.path;
+				files[key].ext = path.extname(args.path).replace('.', '');
+				files[key].fileName = path.basename(args.path);
+				files[key].basePath = path.dirname(args.path);
+			}
+		});
 	}
 };
 
@@ -110,91 +117,66 @@ module.isFileOpen = function(filePath){
 	return result;
 };
 
-var indentSpaces =  '    "';
+// todo: move hardcoded adoc to config
+module.getFileInfo = (filePath, formatter = { defaultExtension: 'adoc' }) => {
+    var returnValue;
 
-const metadataCleanUpRules = {
-	arrays: [
-		{
-			description: 'strips line breaks from array definitions',
-			pattern: /\n/g,
-			replacement: (match) => ''
-		},
-		{
-			description: 'strips stray spaces after array brackets',
-			pattern: /\[\s+/g,
-			replacement: (match) => '['
-		},
-		{
-			description: 'strips stray spaces before array brackets',
-			pattern: /"\s+]/g,
-			replacement: (match) => '"]'
-		},
-		{
-			description: 'strips stray spaces after property members',
-			pattern: /,\s+/g,
-			replacement: (match) => ','
-		},
-		{
-			description: 'ensures indentation is uniform',
-			pattern: /\s\]/g,
-			replacement: (match) => ']'
-		},
-		{
-			description: 'strips stray line before line break',
-			pattern: /\s+\n/g,
-			replacement: (match) => '\n'
-		}
-	],
-	all: [
-		{
-			description: 'adds missing line breaks to members',
-			pattern: /\],\"/g,
-			replacement: (match) => `],\n${indentSpaces}`
-		},
-		{
-			description: 'removes extra spaces between array brackets',
-			pattern: /" \],/g,
-			replacement: (match) => '"],'
-		},
-		{
-			description: 'makes spaces before members uniform',
-			pattern: /\n {1,}"/g,
-			replacement: (match) => `\n${indentSpaces}`
-		}
-	]
+    if (!filePath) {
+        returnValue = {
+            path: '',
+            ext: formatter.defaultExtension,
+            fileName: 'untitled.' + formatter.defaultExtension,
+            basePath: '',
+            isFileAlreadyOpen: false
+        };
+    } else {
+        returnValue = {
+            path: filePath,
+            ext: path.extname(filePath).replace('.', ''),
+            fileName: path.basename(filePath),
+            basePath: path.dirname(filePath),
+            isFileAlreadyOpen: module.isFileOpen(filePath)
+        };
+    }
+
+    returnValue.id = uuid.v1();
+
+    return returnValue;
 };
 
-module.getCurrentFileInfo = () => {
-	return files[_selectedID];
+module.hasUnsavedChanges = () => {
+	let hasDirtyFiles = false;
+	Object.keys(files).forEach((key) => {
+		if(files[key].isDirty) {
+			hasDirtyFiles = true;
+		}
+	});
+	return hasDirtyFiles;
 };
+
+module.isFileDirty = (id) => files[id] && files[id].isDirty;
+
+module.getDirtyFileList = () => {
+	let list = [];
+	Object.keys(files).forEach((key) => {
+		if(files[key].isDirty) {
+			list.push(files[key].fileName);
+		}
+	});
+	return list;
+};
+
+module.getCurrentFileInfo = () => files[_selectedID];
+
+module.getCurrentID = () => _selectedID;
 
 module.getCurrentMetadataString = (formatter) => {
-    var metadata = '';
-    
+    let metadata = '';
+	
     if(files[_selectedID].metadata){
-
 		metadata = JSON.stringify(files[_selectedID].metadata, null, 4);
-
-		const firstIndentPattern = /(\s+)\"/;
-		var indentSpaceMatch = metadata.match(firstIndentPattern);
-
-		if(indentSpaceMatch && indentSpaceMatch.length > 0){
-			indentSpaces = indentSpaceMatch[0].replace('\n', '');
-		}
-
-		const arrayItemPattern = /\[((\s|.)+?)\]/g;
-		metadata = metadata.replace(arrayItemPattern, (match, array) => {
-			metadataCleanUpRules.arrays.forEach((rule) => {
-				match = match.replace(rule.pattern, rule.replacement);    
-			});
-			return match;
-		});
-
-		metadataCleanUpRules.all.forEach((rule) => {
-			metadata = metadata.replace(rule.pattern, rule.replacement);
-		});
-
-		metadata = formatter.wrapTextInComment(`|metadata|\n${metadata}\n|metadata|`)
+		metadata = metadataCleanUpRules.apply(metadata);
+		metadata = formatter.wrapTextInComment(`|metadata|\n${metadata}\n|metadata|`);
     }
     
     return metadata;
@@ -208,22 +190,6 @@ messenger.subscribe.file('pathChanged', handlers.pathChanged);
 messenger.subscribe.file('beforeSelected', handlers.beforeFileSelected);
 messenger.subscribe.file('sourceDirty', handlers.dirty);
 messenger.subscribe.file('isClean', handlers.clean);
+messenger.subscribe.file('newId', handlers.newId);
+messenger.subscribe.file('saveAsComplete', handlers.saveAsComplete);
 messenger.subscribe.metadata('metadataChanged', handlers.metadataChanged);
-
-window.onbeforeunload = (e) => {
-	if(hasUnsavedChanges()) {
-		dialogs.messageBox({
-			type: 'question',
-			buttons: ['Yes', 'No'],
-			title: 'Confirm',
-			message: 'You have unsaved work. Are you sure you want to quit?'
-		}).then((shouldRemainOpen) => {
-			if(!shouldRemainOpen) {
-				window.onbeforeunload = () => {};
-				window.close();
-			}
-		});
-		e.returnValue = false;
-	}
-};
-

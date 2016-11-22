@@ -8,7 +8,6 @@ var
     path = require('path'),
     fs = require('fs'),
     _ = require('lodash'),
-    uuid = require('node-uuid'),
 
     dialogs = require(path.resolve(__dirname, '../dialogs')),
     messenger = require(path.resolve(__dirname, '../messenger')),
@@ -31,32 +30,6 @@ messenger.subscribe.file('pathChanged', (data, envelope) => {
     }
 });
 
-var getFileInfo = (filePath, formatter) => {
-    var returnValue;
-
-    if (filePath === null) {
-        returnValue = {
-            path: '',
-            ext: formatter.defaultExtension,
-            fileName: 'untitled.' + formatter.defaultExtension,
-            basePath: '',
-            isFileAlreadyOpen: false
-        };
-    } else {
-        returnValue = {
-            path: filePath,
-            ext: path.extname(filePath).replace('.', ''),
-            fileName: path.basename(filePath),
-            basePath: path.dirname(filePath),
-            isFileAlreadyOpen: files.isFileOpen(filePath)
-        };
-    }
-
-    returnValue.id = uuid.v1();
-
-    return returnValue;
-};
-
 var menuHandlers = {
 
     newFile: (data, envelope) => {
@@ -68,8 +41,9 @@ var menuHandlers = {
         formatName = envelope.data.format;
         formatter = formats.get(formatName);
 
-        fileInfo = getFileInfo(null, formatter);
+        fileInfo = files.getFileInfo(null, formatter);
 
+        messenger.publish.file('newId', { id: fileInfo.id, path: fileInfo.path });
         messenger.publish.file('pathChanged', fileInfo);
 
         fileInfo.contents = formatter.defaultContent;
@@ -105,11 +79,12 @@ var menuHandlers = {
             filePath = response.path;
             basePath = path.dirname(filePath);
 
-            fileInfo = getFileInfo(response.path);
+            fileInfo = files.getFileInfo(response.path);
             fileInfo.size = response.size;
 
             formatter = formats.getByFileExtension(fileInfo.ext);
 
+            messenger.publish.file('newId', { id: fileInfo.id, path: fileInfo.path });
             messenger.publish.file('pathChanged', fileInfo);
 
             if (!fileInfo.isFileAlreadyOpen) {
@@ -200,6 +175,8 @@ var menuHandlers = {
             messenger.publish.file('titleChanged', fileInfo);
             messenger.publish.file('pathChanged', fileInfo);
             messenger.publish.file('rerender');
+            messenger.publish.file('isClean', { type: 'path', value: filePath });
+            messenger.publish.file('saveAsComplete', { id: files.getCurrentID(), path: filePath });
         }).catch((error) => {
             debugger;
             console.log(error);
