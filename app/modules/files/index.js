@@ -89,7 +89,7 @@ var handlers = {
 	newId: (args) => {
 		let isPathEmpty = !args.path || args.path.length === 0;
 		if(!files[args.id] && isPathEmpty) {
-			files[args.id] = module.getFileInfo(args.formatter);
+			files[args.id] = module.getFileInfo(null, args.formatter);
 		}
 	},
 
