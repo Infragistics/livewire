@@ -43,7 +43,7 @@ require.main.require('./modules/results');
 require.main.require('./modules/editor');
 require.main.require('./modules/footer');
 require.main.require('./modules/help');
-require.main.require('./modules/global');
+require.main.require('./modules/global/drag-drop-open.js');
 require.main.require('./modules/config/productConfigurationReader.js');
 
 

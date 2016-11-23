@@ -109,7 +109,7 @@ module.isFileOpen = function(filePath){
 	var result = false;
 
 	Object.keys(files).forEach((key) => {
-		if(files[key].path.toLowerCase() === filePath) {
+		if(files[key].path.toLowerCase() === filePath.toLowerCase()) {
 			result = true;
 		}
 	});

@@ -50,29 +50,10 @@ var menuHandlers = {
         messenger.publish.file('opened', fileInfo);
     },
 
-    open: (data, envelope) => {
-        var options, supportedFormats, allFormats;
+    open: (filePaths) => {
+        
 
-        options = {
-            title: 'Open',
-            filters: []
-        };
-
-        supportedFormats = formats.getAll();
-
-        allFormats = {
-            name: 'All',
-            extensions: []
-        };
-
-        supportedFormats.forEach((format) => {
-            options.filters.push({ name: format.name, extensions: format.extensions });
-            allFormats.extensions = allFormats.extensions.concat(format.extensions);
-        });
-
-        options.filters.unshift(allFormats);
-
-        dialogs.openFile(options).then((response) => {
+        let openFile = (response) => {
             var fileInfo, fileContents, metadataMatches, metadata;
 
             filePath = response.path;
@@ -103,10 +84,41 @@ var menuHandlers = {
                 fileInfo.contents = fileContents;
                 messenger.publish.file('opened', fileInfo);
             }
-        }).catch((error) => {
-            debugger;
-            console.log(error);
-        });
+        };
+
+        if(filePaths) {
+            filePaths.forEach((filePath) => {
+                fs.readFile(filePath, 'utf8', (err, data) => {
+                    openFile({ path: filePath, content: data });
+                });
+            });
+        } else {
+            let options, supportedFormats, allFormats;
+
+            options = {
+                title: 'Open',
+                filters: []
+            };
+
+            supportedFormats = formats.getAll();
+
+            allFormats = {
+                name: 'All',
+                extensions: []
+            };
+
+            supportedFormats.forEach((format) => {
+                options.filters.push({ name: format.name, extensions: format.extensions });
+                allFormats.extensions = allFormats.extensions.concat(format.extensions);
+            });
+
+            options.filters.unshift(allFormats);
+
+            dialogs.openFile(options).then(openFile).catch((error) => {
+                debugger;
+                console.log(error);
+            });
+        }
     },
 
     save: (data, envelope) => {

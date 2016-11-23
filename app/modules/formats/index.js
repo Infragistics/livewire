@@ -9,6 +9,8 @@ var _ = require('lodash');
 var formats = [];
 var config = require(path.resolve(__dirname, '../config')).get();
 
+let supportedFileExtensions = [];
+
 module.get = function (name) {
     var format = require('./' + name);
     return format;
@@ -38,6 +40,8 @@ module.getByFileExtension = function (ext) {
 	return returnValue;
 };
 
+module.getSupportedFileExtensions = () => supportedFileExtensions;
+
 module.getAll = function () {
 	if (formats.length === 0) {
 		var filePaths = fs.readdirSync(__dirname);
@@ -48,6 +52,9 @@ module.getAll = function () {
 		supportedFormats.forEach(function (filePath) {
 			var name = path.basename(filePath).replace(/.json/, '');
 			var format = module.get(name);
+
+			supportedFileExtensions = supportedFileExtensions.concat(format.extensions);
+			
 			formats.push(format);
 		});
 	}
