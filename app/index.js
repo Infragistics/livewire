@@ -1,14 +1,15 @@
+/*jslint node: true */
+/*jshint esversion: 6 */
 /* global appSettings */
 
 const packageJsonReader = require('./modules/config/packageJsonReader.js');
 const config = require('./modules/config').get();
 const messenger = require('./modules/messenger');
-const path = require('path');
 
 window.appSettings = {
     _editorWidth: '49%',
     
-    editorWidth: function(value){
+    editorWidth: (value) => {
         if(value){
             appSettings._editorWidth = value;
         } else {
@@ -16,11 +17,11 @@ window.appSettings = {
         }
     },
     
-    split: function(){
+    split: () => {
         return (parseInt(appSettings._editorWidth) + 1) + '%';
     },
     
-    resultsWidth: function(value){
+    resultsWidth: (value) => {
         if(parseInt(appSettings.editorWidth()) > 90){
             return '0px';
         } else {
@@ -43,7 +44,6 @@ require.main.require('./modules/editor');
 require.main.require('./modules/footer');
 require.main.require('./modules/help');
 require.main.require('./modules/global');
-
 require.main.require('./modules/config/productConfigurationReader.js');
 
 
@@ -55,7 +55,7 @@ var getNumberValue = (version) => {
         version = reverseString(version);
     }
     return Number(version);
-}
+};
 
 $(function(){
     var publishedVersion, localVersion;
