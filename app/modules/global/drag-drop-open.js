@@ -18,11 +18,16 @@ window.ondrop = function(e) {
 
   [].forEach.call(e.dataTransfer.files, (file) => {
       let extension = path.extname(file.name).replace('.', '');
-
-      if(formats.getSupportedFileExtensions().indexOf(extension) > -1) {
+      let supportedFileExtensions = formats.getSupportedFileExtensions();
+      if(supportedFileExtensions.includes(extension)) {
           filePaths.push(file.path);
       } else {
-          alert(`Unsupported file type: ${file.name}`);
+        let message = supportedFileExtensions;
+        message[message.length -1] = `or ${message[message.length -1]}`;
+        message = message.join(', ');
+        alert(`Can not open file: '${file.name}'.
+
+The file type '${extension}' is unsupported. Please try to open files with the following extensions: ${message}.`);
       }
   });
   

@@ -51,7 +51,9 @@ var menuHandlers = {
     },
 
     open: (filePaths) => {
-        
+
+        let lastFileInfo = null;
+        let openCount = 0;      
 
         let openFile = (response) => {
             var fileInfo, fileContents, metadataMatches, metadata;
@@ -60,6 +62,7 @@ var menuHandlers = {
             basePath = path.dirname(filePath);
 
             fileInfo = files.getFileInfo(response.path);
+            lastFileInfo = fileInfo;
             fileInfo.size = response.size;
 
             formatter = formats.getByFileExtension(fileInfo.ext);
@@ -88,8 +91,19 @@ var menuHandlers = {
 
         if(filePaths) {
             filePaths.forEach((filePath) => {
+
+                openCount++;
+                
                 fs.readFile(filePath, 'utf8', (err, data) => {
+
+                    if(err) console.log(err);
+
                     openFile({ path: filePath, content: data });
+
+                    if(openCount === filePaths.length) {
+                        messenger.publish.file('sourceChange', lastFileInfo);
+                        lastFileInfo = null;
+                    }
                 });
             });
         } else {
