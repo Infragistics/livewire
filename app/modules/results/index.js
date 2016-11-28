@@ -12,6 +12,7 @@ var
     path = require('path'),
     _ = require('lodash'),
     isEnabled = true,
+    cancelRender = false,
 
     messenger = require(path.resolve(__dirname, '../messenger')),
     renderer = require(path.resolve(__dirname, './asciidoc.js')).get(),
@@ -64,7 +65,7 @@ var handlers = {
         handlers.contentChanged(fileInfo);
     },
     contentChanged: function (fileInfo) {
-        if (isEnabled && $result) {
+        if (isEnabled && $result && !cancelRender) {
             _fileInfo = fileInfo;
 
             if (!_.isUndefined(_fileInfo)) {
@@ -72,7 +73,7 @@ var handlers = {
                     $result.html('');
                 } else {
                     if(_fileInfo.contents.length > 0){            
-                        var flags = '';
+
                         detectRenderer(_fileInfo);
                         source = _fileInfo.contents;
 
@@ -175,10 +176,15 @@ var refreshSubscriptions = function(){
 subscribe();
 
 messenger.subscribe.file('selected', handlers.fileSelected);
-messenger.subscribe.file('rerender', function (data, envelope) {
+messenger.subscribe.file('rerender', () => {
     renderer(source, function (e) {
         $result.html(e.html);
     });
+});
+
+messenger.subscribe.file('beforeBulkOpen', () => { cancelRender = true; });
+messenger.subscribe.file('afterBulkOpen', () => {
+    cancelRender = false;
 });
 
 var setHeight = function (offSetValue) {

@@ -1,4 +1,5 @@
-/// <reference path="../../../typings/jquery/jquery.d.ts"/>
+/*jslint node: true */
+/*jshint esversion: 6 */
 /* global appSettings */
 /* global ace */
 
@@ -16,7 +17,8 @@ var
     currentFile = {},
     noop = function () { },
     
-    _suspendOnChangeEventHandler = false;
+    _suspendOnChangeEventHandler = false,
+    _isBulkOpen = false;
     
 var buildFlags = require('./buildFlags.js');
 
@@ -105,15 +107,17 @@ module.load = function (mode) {
         },
         
         contentChangedInternal: function(){
-            if(!_suspendOnChangeEventHandler){
-                var value = editor.getValue();
-                if(value.length > 0){
-                    currentFile.contents = value;
-                    buildFlags.detect(currentFile.contents);
-                    
-                    if(!suspendPublishSourceChange){
-                        messenger.publish.file('sourceChange', currentFile);
-                        messenger.publish.file('sourceDirty', currentFile.id);
+            if(!_isBulkOpen) {
+                if(!_suspendOnChangeEventHandler){
+                    var value = editor.getValue();
+                    if(value.length > 0){
+                        currentFile.contents = value;
+                        buildFlags.detect(currentFile.contents);
+                        
+                        if(!suspendPublishSourceChange){
+                            messenger.publish.file('sourceChange', currentFile);
+                            messenger.publish.file('sourceDirty', currentFile.id);
+                        }
                     }
                 }
             }
@@ -179,6 +183,8 @@ module.load = function (mode) {
     messenger.subscribe.menu('new', handlers.menuNew);
     messenger.subscribe.file('contentChanged', handlers.contentChangedExternal);
     messenger.subscribe.file('new', handlers.fileNew);
+    messenger.subscribe.file('beforeBulkOpen', () => _isBulkOpen = true);
+    messenger.subscribe.file('afterBulkOpen', () => _isBulkOpen = false);
     messenger.subscribe.layout('showResults', handlers.showResults);
     messenger.subscribe.layout('hideResults', handlers.hideResults);
     messenger.subscribe.dialog('modal.closed', handlers.modalClosed);

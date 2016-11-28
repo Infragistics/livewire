@@ -52,8 +52,7 @@ var menuHandlers = {
 
     open: (filePaths) => {
 
-        let lastFileInfo = null;
-        let openCount = 0;      
+        let lastFileInfo = null;   
 
         let openFile = (response) => {
             var fileInfo, fileContents, metadataMatches, metadata;
@@ -90,22 +89,31 @@ var menuHandlers = {
         };
 
         if(filePaths) {
-            filePaths.forEach((filePath) => {
 
-                openCount++;
+            messenger.publish.file('beforeBulkOpen');
+
+            filePaths.forEach((filePath, index) => {
+
+                let isLastFileOpened = index === (filePaths.length - 1);
                 
                 fs.readFile(filePath, 'utf8', (err, data) => {
 
                     if(err) console.log(err);
 
-                    openFile({ path: filePath, content: data });
+                    let response = { path: filePath, content: data }; 
 
-                    if(openCount === filePaths.length) {
-                        messenger.publish.file('sourceChange', lastFileInfo);
-                        lastFileInfo = null;
+                    openFile(response);
+
+                    if(isLastFileOpened) {
+                        messenger.publish.file('afterBulkOpen');
+                        setTimeout(function() {
+                            messenger.publish.file('sourceChange', lastFileInfo);
+                            lastFileInfo = null;
+                        }, 0);
                     }
                 });
             });
+            
         } else {
             let options, supportedFormats, allFormats;
 

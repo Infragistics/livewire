@@ -15,16 +15,17 @@ window.ondrop = function(e) {
   e.preventDefault();
 
   let filePaths = [];
+  let supportedFileExtensions = formats.getSupportedFileExtensions();
+  
+  let message = [].concat(supportedFileExtensions); // clone array
+  message[message.length -1] = `or ${message[message.length -1]}`;
+  message = message.join(', ');
 
   [].forEach.call(e.dataTransfer.files, (file) => {
       let extension = path.extname(file.name).replace('.', '');
-      let supportedFileExtensions = formats.getSupportedFileExtensions();
       if(supportedFileExtensions.includes(extension)) {
           filePaths.push(file.path);
       } else {
-        let message = supportedFileExtensions;
-        message[message.length -1] = `or ${message[message.length -1]}`;
-        message = message.join(', ');
         alert(`Can not open file: '${file.name}'.
 
 The file type '${extension}' is unsupported. Please try to open files with the following extensions: ${message}.`);
