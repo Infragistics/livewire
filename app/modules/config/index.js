@@ -1,16 +1,16 @@
+/*jslint node: true */
+/*jshint esversion: 6 */
+
 module = module.exports;
 
-var fs = require('fs');
-var path = require('path');
+const path = require('path');
 
-var config = null;
+let config = null;
 
 module.get = function () {
 
 	if (config === null) {
-		var fullPath = path.resolve(__dirname, '../../config.json');
-		var text = fs.readFileSync(fullPath, { encoding: 'utf8' });
-		config = JSON.parse(text);
+		config = require(path.resolve(__dirname, '../../config.js'));
 	}
 
 	return config;

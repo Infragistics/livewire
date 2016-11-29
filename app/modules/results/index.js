@@ -83,17 +83,13 @@ var handlers = {
                             $renderingLabel.fadeIn('fast');
                         }
                         
-                        if(_productConfiguration && _productConfiguration.selectedProduct){
-                            source = renderTransformer.beforeRender(source, _productConfiguration);
-                        }
+                        source = renderTransformer.beforeRender(source, _productConfiguration);
                         
                         renderer(source, function (e) {
 
                             html = e.html;
 
-                            if(_productConfiguration && _productConfiguration.selectedProduct) {
-                                html = renderTransformer.afterRender(html, _productConfiguration);
-                            }
+                            html = renderTransformer.afterRender(html, _productConfiguration);
 
                             $result.html(html);
                             

@@ -30,9 +30,9 @@ var handlers = {
         $img.attr('src', (basePath + '\\' + src).replace(/\//g, '\\'));
       });
 
-      // remove AsciiDoc table of contents label
-      //  <div id="toctitle" class="title">Table of Contents</div>
-      $('#toctitle').html('<h2>In This Topic:</h2>');
+      // make toc title H2 element
+      var $tocTitle = $('#toctitle'); 
+      $('#toctitle').html(`<h2>${$tocTitle.text()}</h2>`);
 
       renderCallback({ html: $.html()});
     }

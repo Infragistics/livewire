@@ -1,7 +1,11 @@
+/*jslint node: true */
+/*jshint esversion: 6 */
+
 module = module.exports;
 
 const path = require('path');
 const messenger = require(path.resolve(__dirname, '../../messenger'));
+const config = require(path.resolve(__dirname, '../../../config.js'));
 
 module.productConfiguration = null;
 
@@ -51,6 +55,14 @@ const rules = [
                 }
             }
 
+            return source;
+        }
+    },
+    {
+        description: 'Configure toc macro default text',
+        apply: (source) => {
+            let culture = config.cultures.detect(source);
+            source = source.replace(/toc\:\:\[]/g, `toc::[title="${config.cultures[culture].defaultTOCLabel}"]`);
             return source;
         }
     }
