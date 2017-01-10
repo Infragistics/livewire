@@ -52,7 +52,9 @@ var menuHandlers = {
 
     open: (filePaths) => {
 
-        let lastFileInfo = null;   
+        let lastFileInfo = null;
+
+        let trimStart = _.trimLeft ? _.trimLeft : _.trimStart;
 
         let openFile = (response) => {
             var fileInfo, fileContents, metadataMatches, metadata;
@@ -70,7 +72,7 @@ var menuHandlers = {
             messenger.publish.file('pathChanged', fileInfo);
 
             if (!fileInfo.isFileAlreadyOpen) {
-                fileContents = _.trimLeft(response.content, BOM);
+                fileContents = trimStart(response.content, BOM);
                 
                 metadataMatches = fileContents.match(formatter.metadataPatterns.full);
                 
@@ -81,7 +83,7 @@ var menuHandlers = {
                 }
                 
                 fileContents = fileContents.replace(formatter.metadataPatterns.full, '');
-                fileContents = _.trimLeft(fileContents, '\n\n');
+                fileContents = trimStart(fileContents, '\n\n');
                 
                 fileInfo.contents = fileContents;
                 messenger.publish.file('opened', fileInfo);
