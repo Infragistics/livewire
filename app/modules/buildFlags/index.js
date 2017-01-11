@@ -17,7 +17,7 @@ module.replaceIndividualFlagsWithProductFlags = (buildFlags) => {
       }
     });
     
-    productNames = _.unique(productNames).sort();
+    productNames = _.uniq(productNames).sort();
     
     _.remove(buildFlags, (flag) => {
       return productFlags.indexOf(flag) > -1;
@@ -25,7 +25,7 @@ module.replaceIndividualFlagsWithProductFlags = (buildFlags) => {
     
     buildFlags = buildFlags.concat(productNames);
     
-    buildFlags = _.unique(buildFlags).sort();
+    buildFlags = _.uniq(buildFlags).sort();
     
     return buildFlags;
 };

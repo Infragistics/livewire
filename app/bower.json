@@ -22,7 +22,7 @@
     "ace-min-noconflict": "~1.1.9",
     "bootstrap": "~3.3.5",
     "font-awesome": "~4.4.0",
-    "postal.js": "~1.0.6",
+    "postal.js": "2.0.4",
     "asciidoctor.js": "~1.5.2",
     "typeahead.js": "~0.11.1"
   }

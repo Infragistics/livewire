@@ -21,8 +21,8 @@
   "author": "Craig Shoemaker <cshoemaker@infragistics.com>",
   "license": "MIT",
   "devDependencies": {
-    "electron-packager": "^5.0.1",
-    "electron-prebuilt": "^1.4.5",
+    "electron": "^1.4.14",
+    "electron-packager": "^7.0.0",
     "gulp": "^3.9.0",
     "gulp-less": "^3.1.0",
     "gulp-tsc": "^1.2.4",
@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "cheerio": "^0.19.0",
-    "lodash": "^3.10.1",
+    "lodash": "4.17.4",
     "marked": "^0.3.6"
   }
 }

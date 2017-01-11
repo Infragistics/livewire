@@ -51,7 +51,7 @@ module.detect = (content) => {
             buildFlags = buildFlags.concat(flag.split(splitChar));            
         });
 
-        buildFlags = _.unique(buildFlags).sort();
+        buildFlags = _.uniq(buildFlags).sort();
         messenger.publish.metadata('buildFlags', buildFlags);
     }
 };
