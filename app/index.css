@@ -4,6 +4,26 @@
 .push-down-top-sm {
   margin-top: 15px;
 }
+.table-plain {
+  border: solid 2px #ddd;
+}
+.table-plain tr,
+.table-plain td,
+.table-plain th {
+  background-color: transparent !important;
+}
+.table-plain > thead > tr > th {
+  border-bottom: 0px !important;
+}
+.table-plain > thead > tr > th,
+.table-plain > tbody > tr > th,
+.table-plain > tfoot > tr > th,
+.table-plain > thead > tr > td,
+.table-plain > tbody > tr > td,
+.table-plain > tfoot > tr > td {
+  border-top: 0 !important;
+  border-left: 2px solid #ddd !important;
+}
 #editor {
   position: absolute;
   top: 74px;
@@ -176,17 +196,13 @@
 .admonitionblock {
   margin: 20px 0 20px 0;
 }
-
 .admonitionblock .icon .title {
   display: none;
 }
-
 .admonitionblock .content {
-  border: 1px solid #ccc;
-  padding: 10px;
-  background-color: #ffc;
+  border-left: 8px solid #eee;
+  padding-left: 10px;
 }
-
 .admonitionblock .content .title {
   font-weight: bold;
 }
@@ -333,9 +349,3 @@ button[data-role="build-flag"].selected {
   background-color: #fbfbfb;
   border: solid 1px #eee;
 }
-
-.bold { font-weight: bold; }
-.red { color: #900; }
-.green { color: #060; }
-.blue { color: #039; }
-.yellow-background { background-color: #ff9; }

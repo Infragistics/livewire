@@ -21,6 +21,30 @@
     margin-top: 15px;
 }
 
+.table-plain {
+    border: solid 2px #ddd;
+
+    tr, 
+    td, 
+    th {
+        background-color: transparent !important;
+    }
+
+    > thead > tr > th {
+        border-bottom: 0px !important;
+    }
+
+    > thead > tr > th, 
+    > tbody > tr > th, 
+    > tfoot > tr > th, 
+    > thead > tr > td, 
+    > tbody > tr > td, 
+    > tfoot > tr > td {
+        border-top: 0 !important;
+        border-left: 2px solid #ddd !important;
+    }
+}
+
 #editor {
     position: absolute;
     top: 74px;
