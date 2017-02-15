@@ -1,6 +1,6 @@
 {
   "name": "livewire",
-  "version": "1.2",
+  "version": "1.2.0",
   "description": "Simple Web Content Editor",
   "main": "index.js",
   "scripts": {
