@@ -100,7 +100,8 @@
   margin-left: 5px;
   margin-right: 5px;
 }
-#config-container {
+#config-container,
+#no-confg-files-found {
   margin-left: 50%;
 }
 #file-name-button {

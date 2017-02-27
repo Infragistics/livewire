@@ -23,6 +23,8 @@ let template = [
       { label: 'Save As', accelerator: 'CmdOrCtrl+Shift+S', click: () => send('file-save-as') },
       { label: 'Save As HTML', accelerator: 'CmdOrCtrl+Shift+H', click: () => send('file-save-as-html') },
       { type: 'separator' },
+      { label: 'Load DocsConfig.xml', accelerator: 'CmdOrCtrl+Shift+D', click: () => send('load-docs-config') },
+      { type: 'separator' },
       { label: 'Quit', accelerator: 'CmdOrCtrl+Q', click: () => send('file-quit') },
     ]
   },

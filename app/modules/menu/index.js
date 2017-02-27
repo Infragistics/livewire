@@ -21,6 +21,7 @@ let handlers = {
   save: () =>  messenger.publish.menu('save'),
   saveAs: () =>  messenger.publish.menu('saveAs'),
   saveAsHtml: () =>  messenger.publish.menu('saveAsHtml'),
+  loadDocsConfig: () => messenger.publish.menu('loadDocsConfig'),
   quit: () =>  messenger.publish.menu('quit'),
 
   // Format
@@ -51,3 +52,4 @@ ipc.on('application-menu-view-full-screen', handlers.fullScreen);
 ipc.on('application-menu-view-auto-hide', handlers.autoHideMenu);
 ipc.on('application-menu-help-issues', handlers.issues);
 ipc.on('application-menu-help-about', handlers.about);
+ipc.on('application-menu-load-docs-config', handlers.loadDocsConfig);

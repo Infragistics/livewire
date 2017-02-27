@@ -1,3 +1,6 @@
+/*jslint node: true */
+/*jshint esversion: 6 */
+
 module = module.exports;
 
 const path = require('path');
@@ -8,8 +11,10 @@ const xml2js = require('xml2js');
 const parser = new xml2js.Parser({
     explicitArray: false
 });
+const config = require('./index.js').get();
+const docsConfig = require('./docsConfig.js');
 
-const configFilePath = path.resolve(__dirname, '../../data/docsConfig/');
+const configFilePath = config.userDataPath;
 
 var _configuration = null;
 
@@ -154,27 +159,39 @@ module.getConfigFromDefinition = (definition, productVersion) => {
     return returnValue;
 };
 
+var readFromFileSystem = true;
+
 var handlers = {
-    getVersionNumbers: () => {
-        var directoryPath = path.resolve(__dirname, '../../data/docsConfig');
-        fs.readdir(directoryPath, (error, files) => {
-            if(error){
-                dialogs.messageBox({
-                    message: `Error trying to read version numbers from: ${directoryPath}`,
-                    detial: JSON.stringify(error)
-                });
-            } else {
-                var versionNumbers = [];
+    getVersionNumbers: (options) => {
+        if(readFromFileSystem || options.readFromFileSystem) {
+            var directoryPath = config.userDataPath;
+            fs.readdir(directoryPath, (error, files) => {
+                if(error){
+                    dialogs.messageBox({
+                        message: `Error trying to read version numbers from: ${directoryPath}`,
+                        detial: JSON.stringify(error)
+                    });
+                } else {
+                    var versionNumbers = [];
 
-                files.forEach((fileName) => {
-                    if(/.xml/i.test(fileName)){
-                        versionNumbers.push(fileName.replace('.xml', '').replace('-', '.'));
+                    var configFiles = files.filter((configFileName) => {
+                        return docsConfig.isDocsConfigFileName(configFileName);
+                    });
+
+                    if(configFiles.length > 0) {
+
+                        configFiles.forEach((fileName) => {
+                            versionNumbers.push(docsConfig.getVersionFromFileName(fileName));
+                        });
+
+                        messenger.publish.metadata('productVersionNumbersChanged', versionNumbers);
+                    } else {
+                        messenger.publish.metadata('noDocsConfigFound');
+                        readFromFileSystem = false;
                     }
-                });
-
-                messenger.publish.metadata('productVersionNumbersChanged', versionNumbers);
-            }
-        });
+                }
+            });
+        }
     },
     getConfiguration: (args) => {
 
@@ -183,7 +200,7 @@ var handlers = {
                 messenger.publish.metadata('productConfigurationChanged', _configuration);
                 messenger.publish.metadata('productListChanged', _configuration.products);
             } else {
-                var configurationFilePath = path.join(configFilePath, args.value.replace('.', '-') + '.xml');
+                var configurationFilePath = path.join(configFilePath, 'docsConfig-' + args.value.replace('.', '-') + '.xml');
                 var xml = module.getXml(configurationFilePath);
                 module.read(xml).then((obj, error) => {
                     if(error) {
@@ -208,4 +225,4 @@ var handlers = {
 };
 
 messenger.subscribe.metadata('getProductVersionNumbers', handlers.getVersionNumbers);
-messenger.subscribe.metadata('productVersionSelectionChanged', handlers.getConfiguration)
+messenger.subscribe.metadata('productVersionSelectionChanged', handlers.getConfiguration);

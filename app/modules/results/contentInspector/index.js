@@ -1,3 +1,6 @@
+/*jslint node: true */
+/*jshint esversion: 6 */
+
 module = module.exports
 
 const path =  require('path');
@@ -30,7 +33,9 @@ module.inspect = (source, fileInfo) => {
     _source = source;
     _fileInfo = fileInfo;
 
-    inspectionRules.forEach((rule) => {
-        rule.apply()
-    });
+    if(_source.length > 0) {
+        inspectionRules.forEach((rule) => {
+            rule.apply();
+        });
+    }
 };

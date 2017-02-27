@@ -9,27 +9,27 @@
 				HelpPath - The path stub after infragistics.com/help/
 			-->
         <Product Name="all"              IsObsolete="false" BuildFlags=""   />
-        <Product Name="ios"              IsObsolete="false" BuildFlags="ios"                 ProductFamilyID="27"  HelpPath="ios"  />
-        <Product Name="asp-net"          IsObsolete="false" BuildFlags="asp-net"             ProductFamilyID="2"   HelpPath="aspnet"  />
-        <Product Name="android"       	 IsObsolete="false" BuildFlags="android"             ProductFamilyID="29 " HelpPath="android"  />
-        <Product Name="jquery"        	 IsObsolete="false" BuildFlags="jquery"              ProductFamilyID="16"  HelpPath=""  />
-        <Product Name="xamarin"       	 IsObsolete="false" BuildFlags="xaml,xamarin"        ProductFamilyID=""    HelpPath="xamarin"  />
-        <Product Name="wpf"           	 IsObsolete="false" BuildFlags="xaml,wpf"            ProductFamilyID="6"   HelpPath="wpf"  />
-        <Product Name="wpf-ta"			     IsObsolete="false" BuildFlags="wpf"                 ProductFamilyID="22"  HelpPath="wpf-ta"  />
-        <Product Name="win-forms"		     IsObsolete="false" BuildFlags="win-forms"           ProductFamilyID="1"   HelpPath="winforms"  />
-        <Product Name="win-forms-ta-rft" IsObsolete="false" BuildFlags="win-forms"           ProductFamilyID="12"  HelpPath="winforms-ta-rft"  />
-        <Product Name="win-forms-ta-hp"	 IsObsolete="false" BuildFlags="win-forms"           ProductFamilyID="11"  HelpPath="winforms-ta-hp"  />
-        <Product Name="win-universal"	   IsObsolete="false" BuildFlags="xaml,win-universal"  ProductFamilyID=""    HelpPath="win-universal"  />
+        <Product Name="ios"              IsObsolete="false" BuildFlags="ios"                 ProductFamilyID="27"  HelpPath="ios"              IsNestedHelpSet="false" />
+        <Product Name="asp-net"          IsObsolete="false" BuildFlags="asp-net"             ProductFamilyID="2"   HelpPath="aspnet"           IsNestedHelpSet="false" />
+        <Product Name="android"       	 IsObsolete="false" BuildFlags="android"             ProductFamilyID="29 " HelpPath="android"          IsNestedHelpSet="false" />
+        <Product Name="jquery"        	 IsObsolete="false" BuildFlags="jquery"              ProductFamilyID="16"  HelpPath=""                 IsNestedHelpSet="false" />
+        <Product Name="xamarin"       	 IsObsolete="false" BuildFlags="xaml,xamarin"        ProductFamilyID=""    HelpPath="xamarin"          IsNestedHelpSet="false" />
+        <Product Name="wpf"           	 IsObsolete="false" BuildFlags="xaml,wpf"            ProductFamilyID="6"   HelpPath="wpf"              IsNestedHelpSet="false" />
+        <Product Name="wpf-ta"			     IsObsolete="false" BuildFlags="wpf"                 ProductFamilyID="22"  HelpPath="wpf-ta"           IsNestedHelpSet="false" />
+        <Product Name="win-forms"		     IsObsolete="false" BuildFlags="win-forms"           ProductFamilyID="1"   HelpPath="winforms"         IsNestedHelpSet="false" />
+        <Product Name="win-forms-ta-rft" IsObsolete="false" BuildFlags="win-forms"           ProductFamilyID="12"  HelpPath="winforms-ta-rft"  IsNestedHelpSet="false" />
+        <Product Name="win-forms-ta-hp"	 IsObsolete="false" BuildFlags="win-forms"           ProductFamilyID="11"  HelpPath="winforms-ta-hp"   IsNestedHelpSet="false" />
+        <Product Name="win-universal"	   IsObsolete="false" BuildFlags="xaml,win-universal"  ProductFamilyID=""    HelpPath="win-universal"    IsNestedHelpSet="false" />
         <Product Name="unknown"	         IsObsolete="true"  BuildFlags="" />
         <!-- report plus only  -->
-        <Product Name="reportplus-desktop" IsObsolete="false" BuildFlags="desktop"          ProductFamilyID="28"  HelpPath="reportplus"  />
-        <Product Name="reportplus-android" IsObsolete="false" BuildFlags="android"          ProductFamilyID="28"  HelpPath="reportplus"  />
-        <Product Name="reportplus-web"     IsObsolete="false" BuildFlags="web"              ProductFamilyID="28"  HelpPath="reportplus"  />
-        <Product Name="reportplus-ios"     IsObsolete="false" BuildFlags="ios"              ProductFamilyID="28"  HelpPath="reportplus"  /> 
+        <Product Name="reportplus-desktop" IsObsolete="false" BuildFlags="desktop"          ProductFamilyID="28"  HelpPath="reportplus"        IsNestedHelpSet="false" />
+        <Product Name="reportplus-android" IsObsolete="false" BuildFlags="android"          ProductFamilyID="28"  HelpPath="reportplus"        IsNestedHelpSet="true" />
+        <Product Name="reportplus-web"     IsObsolete="false" BuildFlags="web"              ProductFamilyID="28"  HelpPath="reportplus"        IsNestedHelpSet="true" />
+        <Product Name="reportplus-ios"     IsObsolete="false" BuildFlags="ios"              ProductFamilyID="28"  HelpPath="reportplus"        IsNestedHelpSet="true" />
         <!-- For 16.1 products only  -->
-        <Product Name="sl"               IsObsolete="true"  BuildFlags="xaml,sl"             ProductFamilyID="4"   HelpPath="silverlight"  />
-        <Product Name="win-phone"        IsObsolete="true"  BuildFlags="xaml,win-phone"      ProductFamilyID="21"  HelpPath="windowsphone"  />
-        <Product Name="win-rt"           IsObsolete="true"  BuildFlags="xaml,win-rt"         ProductFamilyID="30"  HelpPath="windowsui"  />
+        <Product Name="sl"               IsObsolete="true"  BuildFlags="xaml,sl"             ProductFamilyID="4"   HelpPath="silverlight"      IsNestedHelpSet="false" />
+        <Product Name="win-phone"        IsObsolete="true"  BuildFlags="xaml,win-phone"      ProductFamilyID="21"  HelpPath="windowsphone"     IsNestedHelpSet="false" />
+        <Product Name="win-rt"           IsObsolete="true"  BuildFlags="xaml,win-rt"         ProductFamilyID="30"  HelpPath="windowsui"        IsNestedHelpSet="false" />
 		</Products>
     <!-- ====================================================================== -->
     <!-- the BuildFlags section contains definitions of build flags used for:
@@ -68,8 +68,8 @@
  
 		
 		<!-- NOTE that ProductVersion is current branch version -->
-        <Variable Name="ProductVersion"     Products="all" Value="16.2"/>
-        <Variable Name="ProductVersionFull" Products="all" Value="20162"/>
+        <Variable Name="ProductVersion"     Products="all" Value="17.1"/>
+        <Variable Name="ProductVersionFull" Products="all" Value="20171"/>
         <Variable Name="ProductName"        Products="all" Value="Infragistics {PlatformName}"/>
         <!-- Note some variables have values built from other variables  -->
         <Variable Name="ProductNameVersion" Products="all" Value="{ProductName} 20{ProductVersion}"/>
@@ -127,7 +127,7 @@
         <Variable Name="ApiVersion"   Products="win-forms-ta-rft" Value=".v{ProductVersion}"/>
         <Variable Name="ApiVersion"   Products="win-forms-ta-hp"  Value=".v{ProductVersion}"/>
         <Variable Name="ApiVersion"	  Products="win-universal"    Value=".v{ProductVersion}"/>
-        <Variable Name="ApiVersion"	  Products="asp-net"  		    Value=".v{ProductVersion}"/>
+        <Variable Name="ApiVersion"	  Products="asp-net"  		    Value=""/> <!-- Blank value to test versionless APIs -->
         <Variable Name="ApiVersion"	  Products="jquery"  		      Value="#options:"/>
         <Variable Name="ApiVersion"	  Products="xamarin"  		    Value=""/>
         <Variable Name="ApiPlatform"  Products="all"            Value=""/>
@@ -136,11 +136,11 @@
         <Variable Name="ApiPlatform"  Products="win-forms-ta-rft" Value="Infragistics4."/>
         <Variable Name="ApiPlatform"  Products="win-forms-ta-hp"  Value="Infragistics4."/>
         <Variable Name="ApiPlatform"  Products="win-forms"      Value="Infragistics4."/>
-        <Variable Name="ApiPlatform"  Products="asp-net"  		  Value="Infragistics4."/> 
+        <Variable Name="ApiPlatform"  Products="asp-net"  		  Value="Infragistics."/> <!-- Removed 4 to test versionless APIs -->
         <Variable Name="ApiPlatform"  Products="xamarin"        Value="InfragisticsXF."/>
         <Variable Name="ApiPlatform"  Products="android"        Value="Infragistics."/> 
         <Variable Name="ApiPlatform"  Products="win-universal"  Value="InfragisticsUWP."/> 
-        <Variable Name="ApiPlatform"  Products="jquery"  		    Value="ui."/> 
+        <Variable Name="ApiPlatform"  Products="jquery"  		    Value="http://www.igniteui.com/help/api/20{ProductVersion}/ui."/> 
 		<!-- =========== Geographic Map ================================================================================================================= -->
 <!-- too bad we cannot share API links between jquery and rest platforms because names of API object are different: axes vs Axis
                  http://www.igniteui.com/help/api/2016.1/ui.igDataChart#options:axes.tickStrokeThickness 
@@ -158,7 +158,7 @@ http://help.infragistics.com/doc/WPF/2016.1/CLR4.0/?page=InfragisticsWPF4.Contro
 		    <Variable Name="GeoMapAssemblyBase"	 Products="xamarin" Value="Controls.Charts"/>
         <Variable Name="GeoMapNamespace"     Products="xamarin" Value="~Infragistics.XF.Controls"/>
         <Variable Name="GeoMapNamespaceBase" Products="xamarin" Value="~Infragistics.XF"/>
-        <Variable Name="GeoMapName"          Products="xamarin" Value="XFGeographicMap"/>
+        <Variable Name="GeoMapName"          Products="xamarin" Value="XamGeographicMap"/>
         <Variable Name="GeoMapBase"          Products="xamarin" Value="SeriesViewer"/>
         <Variable Name="GeoMapAssembly"      Products="win-forms" Value="Win.DataVisualization.UltraGeographicMap"/>
         <Variable Name="GeoMapAssemblyBase"	 Products="win-forms" Value="Win.DataVisualization.UltraDataChart"/>
@@ -190,7 +190,7 @@ http://help.infragistics.com/doc/WPF/2016.1/CLR4.0/?page=InfragisticsWPF4.Contro
         <Variable Name="DataChartAssemblyBase"	Products="xamarin" Value="Controls.Charts"/>
         <Variable Name="DataChartNamespace"     Products="xamarin" Value="~Infragistics.XF.Controls"/>
         <Variable Name="DataChartNamespaceBase" Products="xamarin" Value="~Infragistics.XF"/>
-        <Variable Name="DataChartName"          Products="xamarin" Value="XFDataChart"/>
+        <Variable Name="DataChartName"          Products="xamarin" Value="XamDataChart"/>
         <Variable Name="DataChartBase"          Products="xamarin" Value="SeriesViewer"/>
         <Variable Name="DataChartAssembly"      Products="win-forms" Value="Win.DataVisualization.UltraDataChart"/>
         <Variable Name="DataChartAssemblyBase"	Products="win-forms" Value="Win.DataVisualization.UltraDataChart"/>
@@ -248,7 +248,7 @@ http://help.infragistics.com/doc/WPF/2016.1/CLR4.0/?page=InfragisticsWPF4.Contro
         <Variable Name="PieChartAssemblyBase"	  Products="xamarin" Value="Controls.Charts"/>
         <Variable Name="PieChartNamespace"     	Products="xamarin" Value="~Infragistics.XF.Controls"/>
         <Variable Name="PieChartNamespaceBase" 	Products="xamarin" Value="~Infragistics.XF"/>
-        <Variable Name="PieChartName"          	Products="xamarin" Value="XFPieChart"/>
+        <Variable Name="PieChartName"          	Products="xamarin" Value="XamPieChart"/>
         <Variable Name="PieChartBase"          	Products="xamarin" Value="PieChartBase"/>
         <Variable Name="PieChartAssembly"      	Products="win-forms" Value="Win.DataVisualization.UltraDataChart"/>
         <Variable Name="PieChartAssemblyBase"	  Products="win-forms" Value="Win.DataVisualization.UltraDataChart"/>
@@ -280,7 +280,7 @@ http://help.infragistics.com/doc/WPF/2016.1/CLR4.0/?page=InfragisticsWPF4.Contro
         <Variable Name="FunnelChartAssemblyBase"	  Products="xamarin" Value="Controls.Charts"/>
         <Variable Name="FunnelChartNamespace"     	Products="xamarin" Value="~Infragistics.XF.Controls"/>
         <Variable Name="FunnelChartNamespaceBase" 	Products="xamarin" Value="~Infragistics.XF"/>
-        <Variable Name="FunnelChartName"          	Products="xamarin" Value="XFFunnelChart"/>
+        <Variable Name="FunnelChartName"          	Products="xamarin" Value="XamFunnelChart"/>
         <Variable Name="FunnelChartBase"          	Products="xamarin" Value="ViewBase"/>
 		    <Variable Name="FunnelChartAssembly"      	Products="win-forms" Value="Win.DataVisualization.UltraDataChart"/>
         <Variable Name="FunnelChartAssemblyBase"	  Products="win-forms" Value="Win.DataVisualization.UltraDataChart"/>
@@ -311,7 +311,7 @@ http://help.infragistics.com/doc/WPF/2016.1/CLR4.0/?page=InfragisticsWPF4.Contro
         <Variable Name="DoughnutChartAssembly"      Products="xamarin" Value="Controls.Charts"/>
         <Variable Name="DoughnutChartNamespace"     Products="xamarin" Value="~Infragistics.XF.Controls"/>
         <Variable Name="DoughnutChartNamespaceBase" Products="xamarin" Value="~Infragistics.XF"/>
-        <Variable Name="DoughnutChartName"          Products="xamarin" Value="XFDoughnutChart"/>
+        <Variable Name="DoughnutChartName"          Products="xamarin" Value="XamDoughnutChart"/>
         <Variable Name="DoughnutChartBase"          Products="xamarin" Value="ViewBase"/>
         <Variable Name="DoughnutChartAssembly"      Products="win-forms" Value="Win.DataVisualization.UltraDataChart"/>
         <Variable Name="DoughnutChartNamespace"     Products="win-forms" Value="~Infragistics.Win.DataVisualization"/>
@@ -387,7 +387,7 @@ http://help.infragistics.com/doc/WPF/2016.1/CLR4.0/?page=InfragisticsWPF4.Contro
         <Variable Name="LegendAssemblyBase"		Products="xamarin" Value="Controls.Charts"/>
         <Variable Name="LegendNamespace"     	Products="xamarin" Value="~Infragistics.XF.Controls"/>
         <Variable Name="LegendNamespaceBase" 	Products="xamarin" Value="~Infragistics.XF.Controls"/>
-        <Variable Name="LegendName"          	Products="xamarin" Value="XFLegend"/>
+        <Variable Name="LegendName"          	Products="xamarin" Value="Legend"/>
         <Variable Name="LegendBase"          	Products="xamarin" Value="LegendBase"/>
         <Variable Name="LegendAssembly"      	Products="win-forms" Value="Win.DataVisualization.UltraDataChart"/>
         <Variable Name="LegendAssemblyBase"		Products="win-forms" Value="Win.DataVisualization.UltraDataChart"/>
@@ -417,7 +417,7 @@ http://help.infragistics.com/doc/WPF/2016.1/CLR4.0/?page=InfragisticsWPF4.Contro
         <Variable Name="ItemLegendAssemblyBase"		Products="xamarin" Value="Controls.Charts"/>
         <Variable Name="ItemLegendNamespace"     	Products="xamarin" Value="~Infragistics.XF.Controls"/>
         <Variable Name="ItemLegendNamespaceBase" 	Products="xamarin" Value="~Infragistics.XF.Controls"/>
-        <Variable Name="ItemLegendName"          	Products="xamarin" Value="XFItemLegend"/>
+        <Variable Name="ItemLegendName"          	Products="xamarin" Value="XamItemLegend"/>
         <Variable Name="ItemLegendBase"          	Products="xamarin" Value="LegendBase"/>
         <Variable Name="ItemLegendAssembly"      	Products="win-forms" Value="Win.DataVisualization.UltraDataChart"/>
         <Variable Name="ItemLegendAssemblyBase"		Products="win-forms" Value="Win.DataVisualization.UltraDataChart"/>
@@ -447,7 +447,7 @@ http://help.infragistics.com/doc/WPF/2016.1/CLR4.0/?page=InfragisticsWPF4.Contro
         <Variable Name="ScaleLegendAssemblyBase"	  Products="xamarin" Value="Controls.Charts"/>
         <Variable Name="ScaleLegendNamespace"     	Products="xamarin" Value="~Infragistics.XF.Controls"/>
         <Variable Name="ScaleLegendNamespaceBase" 	Products="xamarin" Value="~Infragistics.XF.Controls"/>
-        <Variable Name="ScaleLegendName"          	Products="xamarin" Value="XFScaleLegend"/>
+        <Variable Name="ScaleLegendName"          	Products="xamarin" Value="XamScaleLegend"/>
         <Variable Name="ScaleLegendBase"          	Products="xamarin" Value="LegendBase"/>
         <Variable Name="ScaleLegendAssembly"      	Products="win-forms" Value="Win.DataVisualization.UltraDataChart"/>
         <Variable Name="ScaleLegendAssemblyBase"	  Products="win-forms" Value="Win.DataVisualization.UltraDataChart"/>
@@ -478,7 +478,7 @@ http://help.infragistics.com/doc/WPF/2016.1/CLR4.0/?page=InfragisticsWPF4.Contro
         <Variable Name="BulletGraphAssemblyBase"	  Products="xamarin" Value="Controls.Gauges"/>
         <Variable Name="BulletGraphNamespace"     	Products="xamarin" Value="~Infragistics.XF.Controls"/>
         <Variable Name="BulletGraphNamespaceBase" 	Products="xamarin" Value="~Infragistics.XF.Controls"/>
-        <Variable Name="BulletGraphName"          	Products="xamarin" Value="XFBulletGraph"/>
+        <Variable Name="BulletGraphName"          	Products="xamarin" Value="XamBulletGraph"/>
         <Variable Name="BulletGraphBase"          	Products="xamarin" Value="ViewBase"/>
         <Variable Name="BulletGraphRange"          	Products="xamarin" Value="LinearGraphRange"/>
         <Variable Name="BulletGraphAssembly"      	Products="win-forms" Value="Win.DataVisualization.Gauge"/>
@@ -513,7 +513,7 @@ http://help.infragistics.com/doc/WPF/2016.1/CLR4.0/?page=InfragisticsWPF4.Contro
         <Variable Name="LinearGaugeAssemblyBase"	  Products="xamarin" Value="Controls.Gauges"/>
         <Variable Name="LinearGaugeNamespace"     	Products="xamarin" Value="~Infragistics.XF.Controls"/>
         <Variable Name="LinearGaugeNamespaceBase" 	Products="xamarin" Value="~Infragistics.XF.Controls"/>
-        <Variable Name="LinearGaugeName"          	Products="xamarin" Value="XFLinearGauge"/>
+        <Variable Name="LinearGaugeName"          	Products="xamarin" Value="XamLinearGauge"/>
         <Variable Name="LinearGaugeBase"          	Products="xamarin" Value="ViewBase"/>
         <Variable Name="LinearGaugeRange"          	Products="xamarin" Value="LinearGraphRange"/>
         <Variable Name="LinearGaugeAssembly"      	Products="win-forms" Value="Win.DataVisualization.Gauge"/>
@@ -548,7 +548,7 @@ http://help.infragistics.com/doc/WPF/2016.1/CLR4.0/?page=InfragisticsWPF4.Contro
         <Variable Name="RadialGaugeAssemblyBase"	  Products="xamarin" Value="Controls.Gauges"/>
         <Variable Name="RadialGaugeNamespace"     	Products="xamarin" Value="~Infragistics.XF.Controls"/>
         <Variable Name="RadialGaugeNamespaceBase" 	Products="xamarin" Value="~Infragistics.XF.Controls"/>
-        <Variable Name="RadialGaugeName"          	Products="xamarin" Value="XFRadialGauge"/>
+        <Variable Name="RadialGaugeName"          	Products="xamarin" Value="XamRadialGauge"/>
         <Variable Name="RadialGaugeBase"          	Products="xamarin" Value="ViewBase"/>
         <Variable Name="RadialGaugeRange"          	Products="xamarin" Value="RadialGaugeRange"/>
         <Variable Name="RadialGaugeAssembly"      	Products="win-forms" Value="Win.DataVisualization.UltraGauges"/>
@@ -587,7 +587,7 @@ http://help.infragistics.com/doc/WPF/2016.1/CLR4.0/?page=InfragisticsWPF4.Contro
       <Variable Name="BarcodesName"       Products="win-universal"  Value="XamBarcode"/>
       <Variable Name="BarcodesName"       Products="win-forms"      Value="UltraBarcode"/>
       <Variable Name="BarcodesName"       Products="android"        Value="BarcodeView"/>
-      <Variable Name="BarcodesName"       Products="xamarin"        Value="XFBarcode"/>
+      <Variable Name="BarcodesName"       Products="xamarin"        Value="XamBarcode"/>
       <!-- =========== Barcode Root Class ===============================================================================================  -->    
       <Variable Name="BarcodesRoot"       Products="wpf"            Value="XamBarcode"/>
       <Variable Name="BarcodesRoot"       Products="win-universal"  Value="XamBarcode"/>
@@ -603,7 +603,7 @@ http://help.infragistics.com/doc/WPF/2016.1/CLR4.0/?page=InfragisticsWPF4.Contro
 		<!-- =========== Barcode 128 Control ================================================================================================ -->
       <Variable Name="Barcode128Name"     Products="wpf,win-universal" Value="XamCode128Barcode"/>
       <Variable Name="Barcode128Base"     Products="wpf,win-universal" Value="XamGridBarcode"/>
-      <Variable Name="Barcode128Name"     Products="xamarin"    Value="XFBarcode128"/>
+      <Variable Name="Barcode128Name"     Products="xamarin"    Value="XamBarcode128"/>
       <Variable Name="Barcode128Base"     Products="xamarin"    Value="Barcode"/>
       <Variable Name="Barcode128Name"     Products="win-forms"  Value="UltraCode128Barcode"/>
       <Variable Name="Barcode128Base"     Products="win-forms"  Value="GridBarcodeBase"/>
@@ -635,7 +635,7 @@ http://help.infragistics.com/doc/WPF/2016.1/CLR4.0/?page=InfragisticsWPF4.Contro
 		    <Variable Name="DataGridAssemblyBase"	  Products="xamarin" Value="Controls.Grids"/>
         <Variable Name="DataGridNamespace"     	Products="xamarin" Value="~Infragistics.XF.Controls"/>
         <Variable Name="DataGridNamespaceBase" 	Products="xamarin" Value="~Infragistics.XF.Controls"/>
-        <Variable Name="DataGridName"          	Products="xamarin" Value="XFDataGrid"/>
+        <Variable Name="DataGridName"          	Products="xamarin" Value="XamDataGrid"/>
         <Variable Name="DataGridBase"          	Products="xamarin" Value="ViewBase"/>
         <Variable Name="DataGridAssembly"      	Products="win-forms" Value="Win.DataVisualization.UltraBarcode"/>
         <Variable Name="DataGridAssemblyBase"	  Products="win-forms" Value="Win.DataVisualization.UltraBarcode"/>
@@ -665,8 +665,8 @@ http://help.infragistics.com/doc/WPF/2016.1/CLR4.0/?page=InfragisticsWPF4.Contro
 		    <Variable Name="SpreadsheetAssemblyBase"	  Products="xamarin" Value="Controls.Grids"/>
         <Variable Name="SpreadsheetNamespace"     	Products="xamarin" Value="~Infragistics.XF.Controls"/>
         <Variable Name="SpreadsheetNamespaceBase" 	Products="xamarin" Value="~Infragistics.XF.Controls"/>
-        <Variable Name="SpreadsheetName"          	Products="xamarin" Value="XFSpreadsheet"/>
-        <Variable Name="SpreadsheetBase"          	Products="xamarin" Value="XFSpreadsheet"/>
+        <Variable Name="SpreadsheetName"          	Products="xamarin" Value="XamSpreadsheet"/>
+        <Variable Name="SpreadsheetBase"          	Products="xamarin" Value="XamSpreadsheet"/>
         <Variable Name="SpreadsheetAssembly"      	Products="win-forms" Value="Win.UltraWinSpreadsheet"/>
         <Variable Name="SpreadsheetAssemblyBase"	  Products="win-forms" Value="Win"/>
         <Variable Name="SpreadsheetNamespace"     	Products="win-forms" Value="~Infragistics.Win.UltraWinSpreadsheet"/>
@@ -679,8 +679,21 @@ http://help.infragistics.com/doc/WPF/2016.1/CLR4.0/?page=InfragisticsWPF4.Contro
         <Variable Name="SpreadsheetNamespaceBase" 	Products="android" Value="~com.infragistics.controls"/>
         <Variable Name="SpreadsheetName"          	Products="android" Value="SpreadsheetView"/>
         <Variable Name="SpreadsheetBase"          	Products="android" Value="SeriesViewerBaseView"/>
+        <Variable Name="SpreadsheetAssembly"      	Products="jquery" Value="igspreadsheet"/>
+        <Variable Name="SpreadsheetAssemblyBase"	  Products="jquery" Value="igspreadsheet"/>
+        <Variable Name="SpreadsheetNamespace"     	Products="jquery" Value=""/>
+        <Variable Name="SpreadsheetNamespaceBase" 	Products="jquery" Value=""/>
+        <Variable Name="SpreadsheetName"          	Products="jquery" Value="igSpreadsheet"/>
+        <Variable Name="SpreadsheetBase"          	Products="jquery" Value=""/>
         <!-- =========== WebAndWindows Chart ================================================================================================================= -->
         <Variable Name="WawChartName"          Products="asp-net" Value="WebChart"/>
         <Variable Name="WawChartName"          Products="win-forms" Value="WinChart"/>
+        <!-- =========== Excel Engine ================================================================================================================= -->
+        <Variable Name="ExcelEngineName"			      Products="xamarin" 		Value="Infragistics Excel Engine"/>
+        <Variable Name="ExcelEngineName"          	Products="wpf" 			  Value="Infragistics Excel Engine"/>
+        <Variable Name="ExcelEngineName"          	Products="asp-net" 			  Value="Infragistics Excel Engine"/>
+        <Variable Name="ExcelEngineName"          	Products="win-forms" 			  Value="Infragistics Excel Engine"/>
+      <Variable Name="ExcelEngineApiLink"        	Products="wpf" 			  Value="{ApiPlatform}documents.excel.v{ProductVersion}~"/>
+      <Variable Name="ExcelEngineApiLink"        	Products="xamarin" 			  Value="infragistics.core.excel~"/>
     </Variables>
 </Configuration>

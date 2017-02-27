@@ -1,4 +1,6 @@
 /* global appSettings */
+/*jslint node: true */
+/*jshint esversion: 6 */
 
 const { shell } = require('electron');
 

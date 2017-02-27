@@ -63,19 +63,19 @@ $(function(){
 
 	$('body').fadeIn('50');
 
-    messenger.publish.metadata('getProductVersionNumbers');
-
-    $.get(config.urls.version).then((json) => { 
-        publishedVersion = getNumberValue(json.version);
-        packageJsonReader.get().then((packageJson) => {
-            localVersion = getNumberValue(packageJson.version);
-            if(publishedVersion > localVersion) {
-                $('#new-version-number').text(json.version);
-                $('#installer-link').attr('href', config.urls.installers);
-                $('#new-version-container').fadeIn('fast');
-            }
+    setTimeout(() => {
+        $.get(config.urls.version).then((json) => { 
+            publishedVersion = getNumberValue(json.version);
+            packageJsonReader.get().then((packageJson) => {
+                localVersion = getNumberValue(packageJson.version);
+                if(publishedVersion > localVersion) {
+                    $('#new-version-number').text(json.version);
+                    $('#installer-link').attr('href', config.urls.installers);
+                    $('#new-version-container').fadeIn('fast');
+                }
+            });
         });
-    });
+    }, 1000);
 
     $('#new-version-container .close').click((e) => {
         $(e.currentTarget.parentElement).fadeOut('fast');
