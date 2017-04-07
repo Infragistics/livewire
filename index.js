@@ -32,7 +32,9 @@ app.on('ready', function () {
 
   mainWindow.show();
   
-  //mainWindow.openDevTools();
+  if(/\-\-debugging/i.test(process.argv[2])){
+    mainWindow.openDevTools();
+  }
 
   mainWindow.loadURL('file://' + __dirname + '/app/index.html');
   
