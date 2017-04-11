@@ -1,6 +1,6 @@
 /*jslint node: true */
 /*jshint esversion: 6 */
-/* global ace, Typo */
+/* global ace */
 
 // You also need to load in typo.js and jquery.js
 
@@ -12,12 +12,16 @@ var messenger = require(path.resolve(__dirname, '../../modules/messenger'));
 var dictionaryProvider = require(path.resolve(__dirname, './dictionaryProvider.js'));
 var dictionary;
 
-dictionaryProvider.get('en_US', (err, dictionaryInstance) => {
-  if(err) console.log(err);
-  dictionary = dictionaryInstance;
-  enable_spellcheck();
-  spell_check();
-});
+dictionaryProvider.get('en_US')
+                  .then((dictionaryInstance) => {
+                    dictionary = dictionaryInstance;
+                    enable_spellcheck();
+                    spell_check();
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                    throw new Error(JSON.stringify(err));
+                  });
 
 // Check the spelling of a line, and return [start, end]-pairs for misspelled words.
 function misspelled(line) {
