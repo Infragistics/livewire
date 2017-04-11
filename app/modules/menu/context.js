@@ -6,20 +6,40 @@ const path = require('path');
 const messenger = require(path.resolve(__dirname, '../messenger'));
 
 const handlers = {
-	cut: function () { messenger.publish.contextMenu('cut'); },
-	copy: function () { messenger.publish.contextMenu('copy'); },
-	paste: function () { messenger.publish.contextMenu('paste'); }
+	cut: () => { messenger.publish.contextMenu('cut'); },
+	copy: () => { messenger.publish.contextMenu('copy'); },
+	paste:() => { messenger.publish.contextMenu('paste'); },
+	replaceMisspelling: (e, args) => messenger.publish.file('replace-misspelling', args),
+	contextMenuInfoResponse: (info) => {
+
+		var args = {
+			dynamicMenus: []
+		};
+
+		if(info.spellingSuggestions) {
+			args.dynamicMenus.push({
+				name: 'spellingSuggestions',
+				values: info.spellingSuggestions
+			});
+		}
+
+		ipc.send('show-editor-context-menu', args);
+
+	}
 };
 
 ipc.on('editor-context-menu-cut', handlers.cut);
 ipc.on('editor-context-menu-copy', handlers.copy);
 ipc.on('editor-context-menu-paste', handlers.paste);
+ipc.on('editor-context-menu-replace-mispelling', handlers.replaceMisspelling);
 
 window.addEventListener('contextmenu', function (e) {
 	e.preventDefault();
 
 	if (e.srcElement.className === 'ace_text-input') {
-		ipc.send('show-editor-context-menu');
+		messenger.publish.file('context-menu-info-request');
 	}
-	
+		
 }, false);
+
+messenger.subscribe.file('context-menu-info-response', handlers.contextMenuInfoResponse);

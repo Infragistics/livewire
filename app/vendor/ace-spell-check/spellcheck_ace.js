@@ -1,5 +1,6 @@
-/* global ace */
-/* global Typo */
+/*jslint node: true */
+/*jshint esversion: 6 */
+/* global ace, Typo */
 
 // You also need to load in typo.js and jquery.js
 
@@ -7,27 +8,15 @@ var path = require('path');
 
 // You should configure these classes.
 var editor = "editor"; // This should be the id of your editor element.
-var lang = "en_US";
-var dicPath = path.resolve(__dirname, "../typo/dictionaries/en_US/en_US.dic");
-var affPath = path.resolve(__dirname, "../typo/dictionaries/en_US/en_US.aff");
-
 var messenger = require(path.resolve(__dirname, '../../modules/messenger'));
+var dictionaryProvider = require(path.resolve(__dirname, './dictionaryProvider.js'));
+var dictionary;
 
-// Load the dictionary.
-// Sequential to ensure the 
-var dictionary = null, dicData, affData;
-
-$.get(dicPath, function(data) {
-	dicData = data;
-}).done(function() {
-  $.get(affPath, function(data) {
-	  affData = data;
-  }).done(function() {
-  	console.log("Dictionary loaded");
-    dictionary = new Typo(lang, affData, dicData);
-    enable_spellcheck();
-    spell_check();
-  });
+dictionaryProvider.get('en_US', (err, dictionaryInstance) => {
+  if(err) console.log(err);
+  dictionary = dictionaryInstance;
+  enable_spellcheck();
+  spell_check();
 });
 
 // Check the spelling of a line, and return [start, end]-pairs for misspelled words.
@@ -115,10 +104,13 @@ function enable_spellcheck() {
 	setInterval(spell_check, 500);
 }
 
+
 var handlers = {
-  allFilesClosed: function(){
-    
+
+  contextMenuInfoResponse: (info) => {
+    const suggestions = dictionary.suggest(info.mispelledWord);
+    messenger.publish.file('context-menu-info-response', { spellingSuggestions: suggestions });
   }
 };
 
-messenger.publish.file('allFilesClosed', handlers.allFilesClosed);
+messenger.subscribe.file('mispellings-request', handlers.contextMenuInfoResponse);

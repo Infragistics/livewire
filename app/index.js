@@ -4,7 +4,6 @@
 
 const packageJsonReader = require('./modules/config/packageJsonReader.js');
 const config = require('./modules/config').get();
-const messenger = require('./modules/messenger');
 
 window.appSettings = {
     _editorWidth: '49%',

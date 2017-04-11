@@ -1,7 +1,5 @@
 /// <reference path="../../../typings/node/node.d.ts"/>
 
-module = module.exports;
-
 var path = require('path');
 var postal = require(path.resolve(__dirname, '../../bower_components/postal.js/lib/postal.js'));
 
@@ -24,7 +22,7 @@ var subscribe = function (channel, topic, callback) {
 	return postal.subscribe({ channel: channel, topic: topic, callback: callback });
 };
 
-module.publish = {
+module.exports.publish = {
 	menu: function (topic, data) { publish(channels.menu, topic, data); },
 	contextMenu: function (topic, data) { publish(channels.contextMenu, topic, data); },
 	file: function (topic, data) { publish(channels.file, topic, data); },
@@ -35,7 +33,7 @@ module.publish = {
 	layout: function (topic, data) { publish(channels.layout, topic, data); }
 };
 
-module.subscribe = {
+module.exports.subscribe = {
 	menu: function (topic, callback) { return subscribe(channels.menu, topic, callback); },
 	contextMenu: function (topic, callback) { return subscribe(channels.contextMenu, topic, callback); },
 	file: function (topic, callback) { return subscribe(channels.file, topic, callback); },
@@ -46,6 +44,6 @@ module.subscribe = {
 	layout: function (topic, callback) { return subscribe(channels.layout, topic, callback); }
 };
 
-module.unsubscribe = function(subscription){
+module.exports.unsubscribe = function(subscription){
     postal.unsubscribe(subscription);
 };
