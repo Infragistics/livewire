@@ -32,7 +32,6 @@ window.appSettings = {
     resultsButtonWidth: function() { return 22; } 
 };
 
-require.main.require('./vendor/ace-spell-check/spellcheck_ace.js');
 require.main.require('./modules/menu');
 require.main.require('./modules/toolbars/formatting');
 require.main.require('./modules/toolbars/tabs');

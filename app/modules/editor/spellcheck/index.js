@@ -4,11 +4,12 @@
 
 // You also need to load in typo.js and jquery.js
 
-var path = require('path');
+const path = require('path');
+const shouldCheckWord = require('./shouldCheckWord.js');
 
 // You should configure these classes.
 var editor = "editor"; // This should be the id of your editor element.
-var messenger = require(path.resolve(__dirname, '../../modules/messenger'));
+var messenger = require(path.resolve(__dirname, '../../messenger'));
 var dictionaryProvider = require(path.resolve(__dirname, './dictionaryProvider.js'));
 var dictionary;
 
@@ -30,12 +31,16 @@ function misspelled(line) {
 	var bads = [];
   var word; // index of word in words array
 	for (word in words) {
-	  var x = words[word] + ""; // ensure string
-	  var checkWord = x.replace(/[^a-zA-Z']/g, ''); // strip all non alpha characters
-	  if (!dictionary.check(checkWord)) { // check dictionary for word
-	    bads.push([i, i + words[word].length]); // create word index pair
-	  }
-	  i += (words[word].length + 1); // move index to position after word
+	  var checkWord = words[word] + ""; // ensure string
+    
+	  var checkWordAlphaOnly = checkWord.replace(/[^a-zA-Z']/g, ''); // strip all non alpha characters
+
+    if(shouldCheckWord(checkWord, checkWordAlphaOnly)) {
+      if (!dictionary.check(checkWordAlphaOnly)) { // check dictionary for word
+        bads.push([i, i + words[word].length]); // create word index pair
+      }
+    }
+    i += (words[word].length + 1); // move index to position after word
   }
   return bads;
 }

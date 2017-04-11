@@ -89,6 +89,7 @@ module.load = function (mode) {
     session.setMode('ace/mode/' + mode);
     session.setUseWrapMode(true);
 
+    require('./spellcheck');
     require('./clipboard.js').init(editor);
     require('./formatting.js').init(editor);
 

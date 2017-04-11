@@ -9,8 +9,8 @@ module.exports.get = (lang) => {
     return new Promise((resolve, reject) => {
         
         const filePaths = {
-            dictionary: path.resolve(__dirname, `../typo/dictionaries/en_US/${lang}.dic`),
-            aff: path.resolve(__dirname, `../typo/dictionaries/en_US/${lang}.aff`)
+            dictionary: path.resolve(__dirname, `../../../vendor/typo/dictionaries/en_US/${lang}.dic`),
+            aff: path.resolve(__dirname, `../../../vendor/typo/dictionaries/en_US/${lang}.aff`)
         };
 
         fs.readFile(filePaths.dictionary, 'utf8', (dictionaryError, dictionaryData) => {
