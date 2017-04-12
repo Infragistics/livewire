@@ -70,7 +70,7 @@
 		<!-- NOTE that ProductVersion is current branch version -->
         <Variable Name="ProductVersion"     Products="all" Value="17.1"/>
         <Variable Name="ProductVersionFull" Products="all" Value="20171"/>
-        <Variable Name="ProductName"        Products="all" Value="Infragistics {PlatformName}"/>
+        <Variable Name="ProductName"        Products="all" Value="Ultimate UI for {PlatformName}"/>
         <!-- Note some variables have values built from other variables  -->
         <Variable Name="ProductNameVersion" Products="all" Value="{ProductName} 20{ProductVersion}"/>
 		
@@ -83,7 +83,7 @@
         <Variable Name="PlatformName" Products="win-phone"        Value="Windows Phone"/>
         <Variable Name="PlatformName" Products="win-rt"           Value="WinRT"/>
         <Variable Name="PlatformName" Products="asp-net"          Value="ASP.NET"/>
-        <Variable Name="PlatformName" Products="jquery"           Value="JQuery"/>
+        <Variable Name="PlatformName" Products="jquery"           Value="jQuery"/>
         <Variable Name="PlatformName" Products="xamarin"          Value="Xamarin.Forms"/>
         <Variable Name="PlatformName" Products="android"          Value="Android"/>
         <Variable Name="PlatformName" Products="win-universal"    Value="UWP"/>   
