@@ -26,16 +26,16 @@ const _module = {
     },
     
     getFileName: (versionNumber) => {
-        return `docsConfig-${versionNumber.replace('.', '-')}.xml`;
+        return `livewire-docsConfig-${versionNumber.replace('.', '-')}.xml`;
     },
 
     getVersionFromFileName: (fileName) => {
-        return fileName.replace('docsConfig-', '').replace('.xml', '').replace('-', '.');
+        return fileName.replace('livewire-docsConfig-', '').replace('.xml', '').replace('-', '.');
     },
 
 
     isDocsConfigFileName: (fileName) => {
-        return /docsConfig-(.*)\.xml/i.test(fileName);
+        return /livewire-docsConfig-(.*)\.xml/i.test(fileName);
     },
 
     isValidDocsConfigFile: (content) => {

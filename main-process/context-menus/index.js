@@ -34,8 +34,9 @@ ipcMain.on('show-editor-context-menu', (e, args) => {
 	let menu = {};
 
 	if(args.dynamicMenus && args.dynamicMenus.length > 0) {
+		let menus = args.dynamicMenus.reverse();
 		menu = createDefaultMenu(e.sender);
-		args.dynamicMenus.forEach((dynamicMenu) => {
+		menus.forEach((dynamicMenu) => {
 			let _menu = require(path.resolve(__dirname, `./${dynamicMenu.name}.js`));
 			menu = _menu.create(dynamicMenu.values, menu, e.sender);
 		});

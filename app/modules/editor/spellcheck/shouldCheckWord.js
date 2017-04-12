@@ -1,15 +1,23 @@
 /*jslint node: true */
 /*jshint esversion: 6 */
 
-const customDictionary = require('./defaultDictionary.js');
-
-module.exports = (word, wordAlphaOnly) => {
+module.exports = (word, wordAlphaOnly, defaultDictionary, customDictionary) => {
 
   if(word.length <= 0) return false;
 
   var returnValue = true;
   
-  if( customDictionary[wordAlphaOnly.toLowerCase()]
+  if(
+      
+        /* ----------------------------
+            Looks for words in the default dictionary
+           ----------------------------- */
+      defaultDictionary[wordAlphaOnly.toLowerCase()]
+
+        /* ----------------------------
+            Looks for words in the user's custom dictionary
+           ----------------------------- */
+      || customDictionary[wordAlphaOnly.toLowerCase()]
 
         /* ----------------------------
             AsciiDoc image macro:
@@ -24,11 +32,27 @@ module.exports = (word, wordAlphaOnly) => {
 
 
         /* ----------------------------
+            AsciiDoc pic macro:
+
+            pick:[asp-net="ASP.NET"]
+           ----------------------------- */
+      || /^pick:/i.test(word)
+
+
+        /* ----------------------------
             AsciiDoc ifdef macro:
 
             ifdef::xaml[]
            ----------------------------- */
       || /^ifdef::/i.test(word)
+
+
+        /* ----------------------------
+            AsciiDoc anchor:
+
+            <<_requirements, Requirements>>
+           ----------------------------- */
+      || /^<</i.test(word)
 
       
         /* ----------------------------
@@ -67,16 +91,12 @@ module.exports = (word, wordAlphaOnly) => {
             Markdown link:
 
             [Infragistics](http://www.infragistics.com)
+
+                or
+
+            Infragistics](http://www.infragistics.com)            
            ----------------------------- */
-      || /\[.+\)/i.test(word)
-
-
-        /* ----------------------------
-            Markdown link fragment:
-
-            Infragistics](http://www.infragistics.com)
-           ----------------------------- */
-      || /.+\]\(.+\)/i.test(word)
+      || /\[?.+\)/i.test(word)
 
 
         /* ----------------------------
@@ -100,7 +120,7 @@ module.exports = (word, wordAlphaOnly) => {
 
 
         /* ----------------------------
-            Inite UI product name:
+            Inite UI control name:
 
             igDataGrid
 
@@ -112,7 +132,7 @@ module.exports = (word, wordAlphaOnly) => {
 
 
         /* ----------------------------
-            XAML product name:
+            XAML control name:
 
             XamDataChart
 

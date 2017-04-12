@@ -2,10 +2,14 @@
 /*jshint esversion: 6 */
 /* global ace */
 
-// You also need to load in typo.js and jquery.js
-
 const path = require('path');
+const config = require(path.resolve(__dirname, '../../config')).get();
 const shouldCheckWord = require('./shouldCheckWord.js');
+const defaultDictionary = require('./defaultDictionary.js');
+
+var customDictionary = require('./customDictionary.js');
+
+customDictionary.init(config.userDataPath);
 
 // You should configure these classes.
 var editor = "editor"; // This should be the id of your editor element.
@@ -26,16 +30,16 @@ dictionaryProvider.get('en_US')
 
 // Check the spelling of a line, and return [start, end]-pairs for misspelled words.
 function misspelled(line) {
-	var words = line.split(' ');
-	var i = 0;
-	var bads = [];
+  var words = line.split(' ');
+  var i = 0;
+  var bads = [];
   var word; // index of word in words array
-	for (word in words) {
-	  var checkWord = words[word] + ""; // ensure string
-    
-	  var checkWordAlphaOnly = checkWord.replace(/[^a-zA-Z']/g, ''); // strip all non alpha characters
+  for (word in words) {
+    var checkWord = words[word] + ""; // ensure string
 
-    if(shouldCheckWord(checkWord, checkWordAlphaOnly)) {
+    var checkWordAlphaOnly = checkWord.replace(/[^a-zA-Z']/g, ''); // strip all non alpha characters
+
+    if (shouldCheckWord(checkWord, checkWordAlphaOnly, defaultDictionary, customDictionary.get())) {
       if (!dictionary.check(checkWordAlphaOnly)) { // check dictionary for word
         bads.push([i, i + words[word].length]); // create word index pair
       }
@@ -60,7 +64,7 @@ var clearMarkers = function(session){
 // Spell check the Ace editor contents.
 function spell_check() {
   // Wait for the dictionary to be loaded.
-  if (dictionary == null) {
+  if (dictionary === null) {
     return;
   }
 
@@ -84,7 +88,7 @@ function spell_check() {
   clearMarkers(session);
 
   try {
-	  var Range = ace.require('ace/range').Range
+	  var Range = ace.require('ace/range').Range;
 	  var lines = session.getDocument().getAllLines();
 	  for (var i in lines) {    
       // Check spelling of this line.
@@ -113,13 +117,21 @@ function enable_spellcheck() {
 	setInterval(spell_check, 500);
 }
 
-
 var handlers = {
 
   contextMenuInfoResponse: (info) => {
     const suggestions = dictionary.suggest(info.mispelledWord);
     messenger.publish.file('context-menu-info-response', { spellingSuggestions: suggestions });
+  },
+
+  addToDictionary: () => {
+    var newDictionaryWord =  ace.edit(editor).getSelectedText();
+    customDictionary.add(newDictionaryWord);
+    
+    contents_modified = true;
+    spell_check();
   }
 };
 
 messenger.subscribe.file('mispellings-request', handlers.contextMenuInfoResponse);
+messenger.subscribe.file('spell-check-add-to-dictionary', handlers.addToDictionary);

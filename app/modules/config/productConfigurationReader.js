@@ -200,7 +200,7 @@ var handlers = {
                 messenger.publish.metadata('productConfigurationChanged', _configuration);
                 messenger.publish.metadata('productListChanged', _configuration.products);
             } else {
-                var configurationFilePath = path.join(configFilePath, 'docsConfig-' + args.value.replace('.', '-') + '.xml');
+                var configurationFilePath = path.join(configFilePath, 'livewire-docsConfig-' + args.value.replace('.', '-') + '.xml');
                 var xml = module.getXml(configurationFilePath);
                 module.read(xml).then((obj, error) => {
                     if(error) {

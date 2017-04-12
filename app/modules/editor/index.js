@@ -176,28 +176,44 @@ module.load = function (mode) {
             editor.focus();
         },
 
-        getContextMenuInfo: () => {
+        getContextMenuInfo: (e) => {
             var 
                   editor = ace.edit('editor')
                 , selectionRange = editor.getSelectionRange()
                 , hasTextSelection
+                , isMouseOnMisspelledWord = false
                 , mispelledWord = ''
                 , info = {};
 
             hasTextSelection = (selectionRange.start.column !== selectionRange.end.column);
 
-            if(hasTextSelection) {
-                // text is selected to cut, copy or paste -
-                // just notify the main process to render the
-                // context menu
-                messenger.publish.file('context-menu-info-response', info);
-            } else {
+            var isMouseOnSelectedMisspelling = function(marker, e){
+                return $(marker).offset().left <= e.clientX &&
+                        $(marker).offset().left + $(marker).width() >= e.clientX &&
+                        $(marker).offset().top <= e.clientY &&
+                        $(marker).offset().top + $(marker).height() >= e.clientY;
+            };
+
+            var mispellingMarkers = $('div[class^="misspelled"]');
+
+            mispellingMarkers.each((i, misspellingMarker) => {
+                if(isMouseOnSelectedMisspelling(misspellingMarker, e)){
+                    isMouseOnMisspelledWord = true;
+                }
+            });
+
+            if(!hasTextSelection && isMouseOnMisspelledWord) {
                 editor.selection.selectWord();
                 mispelledWord = editor.getSelectedText();
 
                 info.mispelledWord = mispelledWord;
 
                 messenger.publish.file('mispellings-request', info);
+            } else {
+                // text is selected to cut, copy or paste -
+                // just notify the main process to render the
+                // context menu
+                messenger.publish.file('context-menu-info-response', info);
             }
         },
 
@@ -219,7 +235,7 @@ module.load = function (mode) {
     messenger.subscribe.layout('hideResults', handlers.hideResults);
     messenger.subscribe.dialog('modal.closed', handlers.modalClosed);
     messenger.subscribe.file('context-menu-info-request', handlers.getContextMenuInfo);
-    messenger.subscribe.file('replace-misspelling', handlers.replaceMissspelling)
+    messenger.subscribe.file('replace-misspelling', handlers.replaceMissspelling);
 };
 
 module.load('asciidoc');
