@@ -1,7 +1,7 @@
 module.exports = {
 	name: "AsciiDoc",
 	defaultContent: "= AsciiDoc\n\n",
-	extensions: ["adoc", "asciidoc"],
+	extensions: ["adoc", "asciidoc","adoctp"],
 	defaultExtension: "adoc",
 	shortcuts: {
 		bold: 		{ left : "*", right : "*" },

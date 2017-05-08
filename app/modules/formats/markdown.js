@@ -1,7 +1,7 @@
 module.exports = {
 	name: "Markdown",
 	defaultContent: "# Markdown",
-	extensions: ["md", "markdown"],
+	extensions: ["md", "markdown", "mdtp"],
 	defaultExtension: "md",
 	shortcuts: {
 		bold: 		{ left : "**", right : "**" },

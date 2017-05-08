@@ -51,22 +51,32 @@ var menuHandlers = {
     },
 
     open: (filePaths) => {
-
         let lastFileInfo = null;
+        let isTemplate = (fileName) => /tp$/i.test(fileName);
 
         let openFile = (response) => {
-            var fileInfo, fileContents, metadataMatches, metadata;
+            var   fileInfo
+                , fileContents
+                , metadataMatches
+                , metadata
+                , formatter
+            ;
 
             filePath = response.path;
             basePath = path.dirname(filePath);
 
-            fileInfo = files.getFileInfo(response.path);
+            if(isTemplate(filePath)) {
+                formatter = formats.getByFileExtension(path.extname(filePath));
+                fileInfo = files.getFileInfo(null, formatter);
+            } else {
+                fileInfo = files.getFileInfo(response.path);
+                formatter = formats.getByFileExtension(fileInfo.ext);
+            }
+
             lastFileInfo = fileInfo;
             fileInfo.size = response.size;
 
-            formatter = formats.getByFileExtension(fileInfo.ext);
-
-            messenger.publish.file('newId', { id: fileInfo.id, path: fileInfo.path });
+            messenger.publish.file('newId', { id: fileInfo.id, path: fileInfo.path, formatter: formatter });
             messenger.publish.file('pathChanged', fileInfo);
 
             if (!fileInfo.isFileAlreadyOpen) {
