@@ -59,7 +59,6 @@ var menuHandlers = {
                 , fileContents
                 , metadataMatches
                 , metadata
-                , formatter
             ;
 
             filePath = response.path;
@@ -68,6 +67,8 @@ var menuHandlers = {
             if(isTemplate(filePath)) {
                 formatter = formats.getByFileExtension(path.extname(filePath));
                 fileInfo = files.getFileInfo(null, formatter);
+                filePath = '';
+                basePath = '';
             } else {
                 fileInfo = files.getFileInfo(response.path);
                 formatter = formats.getByFileExtension(fileInfo.ext);
