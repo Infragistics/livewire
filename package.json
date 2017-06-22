@@ -8,6 +8,7 @@
     "start": "electron .",
     "release-win64": "electron-packager . Livewire --platform=win32 --arch=x64 --out=../releases",
     "release": "electron-packager . Livewire --platform=all --arch=all --out=../releases",
+    "preinstall": "npm i bower gulp",
     "postinstall": "gulp install"
   },
   "repository": {
