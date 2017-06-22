@@ -24,17 +24,9 @@ For more information make sure to read the [wiki](https://github.com/craigshoema
 
 ## Running the App from Source
 
-First, make sure you have [Node.js v4.5.0](https://nodejs.org/) and [Git](https://git-scm.com/downloads) installed on your machine.
+First, make sure you have [Node.js](https://nodejs.org/) and [Git](https://git-scm.com/downloads) installed on your machine.
 
-Then run a command prompt as administrator and install Bower (if you don't already have it installed) by executing this command:
-
-    npm install -g bower
-    
-Next, in that administrative prompt, install Gulp:
-
-    npm install --g gulp
-
-After Bower and Gulp are installed, in Windows Explorer, open the directory in which you want to download Livewire.  Right-click and choose `Git Bash Here`.  If you don't have Git Bash, open Git Shell or any Git-enabled command prompt.  Clone the repository by using this command:
+Next, via the command prompt open the directory in which you want to download Livewire.  Right-click and choose `Git Bash Here`.  If you don't have Git Bash, open Git Shell or any Git-enabled command prompt.  Clone the repository by using this command:
 
     git clone https://github.com/infragistics/livewire.git
 	
