@@ -29,6 +29,11 @@ var handlers = {
         src = $img.attr('src');
         $img.attr('src', (basePath + '\\' + src).replace(/\//g, '\\'));
       });
+      //  Show links as tooltips
+      $('a').each(function() {
+        var $link = $(this);
+        $link.attr('title', $link.attr('href'));
+      });
 
       // make toc title H2 element
       var $tocTitle = $('#toctitle'); 
