@@ -31,8 +31,9 @@ var handlers = {
       });
       //  Show links as tooltips
       $('a').each(function() {
-        var $link = $(this);
-        $link.attr('title', $link.attr('href'));
+        var $link = $(this),
+          href = $link.attr('href');
+        $link.attr('title', href.replace(/<\/?sub>/g, '~'));
       });
 
       // make toc title H2 element
