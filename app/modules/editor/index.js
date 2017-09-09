@@ -20,7 +20,7 @@ var
     _suspendOnChangeEventHandler = false,
     _isBulkOpen = false;
     
-var buildFlags = require('./buildFlags.js');
+var buildFlags = require('./buildflags.js');
 
 var setHeight = function(offSetValue){
     $editor.css('height', $window.height() - offSetValue + 'px');
