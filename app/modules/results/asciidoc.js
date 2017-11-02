@@ -33,7 +33,8 @@ var handlers = {
       $('a').each(function() {
         var $link = $(this),
           href = $link.attr('href');
-        $link.attr('title', href.replace(/<\/?sub>/g, '~'));
+          if(href != undefined)
+            $link.attr('title', href.replace(/<\/?sub>/g, '~'));
       });
 
       // make toc title H2 element
